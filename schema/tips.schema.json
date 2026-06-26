@@ -1,0 +1,34 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://glean-mastery/schema/tips.schema.json",
+  "title": "Tips & Tricks Registry",
+  "type": "object",
+  "required": ["schema_version", "tips"],
+  "properties": {
+    "schema_version": { "type": "string" },
+    "tips": {
+      "type": "array",
+      "items": { "$ref": "#/definitions/tip" }
+    }
+  },
+  "definitions": {
+    "tip": {
+      "type": "object",
+      "required": ["id", "title", "level", "category", "summary", "status"],
+      "additionalProperties": false,
+      "properties": {
+        "id": { "type": "string", "pattern": "^tip-[0-9]{3}$" },
+        "title": { "type": "string", "minLength": 4 },
+        "level": { "type": "string", "enum": ["200", "300", "400", "500"] },
+        "category": { "type": "string", "enum": ["search", "prompts", "connectors", "api", "agents", "governance", "admin", "workflow"] },
+        "audience": { "type": "string", "enum": ["no-coder", "power-user", "builder", "pro-coder"] },
+        "summary": { "type": "string", "minLength": 10 },
+        "steps_ref": { "type": "string" },
+        "code_ref": { "type": "string" },
+        "language": { "type": "string" },
+        "verified_against": { "type": "string" },
+        "status": { "type": "string", "enum": ["draft", "verified", "published"] }
+      }
+    }
+  }
+}
