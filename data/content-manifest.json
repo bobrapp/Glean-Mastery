@@ -1,0 +1,169 @@
+{
+  "schema_version": "1.0.0",
+  "generated_at": "2026-06-26T15:04:24.458Z",
+  "totals": {
+    "days": 7,
+    "published_days": 0,
+    "verified_days": 3,
+    "draft_days": 4
+  },
+  "days": [
+    {
+      "file": "content/weeks/01/day-01.mdx",
+      "week": 1,
+      "day": 1,
+      "level": "200",
+      "title": "Glean Foundations and Search Intent",
+      "theme": "Core concepts and intent framing",
+      "status": "verified",
+      "nist_rmf": [
+        "MAP",
+        "MEASURE"
+      ],
+      "quiz_ref": "quiz-w01",
+      "source_ids": [
+        "official_glossary",
+        "retrieval_basics",
+        "case_acme_rollout",
+        "retrieval_basics"
+      ],
+      "case_study_type": "case_study",
+      "has_verify_marker": false
+    },
+    {
+      "file": "content/weeks/02/day-01.mdx",
+      "week": 2,
+      "day": 1,
+      "level": "300",
+      "title": "Ranking Signals and Trade-offs",
+      "theme": "Signal quality and evaluation",
+      "status": "verified",
+      "nist_rmf": [
+        "MEASURE",
+        "MANAGE"
+      ],
+      "quiz_ref": "quiz-w02",
+      "source_ids": [
+        "retrieval_basics",
+        "case_acme_rollout",
+        "retrieval_basics"
+      ],
+      "case_study_type": "case_study",
+      "has_verify_marker": false
+    },
+    {
+      "file": "content/weeks/03/day-01.mdx",
+      "week": 3,
+      "day": 1,
+      "level": "400",
+      "title": "Case Study Synthesis and Operational Readiness",
+      "theme": "From experiments to production readiness",
+      "status": "verified",
+      "nist_rmf": [
+        "GOVERN",
+        "MANAGE"
+      ],
+      "quiz_ref": "quiz-w03",
+      "source_ids": [
+        "case_acme_rollout",
+        "case_acme_rollout",
+        "retrieval_basics"
+      ],
+      "case_study_type": "case_study",
+      "has_verify_marker": false
+    },
+    {
+      "file": "content/weeks/04/day-01.mdx",
+      "week": 4,
+      "day": 1,
+      "level": "300",
+      "title": "Power Search: Operators and Filters",
+      "theme": "Precision retrieval for power users",
+      "status": "draft",
+      "nist_rmf": [
+        "MAP",
+        "MEASURE"
+      ],
+      "quiz_ref": "quiz-w04",
+      "source_ids": [
+        "retrieval_basics",
+        "official_glossary",
+        "case_acme_rollout",
+        "retrieval_basics"
+      ],
+      "case_study_type": "case_study",
+      "has_verify_marker": true
+    },
+    {
+      "file": "content/weeks/05/day-01.mdx",
+      "week": 5,
+      "day": 1,
+      "level": "400",
+      "title": "Builder Track: Calling the Glean Search API",
+      "theme": "Programmatic retrieval with a typed client",
+      "status": "draft",
+      "nist_rmf": [
+        "MAP",
+        "MEASURE",
+        "MANAGE"
+      ],
+      "quiz_ref": "quiz-w05",
+      "source_ids": [
+        "retrieval_basics",
+        "official_glossary",
+        "case_acme_rollout",
+        "retrieval_basics"
+      ],
+      "case_study_type": "case_study",
+      "has_verify_marker": true
+    },
+    {
+      "file": "content/weeks/06/day-01.mdx",
+      "week": 6,
+      "day": 1,
+      "level": "500",
+      "title": "Pro Track: Governing Glean-Powered Agents",
+      "theme": "Agents, orchestration, and policy-as-code guardrails",
+      "status": "draft",
+      "nist_rmf": [
+        "GOVERN",
+        "MAP",
+        "MEASURE",
+        "MANAGE"
+      ],
+      "quiz_ref": "quiz-w06",
+      "source_ids": [
+        "retrieval_basics",
+        "official_glossary",
+        "case_acme_rollout",
+        "retrieval_basics"
+      ],
+      "case_study_type": "case_study",
+      "has_verify_marker": true
+    },
+    {
+      "file": "content/weeks/06/day-02.mdx",
+      "week": 6,
+      "day": 2,
+      "level": "500",
+      "title": "Pro Track: Orchestrating Multi-Step Agents",
+      "theme": "Agent orchestration, tool use, and layered guardrails",
+      "status": "draft",
+      "nist_rmf": [
+        "GOVERN",
+        "MAP",
+        "MEASURE",
+        "MANAGE"
+      ],
+      "quiz_ref": "quiz-w06",
+      "source_ids": [
+        "retrieval_basics",
+        "official_glossary",
+        "case_acme_rollout",
+        "retrieval_basics"
+      ],
+      "case_study_type": "case_study",
+      "has_verify_marker": true
+    }
+  ]
+}
