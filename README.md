@@ -42,10 +42,10 @@ npm run validate         # build:manifest + validate:data
    `steps_ref`, and `code_ref` all resolve. Broken refs are **warnings while an item is
    `draft`** and become **hard errors once it is `verified`/`published`**.
 3. **Policy gate (OPA)** — `policy/content_integrity.rego` blocks any published day that
-   still contains `[verify]`, lacks a real case study, or **declares a `working_example`
-   without shipping any example code in its body**; any published leader/project without
-   `consent_to_list: true`; and any published tip that ships code without citing what it
-   was `verified_against`.
+   still contains `[verify]`, lacks a real case study, **declares a `working_example`
+   without shipping any example code in its body**, or **has no `video_summary`** (the
+   ~10s Veo clip script); any published leader/project without `consent_to_list: true`;
+   and any published tip that ships code without citing what it was `verified_against`.
 
 CI (`.github/workflows/content-ci.yml`) runs all three on every push and PR. The manifest
 is generated fresh in CI before the gate and is **not** committed to the repo (it's

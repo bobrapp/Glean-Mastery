@@ -34,6 +34,15 @@ deny contains msg if {
 	msg := sprintf("%s is published and declares a working_example but its body has no example code", [day.file])
 }
 
+# Deny published days with no ~10-second video_summary (Veo clip script).
+deny contains msg if {
+	some i
+	day := input.days[i]
+	day.status == "published"
+	day.has_video_summary == false
+	msg := sprintf("%s is published but has no video_summary (10s Veo clip)", [day.file])
+}
+
 # --- Community registries: consent is mandatory before publishing ------------
 
 # Deny any published leader who has not consented to being listed.

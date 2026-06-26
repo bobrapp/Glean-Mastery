@@ -62,6 +62,7 @@ const days = walk(WEEKS_DIR)
       has_verify_marker: /\[verify\]/.test(raw),
       declares_working_example: Boolean(data.working_example),
       has_example_code: body.includes("```"),
+      has_video_summary: Boolean(data.video_summary && String(data.video_summary).trim()),
     };
   })
   .sort((a, b) => (a.week - b.week) || (a.day - b.day));
