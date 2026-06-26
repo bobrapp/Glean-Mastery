@@ -1,0 +1,35 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://glean-mastery/schema/leaders.schema.json",
+  "title": "Top 100 Glean Leaders Registry",
+  "type": "object",
+  "required": ["schema_version", "max_entries", "leaders"],
+  "properties": {
+    "schema_version": { "type": "string" },
+    "max_entries": { "type": "integer", "const": 100 },
+    "leaders": {
+      "type": "array",
+      "maxItems": 100,
+      "items": { "$ref": "#/definitions/leader" }
+    }
+  },
+  "definitions": {
+    "leader": {
+      "type": "object",
+      "required": ["id", "name", "focus_area", "status"],
+      "additionalProperties": false,
+      "properties": {
+        "id": { "type": "string", "pattern": "^leader-[0-9]{3}$" },
+        "name": { "type": "string", "minLength": 2 },
+        "organization": { "type": "string" },
+        "role": { "type": "string" },
+        "region": { "type": "string" },
+        "focus_area": { "type": "string", "enum": ["search", "connectors", "api", "agents", "governance", "adoption", "platform", "community"] },
+        "profile_url": { "type": "string", "format": "uri" },
+        "nomination_source": { "type": "string" },
+        "consent_to_list": { "type": "boolean" },
+        "status": { "type": "string", "enum": ["nominated", "verified", "published"] }
+      }
+    }
+  }
+}
