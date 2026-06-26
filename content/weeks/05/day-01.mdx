@@ -1,0 +1,34 @@
+---
+week: 5
+day: 1
+level: "400"
+title: "Builder Track: Calling the Glean Search API"
+theme: "Programmatic retrieval with a typed client"
+duration_min: 30
+objectives:
+  - "Authenticate and issue a search request programmatically"
+  - "Shape query options in a small typed client"
+references:
+  - source_id: "retrieval_basics"
+    minutes: 8
+  - source_id: "official_glossary"
+    minutes: 4
+lab:
+  minutes: 10
+  steps_ref: true
+working_example:
+  language: "typescript"
+  verified_against: "retrieval_basics"
+case_study:
+  source_id: "case_acme_rollout"
+nist_rmf: ["MAP", "MEASURE", "MANAGE"]
+check_for_understanding: "Why wrap the raw API in a typed client instead of calling fetch directly everywhere?"
+quiz_ref: "quiz-w05"
+status: "draft"
+---
+
+# Day 1 Lab [verify]
+1. Read the search endpoint contract in the references.
+2. Implement a typed `search(query, options)` wrapper (see `examples/tip-003/search-client.ts`).
+3. Issue one query and log the top 3 result titles.
+4. Add one option (page size) and confirm the result count changes.
