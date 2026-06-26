@@ -1,0 +1,22 @@
+{
+  "id": "quiz-w01",
+  "week": 1,
+  "pass_threshold": 0.8,
+  "questions": [
+    {
+      "id": "w01-q1",
+      "type": "mc",
+      "prompt": "Which NIST AI RMF function focuses on context and intended use?",
+      "options": ["GOVERN", "MAP", "MEASURE", "MANAGE"],
+      "answer_index": 1,
+      "explanation": "MAP is about context, intended use, and framing risk."
+    },
+    {
+      "id": "w01-q2",
+      "type": "short",
+      "prompt": "In one sentence, define retrieval quality.",
+      "answer_key": "Retrieval quality is how well the system returns relevant information for a query.",
+      "explanation": "Quality combines relevance, ranking, and consistency against task intent."
+    }
+  ]
+}
