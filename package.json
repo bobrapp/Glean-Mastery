@@ -1,0 +1,21 @@
+{
+  "name": "glean-mastery",
+  "version": "0.1.0",
+  "private": true,
+  "description": "30 minutes a day to Glean Mastery: curriculum (200-500), 100 tips & tricks, and community registries (Top 100 Leaders, Top 100 Projects).",
+  "type": "module",
+  "scripts": {
+    "build:manifest": "tsx lib/content/build-manifest.ts",
+    "validate:data": "tsx lib/content/validate-data.ts",
+    "validate": "npm run build:manifest && npm run validate:data"
+  },
+  "dependencies": {
+    "gray-matter": "^4.0.3"
+  },
+  "devDependencies": {
+    "ajv": "^8.17.1",
+    "ajv-formats": "^3.0.1",
+    "tsx": "^4.19.2",
+    "typescript": "^5.6.3"
+  }
+}
