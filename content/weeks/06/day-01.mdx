@@ -36,8 +36,10 @@ status: "draft"
 ## Working Example: Pre-Action Policy Gate (Rego)
 
 The agent must call this policy before acting on any retrieved result. The
-`act` decision is denied unless every cited source is verified. Verified
-against `retrieval_basics`.
+`act` decision is denied unless every cited source is verified AND the
+requested action is allowed for the user's role. The role allowlist is
+supplied as external `data` (not part of `input`). Verified against
+`retrieval_basics`.
 
 ```rego
 package glean.agent.guardrails
@@ -58,7 +60,7 @@ unverified_sources contains src.id if {
 	not src.verified
 }
 
-# The requested action must be in the role's allowlist.
+# The requested action must be in the role's allowlist (from data).
 action_permitted if {
 	some allowed in data.roles[input.user.role].allowed_actions
 	allowed == input.action
@@ -73,6 +75,21 @@ deny_reasons contains msg if {
 deny_reasons contains msg if {
 	not action_permitted
 	msg := sprintf("action %q not permitted for role %q", [input.action, input.user.role])
+}
+```
+
+### Role data (external `data` document)
+
+The policy reads the role allowlist from `data.roles`. Load this alongside
+the policy (e.g., `opa eval -d roles.json` or a bundle) so `action_permitted`
+can succeed:
+
+```json
+{
+  "roles": {
+    "analyst": { "allowed_actions": ["summarize", "retrieve"] },
+    "viewer": { "allowed_actions": ["retrieve"] }
+  }
 }
 ```
 
@@ -92,7 +109,9 @@ deny_reasons contains msg if {
 ```
 
 With the input above, `allow_act` is `false` and `deny_reasons` reports the
-unverified `doc-102`. Mark every source verified to allow the act step.
+unverified `doc-102`. Mark `doc-102` as `"verified": true` and, because the
+`analyst` role allows the `summarize` action in the role data above,
+`action_permitted` succeeds and `allow_act` becomes `true`.
 
 ### RMF mapping
 
