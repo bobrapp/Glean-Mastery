@@ -10,6 +10,7 @@
   "scripts": {
     "build:manifest": "tsx lib/content/build-manifest.ts",
     "validate:data": "tsx lib/content/validate-data.ts",
+    "build:site": "node scripts/build-site.mjs",
     "typecheck": "tsc --noEmit",
     "validate": "npm run typecheck && npm run build:manifest && npm run validate:data"
   },

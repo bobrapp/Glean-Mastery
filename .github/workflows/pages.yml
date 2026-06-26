@@ -1,0 +1,23 @@
+name: pages
+on:
+  push: { branches: [main] }
+  workflow_dispatch:
+permissions: { contents: read, pages: write, id-token: write }
+concurrency: { group: pages, cancel-in-progress: true }
+jobs:
+  deploy:
+    environment: { name: github-pages, url: "${{ steps.deploy.outputs.page_url }}" }
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with: { node-version: 20, cache: npm }
+      - run: npm ci
+      - run: npm run validate        # hard gate: typecheck + manifest + schema validation must pass before deploy
+      - run: npm run build:site       # render content/weeks/*.mdx + quizzes + sources -> site/
+      - uses: actions/configure-pages@v5
+        with: { enablement: true }    # stand Pages up on first run (needs the repo to be public, or Pro for private)
+      - uses: actions/upload-pages-artifact@v3
+        with: { path: site }
+      - id: deploy
+        uses: actions/deploy-pages@v4

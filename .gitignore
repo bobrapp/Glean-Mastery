@@ -8,6 +8,9 @@ node_modules/
 # Generated — built fresh by `npm run build:manifest` (and in CI before the gate)
 data/content-manifest.json
 
+# Generated — the static site, built fresh by `npm run build:site` and deployed by pages.yml
+site/
+
 # Local env
 .env
 .env.*
