@@ -24,9 +24,11 @@ jobs:
       - name: Validate data against schemas
         run: npm run validate:data
       - name: Setup OPA
-        uses: open-policy-agent/setup-opa@v2
-        with:
-          version: latest
+        run: |
+          curl -L -o opa https://openpolicyagent.org/downloads/latest/opa_linux_amd64_static
+          chmod +x opa
+          sudo mv opa /usr/local/bin/opa
+          opa version
       - name: Run content integrity policy gate
         run: opa eval --format pretty --fail-defined --data policy/content_integrity.rego --input data/content-manifest.json "data.content.integrity.deny[x]"
       - name: Commit regenerated manifest
