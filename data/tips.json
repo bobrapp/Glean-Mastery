@@ -1,0 +1,38 @@
+{
+  "schema_version": "1.0.0",
+  "tips": [
+    {
+      "id": "tip-001",
+      "title": "Frame search intent before you type",
+      "level": "200",
+      "category": "search",
+      "audience": "no-coder",
+      "summary": "Decide whether you want a fact, a document, or a person before searching to pick better keywords.",
+      "steps_ref": "content/tips/tip-001.mdx",
+      "status": "draft"
+    },
+    {
+      "id": "tip-002",
+      "title": "Use operators to narrow noisy results",
+      "level": "300",
+      "category": "search",
+      "audience": "power-user",
+      "summary": "Combine source, owner, and date filters to cut a broad result set down to the few documents that matter.",
+      "steps_ref": "content/tips/tip-002.mdx",
+      "status": "draft"
+    },
+    {
+      "id": "tip-003",
+      "title": "Call the search API with a typed client",
+      "level": "400",
+      "category": "api",
+      "audience": "builder",
+      "summary": "Wrap the Glean search endpoint in a small typed client so query options stay consistent across your app.",
+      "steps_ref": "content/tips/tip-003.mdx",
+      "code_ref": "examples/tip-003/search-client.ts",
+      "language": "typescript",
+      "verified_against": "retrieval_basics",
+      "status": "draft"
+    }
+  ]
+}
