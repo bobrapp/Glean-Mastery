@@ -1,6 +1,6 @@
 {
   "schema_version": "1.1.0",
-  "generated_at": "2026-06-26T16:07:16.680Z",
+  "generated_at": "2026-06-26T16:31:58.405Z",
   "totals": {
     "days": 7,
     "published_days": 0,
@@ -22,9 +22,9 @@
       ],
       "quiz_ref": "quiz-w01",
       "source_ids": [
-        "official_glossary",
+        "glean_search_docs",
         "retrieval_basics",
-        "case_acme_rollout",
+        "case_confluent_glean",
         "retrieval_basics"
       ],
       "case_study_type": "case_study",
@@ -45,7 +45,7 @@
       "quiz_ref": "quiz-w02",
       "source_ids": [
         "retrieval_basics",
-        "case_acme_rollout",
+        "case_confluent_glean",
         "retrieval_basics"
       ],
       "case_study_type": "case_study",
@@ -65,8 +65,8 @@
       ],
       "quiz_ref": "quiz-w03",
       "source_ids": [
-        "case_acme_rollout",
-        "case_acme_rollout",
+        "case_confluent_glean",
+        "case_confluent_glean",
         "retrieval_basics"
       ],
       "case_study_type": "case_study",
@@ -87,8 +87,8 @@
       "quiz_ref": "quiz-w04",
       "source_ids": [
         "retrieval_basics",
-        "official_glossary",
-        "case_acme_rollout",
+        "glean_search_docs",
+        "case_confluent_glean",
         "retrieval_basics"
       ],
       "case_study_type": "case_study",
@@ -110,8 +110,8 @@
       "quiz_ref": "quiz-w05",
       "source_ids": [
         "retrieval_basics",
-        "official_glossary",
-        "case_acme_rollout",
+        "glean_search_docs",
+        "case_confluent_glean",
         "retrieval_basics"
       ],
       "case_study_type": "case_study",
@@ -134,8 +134,8 @@
       "quiz_ref": "quiz-w06",
       "source_ids": [
         "retrieval_basics",
-        "official_glossary",
-        "case_acme_rollout",
+        "glean_search_docs",
+        "case_confluent_glean",
         "retrieval_basics"
       ],
       "case_study_type": "case_study",
@@ -158,8 +158,8 @@
       "quiz_ref": "quiz-w06",
       "source_ids": [
         "retrieval_basics",
-        "official_glossary",
-        "case_acme_rollout",
+        "glean_search_docs",
+        "case_confluent_glean",
         "retrieval_basics"
       ],
       "case_study_type": "case_study",
