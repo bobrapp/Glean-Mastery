@@ -1,0 +1,45 @@
+name: Content CI
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  build-and-validate:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+
+      - name: Install dependencies
+        run: npm install
+
+      - name: Build content manifest
+        run: npm run build:manifest
+
+      - name: Setup OPA
+        uses: open-policy-agent/setup-opa@v2
+        with:
+          version: latest
+
+      - name: Run content integrity policy gate
+        run: opa eval --format pretty --fail-defined --data policy/content_integrity.rego --input data/content-manifest.json "data.content.integrity.deny[x]"
+
+      - name: Commit regenerated manifest
+        if: github.event_name == 'push'
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add data/content-manifest.json
+          git diff --staged --quiet || git commit -m "chore: regenerate content manifest [skip ci]"
+          git push
