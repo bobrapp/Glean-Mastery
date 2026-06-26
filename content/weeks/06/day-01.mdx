@@ -32,3 +32,90 @@ status: "draft"
 2. Identify one risk at the act step (e.g., acting on stale or unauthorized data).
 3. Write a policy-as-code rule that denies the act when the source is unverified.
 4. Map each step of your loop to a NIST AI RMF function.
+
+## Working Example: Pre-Action Policy Gate (Rego)
+
+The agent must call this policy before acting on any retrieved result. The
+`act` decision is denied unless every cited source is verified AND the
+requested action is allowed for the user's role. The role allowlist is
+supplied as external `data` (not part of `input`). Verified against
+`retrieval_basics`.
+
+```rego
+package glean.agent.guardrails
+
+# Default to deny: the agent may not act unless explicitly allowed.
+default allow_act := false
+
+# Allow the act step only when all retrieved sources are verified
+# and the requested action is permitted for the user's role.
+allow_act if {
+	count(unverified_sources) == 0
+	action_permitted
+}
+
+# Collect any retrieved source that is not marked verified.
+unverified_sources contains src.id if {
+	some src in input.retrieval.sources
+	not src.verified
+}
+
+# The requested action must be in the role's allowlist (from data).
+action_permitted if {
+	some allowed in data.roles[input.user.role].allowed_actions
+	allowed == input.action
+}
+
+# Human-readable reasons surfaced to the agent / audit log.
+deny_reasons contains msg if {
+	count(unverified_sources) > 0
+	msg := sprintf("unverified source(s): %v", [unverified_sources])
+}
+
+deny_reasons contains msg if {
+	not action_permitted
+	msg := sprintf("action %q not permitted for role %q", [input.action, input.user.role])
+}
+```
+
+### Role data (external `data` document)
+
+The policy reads the role allowlist from `data.roles`. Load this alongside
+the policy (e.g., `opa eval -d roles.json` or a bundle) so `action_permitted`
+can succeed:
+
+```json
+{
+  "roles": {
+    "analyst": { "allowed_actions": ["summarize", "retrieve"] },
+    "viewer": { "allowed_actions": ["retrieve"] }
+  }
+}
+```
+
+### Sample input
+
+```json
+{
+  "user": { "role": "analyst" },
+  "action": "summarize",
+  "retrieval": {
+    "sources": [
+      { "id": "doc-101", "verified": true },
+      { "id": "doc-102", "verified": false }
+    ]
+  }
+}
+```
+
+With the input above, `allow_act` is `false` and `deny_reasons` reports the
+unverified `doc-102`. Mark `doc-102` as `"verified": true` and, because the
+`analyst` role allows the `summarize` action in the role data above,
+`action_permitted` succeeds and `allow_act` becomes `true`.
+
+### RMF mapping
+
+- **GOVERN** — the default-deny posture encodes an organizational guardrail.
+- **MAP** — inputs make the agent's context (sources, role, action) explicit.
+- **MEASURE** — `deny_reasons` produces auditable signals for each decision.
+- **MANAGE** — the pre-action gate stops unsafe acts before they occur.

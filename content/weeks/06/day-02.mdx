@@ -1,0 +1,34 @@
+---
+week: 6
+day: 2
+level: "500"
+title: "Pro Track: Orchestrating Multi-Step Agents"
+theme: "Agent orchestration, tool use, and layered guardrails"
+duration_min: 30
+objectives:
+  - "Decompose a task into an orchestrated multi-agent plan"
+  - "Apply layered policy-as-code checks across the plan"
+references:
+  - source_id: "retrieval_basics"
+    minutes: 5
+  - source_id: "official_glossary"
+    minutes: 4
+lab:
+  minutes: 12
+  steps_ref: true
+working_example:
+  language: "rego"
+  verified_against: "retrieval_basics"
+case_study:
+  source_id: "case_acme_rollout"
+nist_rmf: ["GOVERN", "MAP", "MEASURE", "MANAGE"]
+check_for_understanding: "Where in an orchestration plan should a guardrail run, and why more than once?"
+quiz_ref: "quiz-w06"
+status: "draft"
+---
+
+# Day 2 Lab [verify]
+1. Decompose a goal into a plan: plan -> retrieve -> reason -> act -> verify.
+2. Identify the highest-risk step in the plan and justify the ranking.
+3. Place a policy-as-code check at both the retrieve and act steps.
+4. Map each guardrail to the NIST AI RMF function it supports.
