@@ -1,20 +1,20 @@
 {
-  "official_glossary": {
+  "glean_search_docs": {
     "type": "reference",
-    "title": "Glean Official Glossary",
-    "url": "https://example.com/glean/glossary",
+    "title": "About Glean Search (Help Center)",
+    "url": "https://docs.glean.com/administration/search/about",
     "verified_on": "2026-06-26"
   },
   "retrieval_basics": {
     "type": "reference",
-    "title": "Retrieval and Ranking Basics",
-    "url": "https://example.com/glean/retrieval-basics",
+    "title": "How Glean Search Works",
+    "url": "https://www.glean.com/resources/guides/how-glean-search-works",
     "verified_on": "2026-06-26"
   },
-  "case_acme_rollout": {
+  "case_confluent_glean": {
     "type": "case_study",
-    "title": "Acme Search Rollout Case Study",
-    "url": "https://example.com/case-studies/acme-rollout",
+    "title": "How Confluent saves 15,000+ hours a month with Glean",
+    "url": "https://www.glean.com/resources/customer-stories/confluent",
     "verified_on": "2026-06-26"
   }
 }
