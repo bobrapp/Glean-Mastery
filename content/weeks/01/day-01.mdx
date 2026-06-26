@@ -2,58 +2,53 @@
 week: 1
 day: 1
 level: "200"
-title: "Glean Foundations and Search Intent"
-theme: "Core concepts and intent framing"
+title: "What Glean Is and the Enterprise Graph"
+theme: "How Glean connects your company's work"
 duration_min: 30
 objectives:
-  - "Define enterprise search intent and relevance"
-  - "Explain baseline retrieval flow"
+  - "Explain what enterprise search does and how it differs from web search"
+  - "Describe the Enterprise Graph as entities and their related signals"
 references:
-  - source_id: "glean_search_docs"
+  - source_id: "enterprise_graph"
     minutes: 10
-  - source_id: "retrieval_basics"
-    minutes: 8
+  - source_id: "search_basics"
+    minutes: 6
 lab:
   minutes: 8
   steps_ref: true
 working_example:
   language: "text"
-  verified_against: "retrieval_basics"
+  verified_against: "enterprise_graph"
 case_study:
   source_id: "case_confluent_glean"
-nist_rmf: ["MAP", "MEASURE"]
-check_for_understanding: "How would you distinguish intent mismatch from ranking mismatch?"
+nist_rmf: ["MAP"]
+check_for_understanding: "Name one entity and two related signals the graph might connect to it."
 quiz_ref: "quiz-w01"
-video_summary: "Great Glean search starts before you type: decide if you want a fact, a document, or a person. That one choice shapes your keywords — and explains every result."
+video_summary: "Glean is enterprise search over all your work apps. Its Enterprise Graph links entities — people, projects, customers — to their signals: docs, tickets, messages. That web is why answers feel relevant."
 status: "published"
 ---
 
 # Day 1 Lab
+1. Pick one project you work on.
+2. List the entities around it: people, customers, related projects.
+3. For each entity, name two "signals" — a doc, a ticket, a message, a channel.
+4. Sketch how those connect. That shape is what the graph models for you.
 
-1. Define three user intents for a single topic.
-2. Write expected top-3 results for each intent.
-3. Compare with actual returned results.
+## Working Example: An Entity and Its Signals
 
-## Working Example: Intent vs. Ranking Mismatch
-
-One query, three intents — and how to tell *which kind* of failure you're looking
-at when the top result is wrong. This is the distinction the check-for-understanding
-asks for.
+The Enterprise Graph models high-value entities and the network of signals around
+each one. Verified against `enterprise_graph`.
 
 ```text
-Query: "vacation policy"
-
-Intent      Expected top result
---------    --------------------------------------------
-fact     →  a snippet: "Employees accrue 15 days/year"
-document →  the official PTO Policy PDF
-person   →  the HR partner who owns the policy
-
-Diagnosing a bad #1 result:
-  Wrong TYPE comes back (a doc when you wanted the person) -> INTENT mismatch
-  Right type, but the best item sits at #6 instead of #1   -> RANKING mismatch
+Entity: Project "Atlas"
+  ├─ People:    owner @maya, contributors @raj @lin
+  ├─ Customer:  Acme (linked opportunity)
+  └─ Signals:
+       • Design doc (Drive)        • 12 Jira issues (Sprint 7)
+       • #atlas Slack channel      • 3 support tickets (Zendesk)
+       • Launch deck (Drive)       • PR #482 (GitHub)
 ```
 
-Intent mismatch is fixed by *reframing the query* (or picking the right result
-type); ranking mismatch is fixed by *signals and tuning*, not by rewording. Naming
-which one you have is the whole skill of Day 1.
+Search for "Atlas" and Glean can rank these together — not because the word
+matches, but because the graph knows they belong to the same entity. That
+relationship is the difference between enterprise search and a keyword box.

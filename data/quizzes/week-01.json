@@ -6,17 +6,82 @@
     {
       "id": "w01-q1",
       "type": "mc",
-      "prompt": "Which NIST AI RMF function focuses on context and intended use?",
-      "options": ["GOVERN", "MAP", "MEASURE", "MANAGE"],
+      "prompt": "What does Glean's Enterprise Graph primarily connect?",
+      "options": [
+        "Only documents in Google Drive",
+        "Entities (people, projects, customers) and their related signals",
+        "Public web pages",
+        "Just the user's recent searches"
+      ],
       "answer_index": 1,
-      "explanation": "MAP is about context, intended use, and framing risk."
+      "explanation": "The graph models high-value entities and the network of signals — docs, tickets, messages — around each."
     },
     {
       "id": "w01-q2",
+      "type": "mc",
+      "prompt": "When is a natural-language question better than keywords?",
+      "options": [
+        "When you already know the exact document",
+        "When you want a synthesized, cited answer",
+        "When the index is empty",
+        "Never — keywords are always better"
+      ],
+      "answer_index": 1,
+      "explanation": "Questions let Glean assemble and cite an answer; keywords are faster when you just need to open a known doc."
+    },
+    {
+      "id": "w01-q3",
+      "type": "mc",
+      "prompt": "Your top result is the wrong TYPE of thing entirely. That is a...",
+      "options": ["ranking mismatch", "intent mismatch", "network error", "permissions issue"],
+      "answer_index": 1,
+      "explanation": "Wrong type means the query expressed the wrong intent; fix it by reframing, not by tuning ranking."
+    },
+    {
+      "id": "w01-q4",
+      "type": "mc",
+      "prompt": "What does a result's snippet tell you?",
+      "options": [
+        "How confident the ranking is",
+        "Why it matched your query",
+        "Who owns the document",
+        "The file size"
+      ],
+      "answer_index": 1,
+      "explanation": "The snippet shows the matched text — why this result surfaced. Position signals rank confidence; metadata shows owner."
+    },
+    {
+      "id": "w01-q5",
+      "type": "mc",
+      "prompt": "What does `type:document onboarding` do?",
+      "options": [
+        "Restricts results to documents about onboarding",
+        "Searches only Google Drive",
+        "Finds only your own documents",
+        "Sorts results by date"
+      ],
+      "answer_index": 0,
+      "explanation": "type: narrows by document kind; here, only documents (not messages or tickets) about onboarding."
+    },
+    {
+      "id": "w01-q6",
+      "type": "mc",
+      "prompt": "`app:slack quarterly roadmap` returns...",
+      "options": [
+        "results from every connected app",
+        "only Slack results for the query",
+        "only documents",
+        "only messages you sent"
+      ],
+      "answer_index": 1,
+      "explanation": "app: scopes the query to one connected system — here, Slack."
+    },
+    {
+      "id": "w01-q7",
       "type": "short",
-      "prompt": "In one sentence, define retrieval quality.",
-      "answer_key": "Retrieval quality is how well the system returns relevant information for a query.",
-      "explanation": "Quality combines relevance, ranking, and consistency against task intent."
+      "prompt": "In one sentence, what does `from:me` do?",
+      "answer_key": "It scopes results to documents you authored or shared — your own work.",
+      "explanation": "from: finds documents associated with a person; from:me is the special case for yourself."
     }
   ]
 }

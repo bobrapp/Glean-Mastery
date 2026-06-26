@@ -1,0 +1,52 @@
+---
+week: 1
+day: 2
+level: "200"
+title: "Keyword vs. Natural-Language Questions"
+theme: "Choosing how to ask"
+duration_min: 30
+objectives:
+  - "Decide when to search with keywords vs a full question"
+  - "Phrase a question so the assistant can answer it directly"
+references:
+  - source_id: "search_basics"
+    minutes: 8
+lab:
+  minutes: 8
+  steps_ref: true
+working_example:
+  language: "text"
+  verified_against: "search_basics"
+case_study:
+  source_id: "case_confluent_glean"
+nist_rmf: ["MAP"]
+check_for_understanding: "Give one need better served by keywords and one better served by a question."
+quiz_ref: "quiz-w01"
+video_summary: "Glean takes keywords or a full question. Keywords win when you know the exact doc; a question wins when you want a synthesized, cited answer. Match the mode to your need."
+status: "published"
+---
+
+# Day 2 Lab
+1. Write one need as three keywords.
+2. Write the same need as a full question.
+3. Run both; compare what comes back — a list of docs vs a synthesized answer.
+4. Note which mode fit the need better, and why.
+
+## Working Example: Same Need, Two Modes
+
+Glean accepts queries as keywords or as questions; the mode changes the shape of
+the result. Verified against `search_basics`.
+
+```text
+Need: "What is our parental leave policy?"
+
+Keyword mode:   parental leave policy
+  → a ranked list of documents (you open the benefits doc yourself)
+
+Question mode:  What is our parental leave policy?
+  → a synthesized, cited answer drawn from the benefits docs
+
+Rule of thumb:
+  Know the exact document  → keywords (faster to the source)
+  Want the answer itself   → a question (Glean assembles and cites it)
+```

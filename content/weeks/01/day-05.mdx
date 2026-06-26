@@ -1,0 +1,46 @@
+---
+week: 1
+day: 5
+level: "200"
+title: "The type: Filter"
+theme: "Narrowing by document type"
+duration_min: 30
+objectives:
+  - "Use the type: filter to restrict results to one kind of document"
+  - "Combine type: with a keyword to cut a broad result set"
+references:
+  - source_id: "search_filters"
+    minutes: 8
+lab:
+  minutes: 8
+  steps_ref: true
+working_example:
+  language: "text"
+  verified_against: "search_filters"
+case_study:
+  source_id: "case_confluent_glean"
+nist_rmf: ["MAP"]
+check_for_understanding: "When does type: help more than adding another keyword?"
+quiz_ref: "quiz-w01"
+video_summary: "Too many results of the wrong kind? Add type: to keep only one — a doc, a message, a ticket. type:document onboarding strips out the chatter and leaves the pages you actually meant."
+status: "published"
+---
+
+# Day 5 Lab
+1. Run a broad query that mixes docs, messages, and tickets.
+2. Add `type:` to keep just one kind.
+3. Compare the counts before and after.
+4. Note when `type:` helped more than another keyword would have.
+
+## Working Example: type: in Action
+
+The `type:` filter restricts results to a single document kind. Verified against
+`search_filters`.
+
+```text
+onboarding                  → 400+ results: docs, Slack messages, tickets, all mixed
+type:document onboarding    → just the onboarding documents
+type:message onboarding     → just the chat messages about onboarding
+
+Use type: when the noise is the wrong KIND of thing, not the wrong topic.
+```

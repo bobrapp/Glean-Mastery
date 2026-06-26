@@ -1,0 +1,55 @@
+---
+week: 1
+day: 7
+level: "200"
+title: "The from: and from:me Filters"
+theme: "Finding documents by person"
+duration_min: 30
+objectives:
+  - "Use from: to find documents associated with a person"
+  - "Use from:me to re-find your own work"
+references:
+  - source_id: "search_filters"
+    minutes: 6
+  - source_id: "search_basics"
+    minutes: 4
+lab:
+  minutes: 8
+  steps_ref: true
+working_example:
+  language: "text"
+  verified_against: "search_filters"
+case_study:
+  source_id: "case_confluent_glean"
+nist_rmf: ["MAP"]
+check_for_understanding: "What's the difference between from:me and my:history for re-finding a doc?"
+quiz_ref: "quiz-w01"
+video_summary: "Remember the person, not the title? Use from:. from:maya surfaces what Maya authored or shared; from:me re-finds your own work. People are an index into the graph too."
+status: "published"
+---
+
+# Day 7 Lab
+1. Think of a doc you remember by its author, not its title.
+2. Search with `from:<that person>`.
+3. Now find one of your own docs with `from:me`.
+4. Note how "who" can be a faster handle than "what".
+
+## Working Example: from: in Action
+
+The `from:` filter finds documents associated with a person across tools;
+`from:me` scopes to your own. Verified against `search_filters`.
+
+```text
+design review                 → everyone's design-review docs
+from:maya design review       → the ones Maya authored or shared
+from:me  design review        → your own design-review docs
+
+"Who" is often a sharper handle than "what" — people are entities in the graph.
+```
+
+## Week 1 Capstone
+
+You can now frame intent, choose a query mode, read results, and cut a result set
+by type, app, and person. That everyday fluency is the foundation every later week
+builds on — and it is what sits behind outcomes like Confluent's (70%+ adoption,
+15,000+ hours saved monthly).

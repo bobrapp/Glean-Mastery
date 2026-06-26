@@ -5,6 +5,24 @@
     "url": "https://docs.glean.com/administration/search/about",
     "verified_on": "2026-06-26"
   },
+  "search_basics": {
+    "type": "reference",
+    "title": "Search in Glean (User Guide — Basics)",
+    "url": "https://docs.glean.com/user-guide/basics/how-to-search-in-glean",
+    "verified_on": "2026-06-26"
+  },
+  "search_filters": {
+    "type": "reference",
+    "title": "Advanced Search Filters & Operators",
+    "url": "https://docs.glean.com/user-guide/advanced/advanced-search-filter",
+    "verified_on": "2026-06-26"
+  },
+  "enterprise_graph": {
+    "type": "reference",
+    "title": "Glean Enterprise Graph",
+    "url": "https://www.glean.com/product/enterprise-graph",
+    "verified_on": "2026-06-26"
+  },
   "retrieval_basics": {
     "type": "reference",
     "title": "How Glean Search Works",
