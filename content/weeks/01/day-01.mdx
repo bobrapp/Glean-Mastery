@@ -17,7 +17,7 @@ lab:
   minutes: 8
   steps_ref: true
 working_example:
-  language: "typescript"
+  language: "text"
   verified_against: "retrieval_basics"
 case_study:
   source_id: "case_confluent_glean"
@@ -32,3 +32,27 @@ status: "published"
 1. Define three user intents for a single topic.
 2. Write expected top-3 results for each intent.
 3. Compare with actual returned results.
+
+## Working Example: Intent vs. Ranking Mismatch
+
+One query, three intents — and how to tell *which kind* of failure you're looking
+at when the top result is wrong. This is the distinction the check-for-understanding
+asks for.
+
+```text
+Query: "vacation policy"
+
+Intent      Expected top result
+--------    --------------------------------------------
+fact     →  a snippet: "Employees accrue 15 days/year"
+document →  the official PTO Policy PDF
+person   →  the HR partner who owns the policy
+
+Diagnosing a bad #1 result:
+  Wrong TYPE comes back (a doc when you wanted the person) -> INTENT mismatch
+  Right type, but the best item sits at #6 instead of #1   -> RANKING mismatch
+```
+
+Intent mismatch is fixed by *reframing the query* (or picking the right result
+type); ranking mismatch is fixed by *signals and tuning*, not by rewording. Naming
+which one you have is the whole skill of Day 1.

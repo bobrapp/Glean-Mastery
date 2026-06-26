@@ -30,3 +30,29 @@ status: "published"
 1. List candidate ranking signals.
 2. Predict possible failure modes for each.
 3. Propose one A/B test.
+
+## Working Example: Blending Ranking Signals
+
+A few signals combine into one score; the *weights* are the trade-off. Raise one
+and you relatively demote the others — which is why "what would you test first?"
+has a real answer. Illustrative, verified against `retrieval_basics`.
+
+```typescript
+type Signals = { textMatch: number; recency: number; affinity: number; popularity: number };
+
+const WEIGHTS = { textMatch: 0.5, recency: 0.2, affinity: 0.2, popularity: 0.1 };
+
+const score = (s: Signals): number =>
+  s.textMatch * WEIGHTS.textMatch +
+  s.recency * WEIGHTS.recency +
+  s.affinity * WEIGHTS.affinity +
+  s.popularity * WEIGHTS.popularity;
+
+// Equal text match; the tie is broken by the other signals.
+score({ textMatch: 0.9, recency: 0.2, affinity: 0.9, popularity: 0.2 }); // 0.69  (affinity-led)
+score({ textMatch: 0.9, recency: 0.9, affinity: 0.1, popularity: 0.9 }); // 0.74  (recency-led)
+```
+
+The second doc wins here purely on recency. If your users complain that *stale*
+docs rank too high, the first signal to test is the `recency` weight — change one
+weight at a time so the A/B test attributes the effect cleanly.

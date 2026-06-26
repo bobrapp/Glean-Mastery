@@ -23,6 +23,17 @@ deny contains msg if {
 	msg := sprintf("%s is published but case study source is not type=case_study", [day.file])
 }
 
+# Deny published days that promise a working_example but ship no example code.
+# Closes the "frontmatter claims it, body doesn't have it" gap.
+deny contains msg if {
+	some i
+	day := input.days[i]
+	day.status == "published"
+	day.declares_working_example == true
+	day.has_example_code == false
+	msg := sprintf("%s is published and declares a working_example but its body has no example code", [day.file])
+}
+
 # --- Community registries: consent is mandatory before publishing ------------
 
 # Deny any published leader who has not consented to being listed.
