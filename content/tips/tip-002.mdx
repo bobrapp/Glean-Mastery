@@ -1,0 +1,30 @@
+---
+id: "tip-002"
+title: "Use operators to narrow noisy results"
+level: "300"
+category: "search"
+audience: "power-user"
+status: "draft"
+---
+
+## Why this helps
+
+When a query returns hundreds of hits, adding more words often makes it worse.
+Operators express *known constraints* exactly, so they cut the set down to the
+few documents that actually qualify.
+
+## Steps
+
+1. Start broad, then read the noise: what's wrong with the top results — wrong
+   system, wrong owner, or wrong age?
+2. Add the matching operator:
+   - wrong system → `source:` (e.g., `source:drive`)
+   - wrong owner → `owner:` or `from:`
+   - too old → a date filter (e.g., `after:`)
+3. Combine operators to stack constraints; each one narrows the set further.
+4. Stop as soon as the top three are right — over-filtering hides good results.
+
+## Check
+
+For your last noisy search, which single operator would have removed the most
+junk? Lead with that one next time.

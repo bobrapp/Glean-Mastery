@@ -1,0 +1,30 @@
+{
+  "id": "quiz-w06",
+  "week": 6,
+  "pass_threshold": 0.8,
+  "questions": [
+    {
+      "id": "w06-q1",
+      "type": "mc",
+      "prompt": "A pre-action policy gate that blocks an agent from acting on unverified sources primarily satisfies which NIST AI RMF function?",
+      "options": ["MAP", "MEASURE", "GOVERN", "MANAGE"],
+      "answer_index": 3,
+      "explanation": "MANAGE covers acting on risk: the gate stops an unsafe act before it occurs. GOVERN sets the default-deny policy; MANAGE enforces it at the act step."
+    },
+    {
+      "id": "w06-q2",
+      "type": "mc",
+      "prompt": "What is the safe default for an agent's allow_act decision in a guardrail policy?",
+      "options": ["allow", "deny", "random", "whatever the model prefers"],
+      "answer_index": 1,
+      "explanation": "Default-deny means the agent may not act unless a rule explicitly permits it — the posture encoded by GOVERN."
+    },
+    {
+      "id": "w06-q3",
+      "type": "short",
+      "prompt": "Where in an orchestration plan should a guardrail run, and why more than once?",
+      "answer_key": "At both the retrieve and act steps, because risk arises at multiple stages and a single gate cannot catch unsafe inputs and unsafe actions alike.",
+      "explanation": "Layered checks let you reject bad context early and still stop an unsafe act later, rather than trusting one chokepoint."
+    }
+  ]
+}
