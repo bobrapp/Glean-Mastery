@@ -1,0 +1,57 @@
+---
+week: 4
+day: 7
+level: "300"
+title: "Prompts That Route Reliably"
+theme: "Structuring asks so Glean answers consistently"
+duration_min: 30
+objectives:
+  - "Structure a prompt so it consistently routes to the intended answer"
+  - "Measure consistency by re-running a prompt and comparing the responses"
+references:
+  - source_id: "assistant_skills"
+    minutes: 9
+lab:
+  minutes: 8
+  steps_ref: true
+working_example:
+  language: "text"
+  verified_against: "assistant_skills"
+case_study:
+  source_id: "case_confluent_glean"
+nist_rmf: ["MEASURE"]
+check_for_understanding: "Take a vague prompt and rewrite it with scope, format, and source so it routes the same way every time."
+quiz_ref: "quiz-w04"
+video_summary: "Consistent answers come from consistent asks. State the scope, the format, and the source in the prompt — then re-run it to measure that you get the same shape back."
+status: "published"
+---
+
+# Day 7 Lab
+1. Write a deliberately vague prompt and run it three times.
+2. Note how much the answers vary in scope, format, and sourcing.
+3. Rewrite the prompt with explicit scope, an explicit output format, and a named source.
+4. Re-run the rewrite three times and compare the variance to the vague version.
+5. Keep the structured version as your template for this kind of ask.
+
+## Working Example: A Vague Ask vs. a Routing Ask
+
+A reliable prompt names its scope, its format, and its source, so the request
+routes the same way on every run. Consistency is something you can measure by
+re-running. Verified against `assistant_skills`.
+
+```text
+Vague (routes differently each run):
+  "What's the status of the migration?"
+
+Structured (routes the same way every run):
+  "Summarize the database migration status from the #db-migration channel and
+   the migration runbook in Drive. Give me 3 bullets: done, in-progress, blocked."
+
+The three levers that make it route reliably:
+  SCOPE   → "the database migration" (not just "the migration")
+  SOURCE  → "#db-migration channel and the runbook in Drive"
+  FORMAT  → "3 bullets: done, in-progress, blocked"
+
+Measure it: run the structured prompt 3x; the SHAPE of the answer should match
+each time. Drift in shape means a lever is still missing.
+```

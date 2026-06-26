@@ -1,0 +1,59 @@
+---
+week: 6
+day: 6
+level: "300"
+title: "Versioning and Lifecycle"
+theme: "Version control for agents"
+duration_min: 30
+objectives:
+  - "Save, name, and roll back versions of an agent as it changes"
+  - "Use a draft-to-published lifecycle to keep risky edits out of production"
+references:
+  - source_id: "fall25_launch"
+    minutes: 8
+lab:
+  minutes: 8
+  steps_ref: true
+working_example:
+  language: "text"
+  verified_against: "fall25_launch"
+nist_rmf: ["GOVERN"]
+check_for_understanding: "Why does rollback to a known-good version count as a governance control, not just a convenience?"
+quiz_ref: "quiz-w06"
+video_summary: "Glean's Fall '25 launch announced agent versioning: save named versions, publish a draft, roll back a bad change. That lifecycle is how an agent stays accountable as it evolves."
+status: "published"
+---
+
+# Day 6 Lab
+
+**Status: Beta (Glean Fall '25 launch) — confirm GA availability in your tenant before relying on this.**
+
+1. Take your working agent and save it as a named version — note what changed and why.
+2. Make an edit in a draft, leaving the published version running untouched.
+3. Publish the draft, then compare the two versions to confirm the diff is what you meant.
+4. Practice a rollback: restore the prior version and verify the schedule still points at it.
+5. Write a one-line changelog note so the next person knows what each version did.
+
+## Working Example: An Agent's Version Lifecycle
+
+Per Glean's Fall '25 launch announcement, agents carry a version lifecycle — save, publish,
+and roll back as the agent evolves. Verified against `fall25_launch`.
+
+```text
+Agent: "Morning #incidents digest"
+
+v1  published   baseline: read -> summarize -> DM            (running on schedule)
+v2  draft       added a "no new posts -> send nothing" guard
+v3  published   promoted v2 after review                     (now running)
+                ...v3 starts over-trimming the digest...
+rollback        restore v1 as published; investigate v3 in a draft
+
+Changelog:
+  v1 baseline | v2 add empty-run guard | v3 promote v2 | rollback -> v1 (regression)
+```
+
+Versioning makes change *accountable*: every edit is a named, comparable, reversible step
+rather than an in-place mutation no one can audit. Rollback to a known-good version is a
+GOVERN control because it bounds blast radius — a bad change is recoverable by policy, not
+by luck. This lifecycle is an announced feature; confirm versioning and rollback are GA in
+your tenant before you treat them as a safety net.

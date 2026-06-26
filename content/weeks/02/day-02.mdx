@@ -1,0 +1,45 @@
+---
+week: 2
+day: 2
+level: "200"
+title: "after: and before: Date Ranges"
+theme: "Precise quoted-date windows"
+duration_min: 30
+objectives:
+  - "Bound a search with after: and before: using quoted dates"
+  - "Combine after: and before: to isolate a specific window"
+references:
+  - source_id: "search_filters"
+    minutes: 10
+lab:
+  minutes: 8
+  steps_ref: true
+working_example:
+  language: "text"
+  verified_against: "search_filters"
+nist_rmf: ["MAP"]
+check_for_understanding: "How do after: and before: together isolate one quarter of results?"
+quiz_ref: "quiz-w02"
+video_summary: "Need an exact window, not just recent? Use after:\"2026-01-01\" and before:\"2026-04-01\" to fence results to a precise date range. Quote the dates and stack the two to isolate a quarter."
+status: "published"
+---
+
+# Day 2 Lab
+1. Pick a topic where you know roughly when the work happened.
+2. Add `after:"2026-01-01"` to cut everything older.
+3. Add `before:"2026-04-01"` to cap the far end of the window.
+4. Adjust the two dates until only the period you care about remains.
+5. Compare this to `updated:` — note when an exact window beats a relative one.
+
+## Working Example: after: and before: in Action
+
+The `after:` and `before:` filters take quoted dates and fence results to a precise
+window. Verified against `search_filters`.
+
+```text
+budget after:"2026-01-01"                       → anything from Jan 1 onward
+budget before:"2026-04-01"                       → anything before Apr 1
+budget after:"2026-01-01" before:"2026-04-01"    → just Q1 2026
+
+Quote the dates as "YYYY-MM-DD". Stack both bounds to isolate a single period.
+```

@@ -1,62 +1,56 @@
 ---
 week: 3
 day: 1
-level: "400"
-title: "Case Study Synthesis and Operational Readiness"
-theme: "From experiments to production readiness"
+level: "200"
+title: "Consuming Built-in Glean Skills"
+theme: "Reusable instruction + tool packages you can invoke"
 duration_min: 30
 objectives:
-  - "Synthesize findings into operational decisions"
-  - "Map risks to mitigations"
+  - "Explain what a built-in Glean Skill packages and when to reach for one"
+  - "Invoke a Skill and read back what it did so the result is reviewable"
 references:
-  - source_id: "case_confluent_glean"
-    minutes: 15
+  - source_id: "assistant_skills"
+    minutes: 10
 lab:
   minutes: 8
   steps_ref: true
 working_example:
-  language: "typescript"
-  verified_against: "retrieval_basics"
-case_study:
-  source_id: "case_confluent_glean"
-nist_rmf: ["GOVERN", "MANAGE"]
-check_for_understanding: "What readiness criteria must be met before broad rollout?"
+  language: "text"
+  verified_against: "assistant_skills"
+nist_rmf: ["MAP"]
+check_for_understanding: "What does a built-in Skill bundle together that a plain prompt does not?"
 quiz_ref: "quiz-w03"
-video_summary: "Before a broad Glean rollout, run one go/no-go gate: permissions verified, relevance measured, a feedback loop, and an owner for tuning. Any single gap holds the launch."
+video_summary: "A Glean Skill bundles instructions plus the tools to act — so you invoke a ready-made workflow instead of re-prompting it. Pick one, pass your input, read the steps it ran. Reuse, not retype."
 status: "published"
 ---
 
 # Day 1 Lab
+1. Open the Skills list and pick one built-in Skill that matches a task you do often.
+2. Read its description — note the instructions and the tools it bundles.
+3. Invoke it with one concrete input.
+4. Read back the steps it ran and the sources it touched.
+5. Note one task you repeat that a Skill could replace.
 
-1. Draft a go/no-go checklist.
-2. Add two measurable acceptance criteria.
-3. Identify one post-launch monitor.
+## Working Example: Invoking a Built-in Skill
 
-## Working Example: A Go/No-Go Readiness Gate
+A built-in Skill is a named package of instructions plus the tools to carry them
+out — you invoke it instead of re-prompting the workflow each time. Verified
+against `assistant_skills`.
 
-The readiness criteria from the rollout case study, encoded as one gate: broad
-rollout is a go only when *every* criterion holds. This answers the
-check-for-understanding directly. Verified against `retrieval_basics`.
+```text
+You:    @Skill "Meeting Prep" — prep me for the Acme renewal call
 
-```typescript
-type Readiness = {
-  permissionsVerified: boolean; // results respect every source's ACLs
-  relevanceMeasured: boolean;   // a baseline quality metric is captured
-  feedbackLoop: boolean;        // users can flag bad results
-  ownerAssigned: boolean;       // someone owns tuning after launch
-};
+Skill bundles:
+  • Instructions: gather context, summarize, list open risks
+  • Tools:        enterprise search, calendar lookup, CRM read
 
-const readyForBroadRollout = (r: Readiness): boolean =>
-  Object.values(r).every(Boolean); // all-or-nothing: any false blocks the go
-
-readyForBroadRollout({
-  permissionsVerified: true,
-  relevanceMeasured: true,
-  feedbackLoop: true,
-  ownerAssigned: false, // <- not ready: no owner for post-launch tuning
-}); // false
+Skill runs:
+  1. Found the calendar event → attendees, time
+  2. Searched: app:salesforce account:Acme  → open opportunity, stage
+  3. Searched: Acme renewal                 → last QBR doc, 2 support tickets
+  4. Returned: one-page brief + 3 open risks, each with a source link
 ```
 
-The gate is deliberately all-or-nothing: a missing owner or an unmeasured
-baseline is enough to hold the rollout, because each criterion maps to a failure
-the case study actually saw in production.
+The win is reuse: the instructions and the tool set travel with the Skill, so
+the next person who invokes "Meeting Prep" gets the same workflow without
+rebuilding the prompt. Verified against `assistant_skills`.

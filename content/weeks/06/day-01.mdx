@@ -1,122 +1,59 @@
 ---
 week: 6
 day: 1
-level: "500"
-title: "Pro Track: Governing Glean-Powered Agents"
-theme: "Agents, orchestration, and policy-as-code guardrails"
+level: "300"
+title: "The Vibe-Code Agent Builder"
+theme: "Build an agent by chatting"
 duration_min: 30
 objectives:
-  - "Map an agent retrieval flow to NIST AI RMF functions"
-  - "Add a policy-as-code guardrail before an agent acts on results"
+  - "Describe a goal in plain language and have Glean draft an agent from it"
+  - "Read the generated plan and decide whether it matches your intent"
 references:
-  - source_id: "retrieval_basics"
-    minutes: 6
-  - source_id: "glean_search_docs"
-    minutes: 4
+  - source_id: "fall25_launch"
+    minutes: 10
 lab:
-  minutes: 12
+  minutes: 8
   steps_ref: true
 working_example:
-  language: "rego"
-  verified_against: "retrieval_basics"
-case_study:
-  source_id: "case_confluent_glean"
-nist_rmf: ["GOVERN", "MAP", "MEASURE", "MANAGE"]
-check_for_understanding: "Which RMF function does a pre-action policy gate primarily satisfy, and why?"
+  language: "text"
+  verified_against: "fall25_launch"
+nist_rmf: ["MAP"]
+check_for_understanding: "After you describe a goal, what is the first thing you should check in the draft before trusting it?"
 quiz_ref: "quiz-w06"
-video_summary: "Before a Glean-powered agent acts, gate it: default deny, allow only when every source is verified and the action fits the user’s role. That pre-action check is your MANAGE control."
+video_summary: "Glean's Fall '25 launch pitched a vibe-code builder: describe what you want in plain language and get a draft agent back. You read its plan, then refine — chatting, not configuring forms."
 status: "published"
 ---
 
 # Day 1 Lab
-1. Diagram a simple agent loop: retrieve -> reason -> act.
-2. Identify one risk at the act step (e.g., acting on stale or unauthorized data).
-3. Write a policy-as-code rule that denies the act when the source is unverified.
-4. Map each step of your loop to a NIST AI RMF function.
 
-## Working Example: Pre-Action Policy Gate (Rego)
+**Status: Beta (Glean Fall '25 launch) — confirm GA availability in your tenant before relying on this.**
 
-The agent must call this policy before acting on any retrieved result. The
-`act` decision is denied unless every cited source is verified AND the
-requested action is allowed for the user's role. The role allowlist is
-supplied as external `data` (not part of `input`). Verified against
-`retrieval_basics`.
+1. Pick one small, repeatable chore you do by hand — "summarize new #incidents posts each morning," say.
+2. In the agent builder, describe that goal in one or two plain sentences. Don't configure anything yet.
+3. Read the draft the builder proposes back: its named steps and the apps it wants to touch.
+4. Compare the draft to what you actually meant, and note the first place it diverges.
+5. Reply in chat to correct that one divergence — then watch the plan redraw.
 
-```rego
-package glean.agent.guardrails
+## Working Example: From a Sentence to a Draft Plan
 
-# Default to deny: the agent may not act unless explicitly allowed.
-default allow_act := false
+Per Glean's Fall '25 launch announcement, you build an agent conversationally: you
+state the goal, the builder drafts a plan, and you read it before committing.
+Verified against `fall25_launch`.
 
-# Allow the act step only when all retrieved sources are verified
-# and the requested action is permitted for the user's role.
-allow_act if {
-	count(unverified_sources) == 0
-	action_permitted
-}
+```text
+You:    "Each morning, summarize new posts in #incidents and DM me the digest."
 
-# Collect any retrieved source that is not marked verified.
-unverified_sources contains src.id if {
-	some src in input.retrieval.sources
-	not src.verified
-}
+Builder draft (proposed, not yet running):
+  Step 1  Read new messages in #incidents since last run
+  Step 2  Summarize them into a short digest
+  Step 3  Send the digest to you via DM
 
-# The requested action must be in the role's allowlist (from data).
-action_permitted if {
-	some allowed in data.roles[input.user.role].allowed_actions
-	allowed == input.action
-}
-
-# Human-readable reasons surfaced to the agent / audit log.
-deny_reasons contains msg if {
-	count(unverified_sources) > 0
-	msg := sprintf("unverified source(s): %v", [unverified_sources])
-}
-
-deny_reasons contains msg if {
-	not action_permitted
-	msg := sprintf("action %q not permitted for role %q", [input.action, input.user.role])
-}
+You read the draft and ask: which channel? whose DM? what counts as "new"?
+The plan is a starting point you steer — not a finished agent you trust on sight.
 ```
 
-### Role data (external `data` document)
-
-The policy reads the role allowlist from `data.roles`. Load this alongside
-the policy (e.g., `opa eval -d roles.json` or a bundle) so `action_permitted`
-can succeed:
-
-```json
-{
-  "roles": {
-    "analyst": { "allowed_actions": ["summarize", "retrieve"] },
-    "viewer": { "allowed_actions": ["retrieve"] }
-  }
-}
-```
-
-### Sample input
-
-```json
-{
-  "user": { "role": "analyst" },
-  "action": "summarize",
-  "retrieval": {
-    "sources": [
-      { "id": "doc-101", "verified": true },
-      { "id": "doc-102", "verified": false }
-    ]
-  }
-}
-```
-
-With the input above, `allow_act` is `false` and `deny_reasons` reports the
-unverified `doc-102`. Mark `doc-102` as `"verified": true` and, because the
-`analyst` role allows the `summarize` action in the role data above,
-`action_permitted` succeeds and `allow_act` becomes `true`.
-
-### RMF mapping
-
-- **GOVERN** — the default-deny posture encodes an organizational guardrail.
-- **MAP** — inputs make the agent's context (sources, role, action) explicit.
-- **MEASURE** — `deny_reasons` produces auditable signals for each decision.
-- **MANAGE** — the pre-action gate stops unsafe acts before they occur.
+The vibe-code flow moves the work from filling out forms to reading and correcting a
+draft. That's faster, but it means the first real skill is *reviewing the plan* — the
+builder's guess about your intent is exactly where MAP-style scrutiny belongs. Treat
+this as an announced capability, not a settled one: confirm the builder exists and
+behaves this way in your own tenant before you lean on it.

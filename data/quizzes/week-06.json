@@ -6,25 +6,67 @@
     {
       "id": "w06-q1",
       "type": "mc",
-      "prompt": "A pre-action policy gate that blocks an agent from acting on unverified sources primarily satisfies which NIST AI RMF function?",
-      "options": ["MAP", "MEASURE", "GOVERN", "MANAGE"],
-      "answer_index": 3,
-      "explanation": "MANAGE covers acting on risk: the gate stops an unsafe act before it occurs. GOVERN sets the default-deny policy; MANAGE enforces it at the act step."
+      "prompt": "In Glean's vibe-code agent builder, how do you start building an agent?",
+      "options": [
+        "By filling out a multi-page configuration form",
+        "By describing the goal in plain language and reading the drafted plan",
+        "By writing the agent in Rego",
+        "By importing a YAML file"
+      ],
+      "answer_index": 1,
+      "explanation": "The Fall '25 launch described a conversational builder: you state the goal, it drafts a plan, and you review and refine it."
     },
     {
       "id": "w06-q2",
       "type": "mc",
-      "prompt": "What is the safe default for an agent's allow_act decision in a guardrail policy?",
-      "options": ["allow", "deny", "random", "whatever the model prefers"],
+      "prompt": "The vibe-code builder, 100+ native actions, scheduled triggers, looping, and versioning are best described as...",
+      "options": [
+        "Long-standing GA features you can rely on today",
+        "Beta / announcement-sourced from Glean's Fall '25 launch — verify GA in your tenant first",
+        "Open-source tools maintained outside Glean",
+        "Deprecated features being removed"
+      ],
       "answer_index": 1,
-      "explanation": "Default-deny means the agent may not act unless a rule explicitly permits it — the posture encoded by GOVERN."
+      "explanation": "These were announced at Glean's Fall '25 launch and are Beta / announcement-sourced. Confirm GA availability in your own tenant before relying on them."
     },
     {
       "id": "w06-q3",
-      "type": "short",
-      "prompt": "Where in an orchestration plan should a guardrail run, and why more than once?",
-      "answer_key": "At both the retrieve and act steps, because risk arises at multiple stages and a single gate cannot catch unsafe inputs and unsafe actions alike.",
-      "explanation": "Layered checks let you reject bad context early and still stop an unsafe act later, rather than trusting one chokepoint."
+      "type": "mc",
+      "prompt": "Before adding a native WRITE action (e.g., update a Salesforce case) to an agent step, what should you check?",
+      "options": [
+        "Nothing — write actions are always safe",
+        "Whose identity it acts as and what it is allowed to change",
+        "Only whether the app's icon is shown",
+        "Whether the action is alphabetically first"
+      ],
+      "answer_index": 1,
+      "explanation": "Reads are cheap to trust; writes carry real authority. Mapping each write action to its permissions is the MAP discipline behind choosing actions."
+    },
+    {
+      "id": "w06-q4",
+      "type": "mc",
+      "prompt": "An agent runs unattended on a daily schedule. Which guard most directly keeps a bad run from compounding?",
+      "options": [
+        "Running it more often",
+        "An empty-run no-op plus a loud failure path that reports errors",
+        "Removing the schedule entirely",
+        "Letting failures stay silent so logs stay clean"
+      ],
+      "answer_index": 1,
+      "explanation": "A schedule repeats a mistake on a timer. An empty-run no-op and a visible failure path are the MANAGE controls that stop an unattended cadence from compounding."
+    },
+    {
+      "id": "w06-q5",
+      "type": "mc",
+      "prompt": "Why does rolling an agent back to a known-good version count as a governance control?",
+      "options": [
+        "It makes the agent run faster",
+        "It bounds blast radius — a bad change is recoverable by policy, not by luck",
+        "It hides the change history from auditors",
+        "It deletes the older versions automatically"
+      ],
+      "answer_index": 1,
+      "explanation": "Versioning makes every edit named, comparable, and reversible. Rollback bounds the blast radius of a bad change, which is a GOVERN-level guarantee."
     }
   ]
 }

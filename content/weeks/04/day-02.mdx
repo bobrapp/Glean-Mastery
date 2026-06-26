@@ -1,0 +1,55 @@
+---
+week: 4
+day: 2
+level: "300"
+title: "Facets vs. Operators"
+theme: "When to click a facet and when to type an operator"
+duration_min: 30
+objectives:
+  - "Choose between a facet click and a typed operator for the same narrowing"
+  - "Use facets to explore an unknown result set and operators to repeat a known one"
+references:
+  - source_id: "search_filters"
+    minutes: 7
+  - source_id: "datasource_filters"
+    minutes: 6
+lab:
+  minutes: 8
+  steps_ref: true
+working_example:
+  language: "text"
+  verified_against: "datasource_filters"
+case_study:
+  source_id: "case_confluent_glean"
+nist_rmf: ["MAP"]
+check_for_understanding: "Name one situation where a facet is clearly better than the equivalent operator, and one where the operator wins."
+quiz_ref: "quiz-w04"
+video_summary: "Facets and operators reach the same place by different doors. Click facets to discover what's there; type operators when you already know — and want it repeatable."
+status: "published"
+---
+
+# Day 2 Lab
+1. Run a broad query and open the facet panel beside the results.
+2. Narrow once by clicking a datasource facet; note the result count.
+3. Reproduce that same narrowing by typing the equivalent `app:` operator.
+4. Decide which felt faster — and whether you'd want to repeat this search tomorrow.
+5. Write the typed version down; that is the form you can save and share.
+
+## Working Example: Same Narrowing, Two Doors
+
+A facet click and a typed operator can land on the identical result set. The
+difference is discovery versus repeatability. Verified against `datasource_filters`.
+
+```text
+Goal: just the Slack results for "incident postmortem"
+
+  FACET path:    type the query → click the "Slack" datasource facet
+                 (great when you don't yet know which apps have hits)
+
+  OPERATOR path: type  incident postmortem app:slack
+                 (great when you already know — and want to paste it again)
+
+Rule of thumb:
+  Exploring an unknown result set?      → click facets, let them show you
+  Repeating a search you trust?         → type the operator, save the string
+```

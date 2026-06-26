@@ -1,0 +1,60 @@
+---
+week: 6
+day: 3
+level: "300"
+title: "The 100+ Native Actions"
+theme: "Reaching into Slack, Microsoft, Salesforce, Jira, GitHub, and Google"
+duration_min: 30
+objectives:
+  - "Pick the right native action for a step instead of a generic one"
+  - "Reason about the permissions a chosen action carries"
+references:
+  - source_id: "fall25_launch"
+    minutes: 7
+  - source_id: "developer_platform"
+    minutes: 4
+lab:
+  minutes: 8
+  steps_ref: true
+working_example:
+  language: "text"
+  verified_against: "fall25_launch"
+nist_rmf: ["MAP"]
+check_for_understanding: "Before adding a write action, what single question about its permissions should you answer?"
+quiz_ref: "quiz-w06"
+video_summary: "Glean's Fall '25 launch announced 100+ native actions across Slack, Microsoft, Salesforce, Jira, GitHub, and Google. The skill is choosing the right one — and knowing what each is allowed to touch."
+status: "published"
+---
+
+# Day 3 Lab
+
+**Status: Beta (Glean Fall '25 launch) — confirm GA availability in your tenant before relying on this.**
+
+1. List the apps your chore touches: Slack, Jira, GitHub, Google, Salesforce, Microsoft.
+2. For each, find the native action that matches the step — a *read* before a *write*.
+3. For one write action, write down the permission it carries (who it acts as, what it can change).
+4. Replace any "do it manually" gap in your plan with the closest native action.
+5. Note any step where no native action fits — that's a flag, not a workaround.
+
+## Working Example: Choosing Native Actions Per Step
+
+Per Glean's Fall '25 launch and developer-platform announcements, agents can call from
+a catalog of 100+ native actions across major apps. Verified against `fall25_launch`.
+
+```text
+Goal: triage a new bug report and notify the owner.
+
+Step 1  Jira      -> get_issue            (read)   safe, read-only
+Step 2  GitHub    -> search_pull_requests (read)   find the related PR
+Step 3  Slack     -> post_message         (WRITE)  posts as the agent's identity
+Step 4  Salesforce-> update_case          (WRITE)  changes a customer record!
+
+Pause at every WRITE: who does it act as, and what can it change?
+Step 4 mutates customer data — that one earns a human check before it ships.
+```
+
+The catalog is broad — Slack, Microsoft, Salesforce, Jira, GitHub, Google — so the work
+is *selection*, not plumbing. Reads are cheap to trust; writes carry real authority, so
+mapping each action to its permissions is where MAP lives. These actions are announced
+capability: confirm which ones are actually enabled and GA in your tenant before a plan
+relies on them.

@@ -1,0 +1,66 @@
+---
+week: 7
+day: 6
+level: "400"
+title: "The Indexing API"
+theme: "Push datasources, documents, people, and permissions"
+duration_min: 30
+objectives:
+  - "Register a datasource and push a document through the Indexing API"
+  - "Attach permission metadata so access is enforced after indexing"
+references:
+  - source_id: "developer_platform"
+    minutes: 10
+lab:
+  minutes: 8
+  steps_ref: true
+working_example:
+  language: "python"
+  verified_against: "developer_platform"
+nist_rmf: ["GOVERN"]
+check_for_understanding: "You push documents but omit permission metadata. Who can now see them, and why is that a governance failure?"
+quiz_ref: "quiz-w07"
+video_summary: "The Indexing API writes your content into Glean — datasources, documents, people. The non-negotiable part is permissions: push the ACLs with the document, or Glean can't enforce who's allowed to see it."
+status: "published"
+---
+
+# Day 6 Lab
+1. Register a custom datasource so Glean knows the content type and display name.
+2. Push a document into it with a stable `id`, `title`, and `body`.
+3. Attach permission metadata — the allowed users or groups — to the same document.
+4. Verify: without ACLs, indexed content is unprotected. Permissions must be pushed, not assumed.
+
+## Working Example: Push a Document With Permissions
+
+The Indexing API writes a document and its access control together. Glean
+enforces only the permissions you push — omit them and the content is not
+properly governed. Verified against `developer_platform`.
+
+```python
+import os
+from glean import Glean
+
+index_client = Glean(
+    instance=os.environ["GLEAN_INSTANCE"],
+    api_token=os.environ["GLEAN_INDEXING_TOKEN"],   # admin-scoped
+)
+
+index_client.indexing.documents.index(
+    datasource="acme-handbook",
+    document={
+        "id": "handbook-pto-2026",
+        "title": "PTO Carryover Policy 2026",
+        "view_url": "https://handbook.acme.com/pto",
+        "body": {"mime_type": "text/plain", "text_content": "Up to 5 days carry over..."},
+        # Permissions ship WITH the document — this is what Glean enforces.
+        "permissions": {
+            "allowed_groups": ["all-employees"],
+            "allowed_users": [{"email": "hr-admin@acme.com"}],
+        },
+    },
+)
+```
+
+No `permissions` block means no enforced access boundary. Always push ACLs so
+Glean filters results by who is allowed to see them. Verified against
+`developer_platform`.

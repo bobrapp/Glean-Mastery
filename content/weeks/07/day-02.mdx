@@ -1,0 +1,62 @@
+---
+week: 7
+day: 2
+level: "400"
+title: "Authentication — Tokens, Scopes, and Identity"
+theme: "OAuth vs. Glean-issued tokens; user-scoped vs. global"
+duration_min: 30
+objectives:
+  - "Distinguish OAuth from Glean-issued tokens and user-scoped from global scope"
+  - "Choose the least-privilege token that still preserves per-user permissions"
+references:
+  - source_id: "authentication"
+    minutes: 10
+lab:
+  minutes: 8
+  steps_ref: true
+working_example:
+  language: "python"
+  verified_against: "authentication"
+nist_rmf: ["GOVERN"]
+check_for_understanding: "Why does a user-scoped token return different results for two users running the same query?"
+quiz_ref: "quiz-w07"
+video_summary: "Two token kinds, two scopes. User-scoped tokens carry the caller's identity so Glean enforces that user's permissions. Global tokens see everything — powerful, and exactly why you reach for them last."
+status: "published"
+---
+
+# Day 2 Lab
+1. List your auth options: OAuth (your IdP issues the token) vs. a Glean-issued API token.
+2. Decide scope: user-scoped (acts as one person, honors their permissions) vs. global (acts across the instance).
+3. Pick the least-privilege option that still meets the need — prefer user-scoped so per-user permissions are preserved.
+4. Note the gotcha: a global token bypasses per-user ACLs, so results are not filtered by who is asking.
+
+## Working Example: User-Scoped vs. Global
+
+A user-scoped token carries the end user's identity, so Glean filters every
+result through that user's permissions. A global token does not — use it only
+for server-side work that legitimately needs cross-user reach. Verified against
+`authentication`.
+
+```python
+import os
+from glean import Glean
+
+# Least privilege: act AS a specific user. Glean enforces THEIR permissions,
+# so the same query returns only what that user is allowed to see.
+user_client = Glean(
+    instance=os.environ["GLEAN_INSTANCE"],
+    api_token=os.environ["GLEAN_API_TOKEN"],
+    actas_user=os.environ["END_USER_EMAIL"],   # impersonate within allowed scope
+)
+
+# Global scope: omit the user. This bypasses per-user ACL filtering —
+# reserve it for trusted server-side jobs, never for end-user-facing queries.
+global_client = Glean(
+    instance=os.environ["GLEAN_INSTANCE"],
+    api_token=os.environ["GLEAN_GLOBAL_TOKEN"],
+)
+```
+
+Default to user-scoped. Reach for a global token only when the task truly
+needs cross-user reach, and gate it behind your own authorization. Verified
+against `authentication`.

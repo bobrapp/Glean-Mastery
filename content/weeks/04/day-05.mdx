@@ -1,0 +1,54 @@
+---
+week: 4
+day: 5
+level: "300"
+title: "Cross-App Investigation"
+theme: "Tracing one topic across systems via the Enterprise Graph"
+duration_min: 30
+objectives:
+  - "Follow a single topic across multiple connected apps in one investigation"
+  - "Use datasource scoping to read each system's view of the same entity"
+references:
+  - source_id: "enterprise_graph"
+    minutes: 8
+  - source_id: "datasource_filters"
+    minutes: 6
+lab:
+  minutes: 8
+  steps_ref: true
+working_example:
+  language: "text"
+  verified_against: "enterprise_graph"
+case_study:
+  source_id: "case_confluent_glean"
+nist_rmf: ["MAP"]
+check_for_understanding: "Pick one topic and name the order of apps you'd check to reconstruct its full story, and why that order."
+quiz_ref: "quiz-w04"
+video_summary: "A real story rarely lives in one app. Anchor on the entity in the graph, then walk it app by app — the decision in docs, the debate in Slack, the work in tickets."
+status: "published"
+---
+
+# Day 5 Lab
+1. Choose one entity to investigate — a project, an incident, or a customer.
+2. Run the topic query unscoped and note which apps surfaced hits.
+3. Scope to each app in turn (`app:gdrive`, `app:slack`, `app:jira`) and read that system's slice.
+4. Assemble the slices into a timeline: decision → discussion → execution.
+5. Note any gap where one system has the story and another is silent — that gap is a finding.
+
+## Working Example: One Topic, Several Systems
+
+The graph relates an entity to signals scattered across apps. Scope to each app
+to read its view, then stitch the views into one narrative. Verified against `enterprise_graph`.
+
+```text
+Entity: incident "INC-204"
+
+  app:gdrive   incident INC-204   → the postmortem doc (the decisions)
+  app:slack    incident INC-204   → the #incident channel (the live debate)
+  app:jira     incident INC-204   → the remediation tickets (the follow-up work)
+
+Stitch them in time order:
+  Slack (what happened, live) → Jira (what we committed to fix)
+                              → Drive (what we concluded, written up)
+A silent system is itself a signal: no tickets means no follow-up was filed.
+```

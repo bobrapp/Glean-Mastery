@@ -1,0 +1,74 @@
+---
+week: 8
+day: 7
+level: "500"
+title: "Capstone: Map Controls to NIST AI RMF and Evaluate Your Agent"
+theme: "A control crosswalk and an honest evaluation, anchored at scale"
+duration_min: 30
+objectives:
+  - "Crosswalk your agent's controls to the NIST AI RMF functions (GOVERN/MAP/MEASURE/MANAGE)"
+  - "Evaluate the agent against that crosswalk and name where evidence is missing"
+references:
+  - source_id: "developer_platform"
+    minutes: 8
+lab:
+  minutes: 8
+  steps_ref: true
+working_example:
+  language: "text"
+  verified_against: "developer_platform"
+case_study:
+  source_id: "case_dbs_glean"
+nist_rmf: ["GOVERN", "MAP", "MEASURE", "MANAGE"]
+check_for_understanding: "Which RMF function is your weakest, and what one piece of evidence would strengthen it?"
+quiz_ref: "quiz-w08"
+video_summary: "The capstone: crosswalk your agent's controls to NIST AI RMF, then evaluate honestly where evidence is thin. Two caveats up front — the level ladder and this mapping are our framing, not Glean's official ones."
+status: "published"
+---
+
+# Day 7 Lab
+
+Two honesty notes before you start — say them out loud to your team:
+
+- **The 200 → 500 level ladder is our instructional framing, not an official
+  Glean certification.** It organizes this curriculum; it confers no credential
+  and is not Glean's.
+- **The NIST AI RMF mapping below is instructional synthesis, not a documented
+  Glean crosswalk.** We map our controls to RMF functions to reason about
+  coverage; Glean does not publish this crosswalk, and you should not present it
+  as Glean's.
+
+Throughout, attribute capability claims to Glean ("Glean describes…"), not to us.
+
+1. List every control you built this week: run-mode choice, scoped MCP token, framework tool boundary, layered guardrails, permissions-aware retrieval, audit records.
+2. Crosswalk each control to one or more RMF functions (use the example below).
+3. Evaluate: for each function, do you have *evidence* it works, or only intent? Mark the gaps.
+4. Anchor scale with DBS — Glean reports it freed roughly 10% of work hours across 40,000+ employees — and ask whether your controls hold at that size, not just in a demo.
+
+## Working Example: Control → NIST AI RMF Crosswalk
+
+This crosswalk is instructional synthesis, not a Glean-published mapping. Use it
+to find thin spots — a function with controls but no evidence is your next piece
+of work. Verified against `developer_platform`.
+
+```text
+CONTROL (built this week)            RMF FUNCTION   EVIDENCE YOU SHOULD HAVE
+──────────────────────────────────────────────────────────────────────────────
+Run-mode chosen for the boundary     MAP            a written trust-boundary note
+Scoped MCP token (acts as a user)    GOVERN         token scope + rotation record
+Framework tool = user's access only  MAP            tool wired to per-user token
+Layered guardrails (in/mid/pre-act)  MANAGE         deny logs showing each fired
+Permissions-aware retrieval          GOVERN         two-user test: different views
+Audit record per action              MEASURE        sampled records, who/what/why
+──────────────────────────────────────────────────────────────────────────────
+GOVERN: policy & identity in force   MAP: context made explicit
+MEASURE: behavior is observable      MANAGE: unsafe steps are stopped
+
+Scale check (DBS, per Glean): ~10% of work hours freed across 40,000+ people.
+At that scale a missing audit trail is not a gap — it is the whole story.
+```
+
+The capstone is a MEASURE-and-MANAGE habit: a control with no evidence is a
+claim, not a control. Find your weakest function, produce one piece of evidence,
+and you have moved from "we built guardrails" to "we can show they work." That
+is the difference governance cares about. Verified against `developer_platform`.

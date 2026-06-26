@@ -1,0 +1,57 @@
+---
+week: 8
+day: 3
+level: "500"
+title: "IDE Plugins: Glean in Claude Code and Cursor via MCP"
+theme: "Bringing the enterprise graph into the editor"
+duration_min: 30
+objectives:
+  - "Add Glean as an MCP server in an MCP-capable IDE (Claude Code, Cursor)"
+  - "Map what the IDE can now retrieve, and where that retrieval is still scoped by identity"
+references:
+  - source_id: "mcp"
+    minutes: 9
+lab:
+  minutes: 8
+  steps_ref: true
+working_example:
+  language: "json"
+  verified_against: "mcp"
+nist_rmf: ["MAP"]
+check_for_understanding: "After adding Glean in your IDE, whose permissions decide what the editor can retrieve?"
+quiz_ref: "quiz-w08"
+video_summary: "Claude Code and Cursor speak MCP, so the same Glean server you wired yesterday drops straight into the editor. Your code questions now reach the enterprise graph — scoped to your identity, not the IDE's."
+status: "published"
+---
+
+# Day 3 Lab
+1. Confirm your IDE supports MCP servers (Claude Code and Cursor both do) and find where it stores MCP config.
+2. Add Glean as a server, reusing the scoped token from Day 2 via the environment.
+3. Reload the IDE and verify Glean's tools appear in the available tool list.
+4. Ask a question that needs company context, and confirm the results are ones YOU are allowed to see — not the IDE's, not a teammate's.
+
+## Working Example: Glean MCP Server in the IDE
+
+Because Claude Code and Cursor are MCP hosts, Glean connects through the same
+MCP server entry — only the file location differs per editor. Retrieval still
+runs as the authenticated user, so the IDE inherits your access, never more.
+The token comes from the environment. Verified against `mcp`.
+
+```json
+{
+  "mcpServers": {
+    "glean": {
+      "type": "http",
+      "url": "https://<your-instance>-be.glean.com/mcp/default",
+      "headers": {
+        "Authorization": "Bearer ${GLEAN_MCP_TOKEN}"
+      }
+    }
+  }
+}
+```
+
+This is a MAP step: name what the editor can now reach. The IDE does not get its
+own privileges — Glean resolves the token to you and returns only what your
+permissions allow. Map that boundary before you trust the editor with sensitive
+queries. Verified against `mcp`.

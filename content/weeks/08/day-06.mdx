@@ -1,0 +1,72 @@
+---
+week: 8
+day: 6
+level: "500"
+title: "Governance API & Agent Governance: Policy, Permissions, Reporting"
+theme: "Permissions-aware retrieval, audit, and compliance reporting"
+duration_min: 30
+objectives:
+  - "Explain how permissions-aware retrieval keeps an agent within the user's access"
+  - "Use governance signals — audit trails and reporting — to evidence agent behavior"
+references:
+  - source_id: "developer_platform"
+    minutes: 7
+  - source_id: "authentication"
+    minutes: 6
+lab:
+  minutes: 8
+  steps_ref: true
+working_example:
+  language: "python"
+  verified_against: "developer_platform"
+nist_rmf: ["GOVERN"]
+check_for_understanding: "Why does permissions-aware retrieval matter more, not less, once an agent is doing the retrieving?"
+quiz_ref: "quiz-w08"
+video_summary: "Glean describes governance over agents: permissions-aware retrieval so an agent never out-reaches its user, plus audit and reporting. Identity decides what's returned; the audit trail proves what happened."
+status: "published"
+---
+
+# Day 6 Lab
+1. Confirm how your agent authenticates (Glean describes OAuth and Glean-issued tokens) and that the token resolves to a real user.
+2. Run the same agent query as two different users; confirm each sees only what their permissions allow.
+3. Capture an audit record for each agent action: who, what, which sources, what decision.
+4. Sketch a compliance report from those records: a per-user, per-action trail you could hand an auditor.
+
+## Working Example: Permissions-Aware Retrieval with an Audit Record
+
+Glean describes permissions-aware retrieval — results are scoped to the
+authenticated user's access — together with audit and reporting for agent
+activity. The token must resolve to a real identity; the agent then inherits
+exactly that identity's reach, no more. Every action emits an audit record you
+can roll up into a compliance report. Verified against `developer_platform`.
+
+```python
+import os, json, datetime
+from glean import Glean
+
+_client = Glean(
+    instance=os.environ["GLEAN_INSTANCE"],
+    api_token=os.environ["GLEAN_API_TOKEN"],  # resolves to a specific user
+)
+
+
+def governed_retrieve(query: str, user_id: str) -> dict:
+    """Retrieve as the user, then emit an audit record for the action."""
+    resp = _client.client.search.query(query=query, page_size=5)
+    sources = [{"title": r.title, "url": r.url} for r in resp.results]
+
+    audit = {
+        "ts": datetime.datetime.utcnow().isoformat() + "Z",
+        "actor": user_id,            # WHO the agent acted as
+        "action": "retrieve",        # WHAT it did
+        "query": query,
+        "source_count": len(sources),  # WHICH evidence (ids only — no payloads)
+    }
+    print(json.dumps(audit))         # ship to your audit sink / SIEM
+    return {"sources": sources, "audit": audit}
+```
+
+This is the GOVERN function in practice: identity decides what is returned, and
+the audit record proves what happened. The agent automates the work; the
+permission model and the trail keep a human able to answer "who saw what, and
+why." Verified against `developer_platform`.

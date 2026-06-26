@@ -1,0 +1,56 @@
+---
+week: 4
+day: 3
+level: "300"
+title: "Ranking Signals and Their Trade-offs"
+theme: "How recency, authority, and engagement blend — and what to test first"
+duration_min: 30
+objectives:
+  - "Describe, at a conceptual level, the families of signals that shape ranking"
+  - "Decide which single signal to test first when a relevant result ranks too low"
+references:
+  - source_id: "retrieval_basics"
+    minutes: 8
+  - source_id: "enterprise_graph"
+    minutes: 6
+lab:
+  minutes: 8
+  steps_ref: true
+working_example:
+  language: "text"
+  verified_against: "retrieval_basics"
+case_study:
+  source_id: "case_confluent_glean"
+nist_rmf: ["MEASURE"]
+check_for_understanding: "A known-good doc ranks at #8. Which signal would you check first, and how would you test it without guessing weights?"
+quiz_ref: "quiz-w04"
+video_summary: "Ranking blends recency, authority, and engagement — but nobody outside Glean knows the exact weights. So don't guess them. Change one signal, watch the rank move, and let the result set teach you."
+status: "published"
+---
+
+# Day 3 Lab
+1. Find a query where a document you trust ranks lower than it should.
+2. Form a hypothesis about which signal family is holding it back — recency, authority, or engagement.
+3. Test one signal at a time: tighten a date bound, or compare against a more-linked authoritative doc.
+4. Observe whether the rank moves; record the change, not an assumed weight.
+5. Conclude which signal mattered most for this query — and note that the answer can differ per query.
+
+## Working Example: Reasoning About Signals Without Guessing Weights
+
+Ranking blends several signal families. The exact weightings are internal to
+Glean and not published, so this is a conceptual model for deciding what to test
+first — not a formula. Verified against `retrieval_basics`.
+
+```text
+Signal family   What it tends to favor          A fair test you can run
+-------------   -----------------------------   -----------------------------
+recency         newer documents                 add after: and see if rank rises
+authority       well-connected / canonical docs compare a linked-from-many doc
+engagement      docs people actually open        check a frequently-opened peer
+
+Honest framing:
+  - These families BLEND; you can't read off exact weights from the outside.
+  - The graph relates entities and signals — it does not, by itself, decide
+    one fixed ranking; treat ranking as observed behavior you probe, not a dial.
+  - Test ONE signal per change so the rank movement is interpretable.
+```

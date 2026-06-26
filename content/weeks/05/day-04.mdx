@@ -1,0 +1,53 @@
+---
+week: 5
+day: 4
+level: "300"
+title: "Explicit Invocation"
+theme: "Calling a Skill by name or with a slash command"
+duration_min: 30
+objectives:
+  - "Invoke a Skill explicitly by name when you don't want to rely on routing"
+  - "Use a /slash command to call a Skill directly"
+references:
+  - source_id: "assistant_skills"
+    minutes: 9
+lab:
+  minutes: 8
+  steps_ref: true
+working_example:
+  language: "text"
+  verified_against: "assistant_skills"
+nist_rmf: ["MAP"]
+check_for_understanding: "When would you call a Skill explicitly instead of letting Glean route?"
+quiz_ref: "quiz-w05"
+video_summary: "Don't want to gamble on routing? Call the Skill yourself — name it directly or fire it with a /slash command. Explicit invocation is the deterministic path."
+status: "published"
+---
+
+# Day 4 Lab
+1. Pick a Skill you want to run on demand, every time, no ambiguity.
+2. Invoke it by name in your request and confirm it runs.
+3. Try the `/slash` command form for the same Skill.
+4. Send a request the router would normally miss, then force it with explicit invocation.
+5. Decide which Skills you'll always call explicitly vs. let Glean route.
+
+## Working Example: Two Ways to Call a Skill
+
+When you don't want to depend on auto-routing, invoke a Skill explicitly — by
+naming it or with a `/slash` command. Both bypass the router and run the Skill you
+named. Verified against `assistant_skills`.
+
+```text
+Auto-routed (Glean decides):
+  "summarize my week"            → Glean picks a Skill from descriptions
+
+Explicit by name:
+  "Use the Weekly status digest Skill to summarize my week"
+
+Explicit by slash command:
+  /weekly-status-digest          → runs that Skill directly, no routing
+```
+
+Routing is convenient; explicit invocation is deterministic. For a Skill you run
+the same way every time — or one whose description overlaps with others — call it
+by name or slash so it fires exactly when you mean it to.

@@ -6,10 +6,67 @@
     {
       "id": "w03-q1",
       "type": "mc",
-      "prompt": "What should happen before marking a day as published?",
-      "options": ["Leave [verify] tags", "Skip case study checks", "Complete source verification", "Disable CI"],
-      "answer_index": 2,
-      "explanation": "Published content must have verified sources and no [verify] markers."
+      "prompt": "What does a built-in Glean Skill bundle together?",
+      "options": [
+        "Only a saved search query",
+        "Instructions plus the tools to carry them out",
+        "A list of recent results",
+        "A single document's metadata"
+      ],
+      "answer_index": 1,
+      "explanation": "A Skill packages instructions and the tools that act on them, so you invoke a reusable workflow instead of re-prompting it each time."
+    },
+    {
+      "id": "w03-q2",
+      "type": "mc",
+      "prompt": "In a busy Slack channel, which facet pair pins a message fastest?",
+      "options": [
+        "owner: and type:",
+        "channel: and a time facet like after:",
+        "project: and priority:",
+        "stage: and amount:"
+      ],
+      "answer_index": 1,
+      "explanation": "Slack indexes messages by channel and timestamp, so channel: plus after:/before: cuts along the axis with the most signal."
+    },
+    {
+      "id": "w03-q3",
+      "type": "mc",
+      "prompt": "What does `app:jira project:ATLAS priority:high assignee:@raj` return?",
+      "options": [
+        "Every Atlas ticket",
+        "Raj's high-priority tickets in the Atlas project",
+        "All high-priority tickets across every project",
+        "Only Atlas tickets in the current sprint"
+      ],
+      "answer_index": 1,
+      "explanation": "The facets stack: project: scopes to Atlas, priority:high keeps the urgent items, and assignee: limits to Raj."
+    },
+    {
+      "id": "w03-q4",
+      "type": "mc",
+      "prompt": "Why does a Confluence `label:` facet help you find the canonical page?",
+      "options": [
+        "Labels sort pages by date",
+        "Labels are deliberate tags a team applies to mark intent",
+        "Labels restrict results to one author",
+        "Labels search only page titles"
+      ],
+      "answer_index": 1,
+      "explanation": "A team tags the official runbook so it stands apart from drafts that mention the same words — the label is intent placed for exactly that lookup."
+    },
+    {
+      "id": "w03-q5",
+      "type": "mc",
+      "prompt": "Which Salesforce facets together build a 'large deals closing this quarter' shortlist?",
+      "options": [
+        "owner: and channel:",
+        "amount:> and closedate:",
+        "label: and space:",
+        "repo: and state:"
+      ],
+      "answer_index": 1,
+      "explanation": "closedate: bounds the time window and amount:> drops the small deals, leaving the opportunities a pipeline review should cover."
     }
   ]
 }

@@ -1,62 +1,51 @@
 ---
 week: 5
 day: 1
-level: "400"
-title: "Builder Track: Calling the Glean Search API"
-theme: "Programmatic retrieval with a typed client"
+level: "300"
+title: "Author a Personal Skill"
+theme: "A reusable instruction package only you can run"
 duration_min: 30
 objectives:
-  - "Authenticate and issue a search request programmatically"
-  - "Shape query options in a small typed client"
+  - "Create a Personal Skill scoped to just yourself"
+  - "Write a description that tells Glean when the Skill should fire"
 references:
-  - source_id: "retrieval_basics"
-    minutes: 8
-  - source_id: "glean_search_docs"
-    minutes: 4
+  - source_id: "assistant_skills"
+    minutes: 10
 lab:
-  minutes: 10
+  minutes: 8
   steps_ref: true
 working_example:
-  language: "typescript"
-  verified_against: "retrieval_basics"
-case_study:
-  source_id: "case_confluent_glean"
-nist_rmf: ["MAP", "MEASURE", "MANAGE"]
-check_for_understanding: "Why wrap the raw API in a typed client instead of calling fetch directly everywhere?"
+  language: "text"
+  verified_against: "assistant_skills"
+nist_rmf: ["MAP"]
+check_for_understanding: "What does the 'when to use' part of a Skill description control?"
 quiz_ref: "quiz-w05"
-video_summary: "Stop scattering fetch calls. Wrap Glean’s search API in one typed client: the token comes from the environment, options are typed once, and every caller gets the same clean result."
+video_summary: "A Skill is a reusable instruction package for Glean Assistant. Author a Personal one — scoped to just you — and the description tells Glean exactly when it should fire."
 status: "published"
 ---
 
 # Day 1 Lab
-1. Read the search endpoint contract in the references.
-2. Implement a typed `search(query, options)` wrapper (see `examples/tip-003/search-client.ts`).
-3. Issue one query and log the top 3 result titles.
-4. Add one option (page size) and confirm the result count changes.
+1. Pick one task you ask Glean to do the same way every week.
+2. In Assistant, create a new Skill and set its scope to Personal (creator-only).
+3. Write the instructions: what the Skill does, step by step.
+4. Write the description — the "when to use" line that tells Glean which requests this Skill is for.
+5. Run a request that matches the description and confirm your Skill handles it.
 
-## Working Example: A Typed `search()` Call
+## Working Example: A Personal Skill's Shape
 
-Reuse the client from
-[`examples/tip-003/search-client.ts`](../../../examples/tip-003/search-client.ts):
-the token comes from the environment, query options are typed once, and callers
-only ever touch the typed `SearchResponse`. Verified against `retrieval_basics`.
+A Skill packages instructions Glean Assistant can reuse. A Personal Skill is
+scoped to its creator — only you can invoke it. Verified against `assistant_skills`.
 
-```typescript
-import { GleanSearchClient } from "../../../examples/tip-003/search-client";
-
-const client = new GleanSearchClient(); // reads GLEAN_API_TOKEN from the env
-
-const { results } = await client.search({
-  query: "quarterly roadmap",
-  pageSize: 3,            // one typed option — change it and the count changes
-  sources: ["drive"],    // optional datasource filter
-});
-
-for (const r of results) {
-  console.log(`${r.title} — ${r.url}`);
-}
+```text
+Skill: "Weekly status digest"   (scope: Personal — only @you)
+  Description (when to use):
+    "When the user asks for a weekly status update or standup summary."
+  Instructions:
+    1. Pull my open Jira issues and recent PRs.
+    2. Group them by project.
+    3. Write 3 bullets: shipped, in progress, blocked.
 ```
 
-Swapping `pageSize` from `3` to `10` changes the number of results without
-touching a single caller — which is the whole reason to centralize query options
-in one typed client (lab step 4) instead of scattering `fetch` calls.
+The description is not decoration — it is what Glean reads to decide whether a
+given request should trigger this Skill. A vague "when to use" line fires on the
+wrong prompts; a specific one fires on exactly the requests you meant.

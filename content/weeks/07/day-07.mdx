@@ -1,0 +1,57 @@
+---
+week: 7
+day: 7
+level: "400"
+title: "The Web SDK"
+theme: "Embed Chat, Search, Modal, Sidebar, and Recommendations"
+duration_min: 30
+objectives:
+  - "Mount a Glean Web SDK component into a web app"
+  - "Choose the right component for a given surface (inline vs. modal vs. sidebar)"
+references:
+  - source_id: "web_sdk"
+    minutes: 10
+lab:
+  minutes: 8
+  steps_ref: true
+working_example:
+  language: "typescript"
+  verified_against: "web_sdk"
+nist_rmf: ["MAP"]
+check_for_understanding: "When would you embed the Sidebar instead of the Modal, and what stays true about permissions in both?"
+quiz_ref: "quiz-w07"
+video_summary: "The Web SDK drops Glean into your own app — Chat, Autocomplete+Search, Modal, Sidebar, Recommendations. You mount a component; Glean handles retrieval and still enforces each user's permissions."
+status: "published"
+---
+
+# Day 7 Lab
+1. Survey the Web SDK surfaces: Chat, Autocomplete + Search, Modal, Sidebar, Recommendations.
+2. Pick one for your app — inline Search box, a Modal launcher, or a docked Sidebar.
+3. Mount the component into a container element with your backend-issued token.
+4. Confirm that whichever surface you embed, results are still scoped to the signed-in user.
+
+## Working Example: Embed the Chat Component
+
+The Web SDK mounts a Glean surface into your page. You supply a container and an
+auth token your backend minted for the signed-in user, and Glean handles
+retrieval — still permission-scoped. Verified against `web_sdk`.
+
+```typescript
+import { GleanWebSDK } from "@gleanwork/web-sdk";
+
+// Token is minted server-side for the signed-in user — never hard-coded.
+const token = await fetchGleanTokenForCurrentUser();
+
+GleanWebSDK.attach({
+  instance: "acme",
+  authToken: token,
+  // Chat docked into a sidebar surface; swap `chat` for `search`,
+  // `modal`, `sidebar`, or `recommendations` to change the surface.
+  surface: "chat",
+  target: document.getElementById("glean-chat")!,
+});
+```
+
+Whichever surface you mount — Modal for an on-demand launcher, Sidebar for a
+persistent panel — results stay scoped to the signed-in user. Verified against
+`web_sdk`.

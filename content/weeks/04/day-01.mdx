@@ -2,62 +2,50 @@
 week: 4
 day: 1
 level: "300"
-title: "Power Search: Operators and Filters"
-theme: "Precision retrieval for power users"
+title: "Operator-Stacking Mastery"
+theme: "Narrowing a noisy query one constraint at a time"
 duration_min: 30
 objectives:
-  - "Use source, owner, and date filters to narrow results"
-  - "Combine operators to express precise intent"
+  - "Stack operators in sequence to cut a broad result set down to a precise one"
+  - "Read each step's result count to know which constraint did the work"
 references:
-  - source_id: "retrieval_basics"
+  - source_id: "search_filters"
     minutes: 10
-  - source_id: "glean_search_docs"
-    minutes: 5
 lab:
   minutes: 8
   steps_ref: true
 working_example:
   language: "text"
-  verified_against: "retrieval_basics"
+  verified_against: "search_filters"
 case_study:
   source_id: "case_confluent_glean"
-nist_rmf: ["MAP", "MEASURE"]
-check_for_understanding: "When does a filter beat a longer natural-language query?"
+nist_rmf: ["MAP"]
+check_for_understanding: "Given a 500-result query, which single operator would you add first, and why?"
 quiz_ref: "quiz-w04"
-video_summary: "Drowning in results? Stack filters instead of adding words: scope to one app, then the owner, then a date range. Each constraint strips away a layer of noise."
+video_summary: "A noisy query isn't a dead end — it's a starting point. Add one operator at a time, watch the count fall, and you'll know exactly which constraint earned its keep."
 status: "published"
 ---
 
 # Day 1 Lab
-1. Pick one broad query that returns too many results.
-2. Add a source filter, then an owner filter, then a date range.
-3. Record how many results remain after each filter.
-4. Write one sentence on which filter gave the biggest precision gain.
+1. Run a deliberately broad query — one that returns hundreds of mixed results.
+2. Add one operator (`type:`, `app:`, `owner:`, or `after:`) and note the new count.
+3. Add a second operator and note the count again.
+4. Identify which single operator cut the most noise — that is your highest-value constraint.
+5. Drop the weakest operator and confirm the result set barely changes.
 
-## Working Example: Stacking Operators to Narrow a Query
+## Working Example: Stacking Constraints in Sequence
 
-The same information need, refined one constraint at a time. Each line adds a
-filter that removes a class of noise, so the result set shrinks while precision
-rises. Exact operator tokens vary by deployment — see the references for the
-operators your instance supports; the *pattern* is what matters.
+Each operator is one constraint. Stack them one at a time and the result count
+tells you which constraint actually mattered. Verified against `search_filters`.
 
 ```text
-# 1. Broad and noisy — hundreds of hits across every connected app
-quarterly roadmap
+roadmap                                  → 520 results (docs, chats, tickets, decks)
+roadmap type:document                    → 180 results (cut the chatter)
+roadmap type:document app:gdrive         →  74 results (one source of truth)
+roadmap type:document app:gdrive after:2026-01-01  → 19 results (this year only)
 
-# 2. Scope to one system
-quarterly roadmap app:drive
-
-# 3. Narrow to the likely author
-quarterly roadmap app:drive owner:alex
-
-# 4. Bound to the quarter you care about
-quarterly roadmap app:drive owner:alex after:2026-04-01
+Read the deltas:
+  520 → 180   type: did the heavy lifting (the wrong KIND was the noise)
+   74 →  19   after: was the precision finisher
+Start with the constraint that removes the wrong kind of thing first.
 ```
-
-By the last line the result set is typically a handful of documents instead of
-hundreds. The biggest single precision gain usually comes from the first
-constraint that matches the *kind* of answer you want — often `app:` (which
-system) or a date bound. That is exactly what step 4 of the lab asks you to
-notice: a filter beats a longer natural-language query whenever you already know
-a precise, structured constraint the query text can only hint at.

@@ -1,0 +1,49 @@
+---
+week: 2
+day: 5
+level: "200"
+title: "Glean Assistant Basics"
+theme: "Asking a question and getting a cited answer"
+duration_min: 30
+objectives:
+  - "Ask Glean Assistant a question instead of running a keyword search"
+  - "Read the cited answer and locate the sources behind it"
+references:
+  - source_id: "assistant_skills"
+    minutes: 10
+  - source_id: "search_basics"
+    minutes: 5
+lab:
+  minutes: 8
+  steps_ref: true
+working_example:
+  language: "text"
+  verified_against: "assistant_skills"
+nist_rmf: ["MAP"]
+check_for_understanding: "When is asking the Assistant better than running a keyword search?"
+quiz_ref: "quiz-w02"
+video_summary: "Don't want to open ten docs? Ask Glean Assistant a plain question and get one synthesized answer with citations. It reads across your work apps and shows the sources, so you can chat instead of hunt."
+status: "published"
+---
+
+# Day 5 Lab
+1. Pick a question you would normally answer by opening several documents.
+2. Ask Glean Assistant that question in plain language, not as keywords.
+3. Read the synthesized answer it returns.
+4. Find the citations attached to the answer and note which sources it used.
+5. Compare the time against doing the same lookup by hand.
+
+## Working Example: Asking the Assistant
+
+Glean Assistant answers a natural-language question by reading across your connected
+apps and returning a synthesized response with citations. Verified against
+`assistant_skills`.
+
+```text
+You:    What is our current PTO policy for new hires?
+Glean:  New hires accrue 15 days of PTO in year one, prorated by start date. [1][2]
+        [1] People Ops Handbook — "Time Off" (Confluence)
+        [2] New Hire FAQ (Drive)
+
+Ask a question when you want the answer assembled for you, not a list of links.
+```

@@ -1,0 +1,58 @@
+---
+week: 6
+day: 4
+level: "300"
+title: "Scheduled Triggers"
+theme: "Run an agent on a schedule"
+duration_min: 30
+objectives:
+  - "Attach a schedule to an agent so it runs without a human kicking it off"
+  - "Choose a cadence and a guard so unattended runs stay safe"
+references:
+  - source_id: "fall25_launch"
+    minutes: 8
+lab:
+  minutes: 8
+  steps_ref: true
+working_example:
+  language: "text"
+  verified_against: "fall25_launch"
+nist_rmf: ["MANAGE"]
+check_for_understanding: "An agent runs unattended on a schedule. Name one guard that keeps a bad run from compounding."
+quiz_ref: "quiz-w06"
+video_summary: "Glean's Fall '25 launch announced scheduled triggers: an agent that fires on a cadence, no human in the loop. Pick the right interval — and a guard — so an unattended run can't quietly go wrong."
+status: "published"
+---
+
+# Day 4 Lab
+
+**Status: Beta (Glean Fall '25 launch) — confirm GA availability in your tenant before relying on this.**
+
+1. Take your reviewed agent and choose a cadence: hourly, daily at 8am, weekly Monday.
+2. Attach the schedule as a trigger so the agent runs without anyone starting it.
+3. Add a guard that makes an empty run a no-op (no input -> send nothing).
+4. Decide where a failed run reports — a DM or channel, so silence never means "fine."
+5. Note the first run time and confirm the window matches what you intended.
+
+## Working Example: Attaching a Schedule
+
+Per Glean's Fall '25 launch announcement, an agent can carry a scheduled trigger that
+runs it on a cadence with no human in the loop. Verified against `fall25_launch`.
+
+```text
+Agent:    "Morning #incidents digest"
+
+Trigger:  schedule
+  Cadence:   every weekday at 08:00 (tenant timezone)
+  Window:    posts since the previous run
+  Guard:     if zero new posts -> stop, send nothing
+  On error:  DM #ops-alerts with the failure reason (don't fail silently)
+
+First run: tomorrow 08:00. Unattended from then on.
+```
+
+A schedule turns a one-off into an unattended worker, which raises the stakes: a bad run
+now repeats on a timer. The guards — an empty-run no-op and a loud failure path — are the
+MANAGE controls that keep an automated cadence from compounding a mistake. Scheduled
+triggers are an announced feature; verify they exist and fire reliably in your tenant
+before you trust an unattended cadence.

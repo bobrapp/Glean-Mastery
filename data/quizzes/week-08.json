@@ -1,0 +1,72 @@
+{
+  "id": "quiz-w08",
+  "week": 8,
+  "pass_threshold": 0.8,
+  "questions": [
+    {
+      "id": "w08-q1",
+      "type": "mc",
+      "prompt": "Glean describes three agent run-modes. Which list matches them?",
+      "options": [
+        "Run on Glean, call via the API, expose as an MCP server",
+        "Run on-premise, run in the browser, run on a phone",
+        "Free tier, pro tier, enterprise tier",
+        "Search, summarize, and translate"
+      ],
+      "answer_index": 0,
+      "explanation": "An agent can be built and run on Glean, invoked from your code via the API, or exposed to other hosts over MCP — same graph, different trust boundaries."
+    },
+    {
+      "id": "w08-q2",
+      "type": "mc",
+      "prompt": "When a host connects to Glean's MCP server with a scoped token, what happens to access?",
+      "options": [
+        "The host gets admin access to the whole graph",
+        "Retrieval stays permissions-aware — the token resolves to a user and returns only what that user may see",
+        "All permission checks are bypassed for speed",
+        "The host can only read public documents"
+      ],
+      "answer_index": 1,
+      "explanation": "The MCP endpoint relays access; it does not widen it. The token acts as a user, so retrieval remains scoped to that identity."
+    },
+    {
+      "id": "w08-q3",
+      "type": "mc",
+      "prompt": "In a guarded multi-tool agent loop, what is the job of the pre-action gate?",
+      "options": [
+        "To speed up retrieval",
+        "To block the final, irreversible action unless the user's role permits it",
+        "To rephrase the user's query",
+        "To cache search results"
+      ],
+      "answer_index": 1,
+      "explanation": "The pre-action gate is the last line before the agent touches the world — a MANAGE control that stops an unpermitted action."
+    },
+    {
+      "id": "w08-q4",
+      "type": "mc",
+      "prompt": "Across CrewAI, Google ADK, LangGraph, and the OpenAI Agents SDK, what does every Glean tool have in common?",
+      "options": [
+        "They all require Rego policies",
+        "They each carry a token that resolves to a user, so the agent can only retrieve what that user is allowed to see",
+        "They all run only inside Glean's platform",
+        "They disable audit logging"
+      ],
+      "answer_index": 1,
+      "explanation": "The framework changes, but the trust boundary does not: the tool's token is per-user, so retrieval stays permissions-aware everywhere."
+    },
+    {
+      "id": "w08-q5",
+      "type": "mc",
+      "prompt": "Which statement about this curriculum is accurate?",
+      "options": [
+        "The 200–500 level ladder is an official Glean certification",
+        "The NIST AI RMF crosswalk is a documented Glean mapping",
+        "Both the level ladder and the NIST AI RMF mapping are our instructional framing, not official Glean artifacts",
+        "Glean issues a credential when you finish Week 8"
+      ],
+      "answer_index": 2,
+      "explanation": "The level ladder and the RMF crosswalk are instructional synthesis we use to organize and reason about the material — neither is an official Glean certification or a Glean-published mapping."
+    }
+  ]
+}

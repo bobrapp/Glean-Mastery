@@ -1,0 +1,61 @@
+---
+week: 7
+day: 5
+level: "400"
+title: "Client API vs. Indexing API"
+theme: "The split, and what each half is for"
+duration_min: 30
+objectives:
+  - "Explain the boundary between the Client API and the Indexing API"
+  - "Decide which API a given task belongs to"
+references:
+  - source_id: "developer_platform"
+    minutes: 9
+lab:
+  minutes: 8
+  steps_ref: true
+working_example:
+  language: "python"
+  verified_against: "developer_platform"
+nist_rmf: ["MAP"]
+check_for_understanding: "You need to push 10k support tickets into Glean so they're searchable. Which API, and why not the other?"
+quiz_ref: "quiz-w07"
+video_summary: "Two APIs, one boundary. The Client API reads the graph — search, chat, recommendations. The Indexing API writes to it — datasources, documents, people. Reading is user-scoped; writing is admin-scoped."
+status: "published"
+---
+
+# Day 5 Lab
+1. List read tasks: search, chat, autocomplete, recommendations — these are Client API.
+2. List write tasks: register a datasource, push documents, push people and permissions — these are Indexing API.
+3. Note the auth difference: Client calls are typically user-scoped; Indexing calls are admin/global-scoped.
+4. For each task on your roadmap, label it CLIENT or INDEXING before you write any code.
+
+## Working Example: Two Clients, Two Jobs
+
+The Client API reads what is already indexed, scoped to a user. The Indexing
+API writes new content and its permissions, scoped to an admin token. Verified
+against `developer_platform`.
+
+```python
+import os
+from glean import Glean
+
+# CLIENT API: read the graph as a specific user (honors their permissions).
+read_client = Glean(
+    instance=os.environ["GLEAN_INSTANCE"],
+    api_token=os.environ["GLEAN_API_TOKEN"],
+    actas_user=os.environ["END_USER_EMAIL"],
+)
+hits = read_client.client.search.query(query="release notes", page_size=5)
+
+# INDEXING API: write into the graph with an admin-scoped token.
+index_client = Glean(
+    instance=os.environ["GLEAN_INSTANCE"],
+    api_token=os.environ["GLEAN_INDEXING_TOKEN"],
+)
+# index_client.indexing.documents.index(...)  # covered on Day 6
+```
+
+If the task is "make something searchable," it is Indexing. If the task is
+"find or answer over what exists," it is Client. Verified against
+`developer_platform`.

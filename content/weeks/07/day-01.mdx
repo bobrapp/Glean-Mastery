@@ -1,0 +1,60 @@
+---
+week: 7
+day: 1
+level: "400"
+title: "The Developer Platform and Typed Clients"
+theme: "Where the API lives and how you call it"
+duration_min: 30
+objectives:
+  - "Locate the Glean Developer Platform and the four typed client SDKs"
+  - "Instantiate a client and make a first authenticated call"
+references:
+  - source_id: "developer_platform"
+    minutes: 8
+  - source_id: "api_clients"
+    minutes: 6
+lab:
+  minutes: 8
+  steps_ref: true
+working_example:
+  language: "python"
+  verified_against: "developer_platform"
+nist_rmf: ["MAP"]
+check_for_understanding: "Name the four typed clients Glean ships and one reason to prefer a typed client over raw HTTP."
+quiz_ref: "quiz-w07"
+video_summary: "Glean's Developer Platform exposes the same graph the UI uses — through typed clients for Python, TypeScript, Java, and Go. One client object, authenticated once, and every API surface is a method call away."
+status: "published"
+---
+
+# Day 1 Lab
+1. Open the Developer Platform docs and find the four typed clients: Python, TypeScript, Java, Go.
+2. Install the client for your language and set your instance name and token as environment variables.
+3. Instantiate the client and make one read call to confirm the connection works.
+4. Note what the client gives you that raw HTTP would not: typed models, retries, and auth handling.
+
+## Working Example: Instantiate the Client
+
+The typed client wraps authentication, the base URL for your instance, and the
+request/response models so each API surface is a typed method. Verified against
+`developer_platform`.
+
+```python
+import os
+from glean import Glean
+
+# The client reads your instance and token; never hard-code the token.
+client = Glean(
+    instance=os.environ["GLEAN_INSTANCE"],   # e.g. "acme"
+    api_token=os.environ["GLEAN_API_TOKEN"],
+)
+
+# A first call: typed in, typed out — no manual JSON, no manual URLs.
+results = client.client.search.query(query="onboarding checklist", page_size=5)
+
+for r in results.results:
+    print(r.title, "->", r.url)
+```
+
+The same shape exists in TypeScript, Java, and Go: one `Glean(...)` client,
+authenticated once, every surface a typed call. Verified against
+`developer_platform`.

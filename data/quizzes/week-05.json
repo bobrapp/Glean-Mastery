@@ -6,35 +6,67 @@
     {
       "id": "w05-q1",
       "type": "mc",
-      "prompt": "How should a search request authenticate to the Glean API?",
+      "prompt": "What is a Glean Assistant Skill?",
       "options": [
-        "A public anonymous key in the URL",
-        "A bearer token in the Authorization header",
-        "The user's password in the request body",
-        "No auth; the search API is open"
+        "A single saved search query",
+        "A reusable package of instructions (and optional templates, examples, and scripts) Glean Assistant can run",
+        "A connector to a new data source",
+        "A user permission level"
       ],
       "answer_index": 1,
-      "explanation": "Authenticated APIs expect a bearer token in the Authorization header, sourced from a secret store rather than hard-coded."
+      "explanation": "A Skill packages reusable instructions — plus optional templates, examples, and where supported scripts — that Glean Assistant can invoke."
     },
     {
       "id": "w05-q2",
       "type": "mc",
-      "prompt": "Why wrap the raw search endpoint in a small typed client?",
+      "prompt": "Who can invoke a Personal Skill?",
       "options": [
-        "To make each call slower",
-        "To centralize query options, types, and error handling",
-        "To avoid using HTTPS",
-        "To bypass rate limits"
+        "Anyone in the company",
+        "Only the creator",
+        "Only stewards/admins",
+        "The creator's whole team"
       ],
       "answer_index": 1,
-      "explanation": "A typed client keeps query options, response shapes, and error handling consistent everywhere instead of scattering fetch calls."
+      "explanation": "A Personal Skill is scoped to its creator; promoting it to a Shared Skill makes it available to a team."
     },
     {
       "id": "w05-q3",
-      "type": "short",
-      "prompt": "Name one query option, besides the query string, a typed client should expose.",
-      "answer_key": "A page size or result limit (a source filter or page cursor is also acceptable).",
-      "explanation": "Limit, cursor, and source filters are common options worth typing once and reusing."
+      "type": "mc",
+      "prompt": "When Glean auto-selects a Skill, what does it primarily match against?",
+      "options": [
+        "The Skill's step-by-step instructions",
+        "The Skill's description / 'when to use' line",
+        "The Skill's creation date",
+        "The number of times the Skill has run"
+      ],
+      "answer_index": 1,
+      "explanation": "Routing matches the request against each Skill's description, so a precise 'when to use' line drives reliable auto-selection — most reliably in Thinking mode."
+    },
+    {
+      "id": "w05-q4",
+      "type": "mc",
+      "prompt": "Which gives you deterministic control over which Skill runs?",
+      "options": [
+        "Letting Glean auto-route every request",
+        "Invoking the Skill explicitly by name or with a /slash command",
+        "Rewriting the instructions to be longer",
+        "Making the Skill Shared instead of Personal"
+      ],
+      "answer_index": 1,
+      "explanation": "Explicit invocation — naming the Skill or using a /slash command — bypasses routing and runs exactly the Skill you named."
+    },
+    {
+      "id": "w05-q5",
+      "type": "mc",
+      "prompt": "A Skill keeps firing on the wrong requests. What is the most likely fix?",
+      "options": [
+        "Delete and recreate the Skill",
+        "Tighten the Skill's description so its 'when to use' boundary doesn't overlap others",
+        "Add more steps to the instructions",
+        "Switch the Skill from Shared to Personal"
+      ],
+      "answer_index": 1,
+      "explanation": "Misroutes are almost always a description problem; sharpen the 'when to use' boundary and retest until the right requests route to the right Skill."
     }
   ]
 }

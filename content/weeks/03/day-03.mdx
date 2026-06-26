@@ -1,0 +1,52 @@
+---
+week: 3
+day: 3
+level: "200"
+title: "Per-App Search: Jira"
+theme: "Facets for project, priority, assignee, and sprint"
+duration_min: 30
+objectives:
+  - "Scope a query to Jira and filter by project and priority"
+  - "Combine assignee and sprint facets to surface the right work item"
+references:
+  - source_id: "datasource_filters"
+    minutes: 9
+lab:
+  minutes: 8
+  steps_ref: true
+working_example:
+  language: "text"
+  verified_against: "datasource_filters"
+nist_rmf: ["MAP"]
+check_for_understanding: "Why is project: usually the first Jira facet to add?"
+quiz_ref: "quiz-w03"
+video_summary: "Jira speaks in project, priority, assignee, sprint. app:jira project:ATLAS priority:high assignee:@raj finds Raj's urgent Atlas tickets without leaving search. Lead with project — it scopes the noise away first."
+status: "published"
+---
+
+# Day 3 Lab
+1. Run `app:jira project:` plus a project key. Note how much it narrows.
+2. Add `priority:high` to keep only the urgent items.
+3. Add `assignee:` to scope to one person.
+4. Add `sprint:` to limit to the current iteration, then read the count.
+
+## Working Example: Jira Facets
+
+Jira indexes work items by structured fields; `app:jira` selects the source and
+each facet matches a Jira field. Verified against `datasource_filters`.
+
+```text
+app:jira project:ATLAS
+  → every Atlas ticket — too broad
+
+app:jira project:ATLAS priority:high assignee:@raj
+  → only Raj's high-priority Atlas tickets
+
+app:jira project:ATLAS sprint:"Sprint 7" priority:high
+  → high-priority Atlas tickets in the current sprint — a standup-ready list
+```
+
+Lead with `project:` because it is the highest-cardinality split in most Jira
+instances — one facet drops you from the whole backlog to one team's board, and
+every facet after that refines a much smaller set. Verified against
+`datasource_filters`.

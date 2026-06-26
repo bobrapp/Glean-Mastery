@@ -1,0 +1,68 @@
+---
+week: 7
+day: 3
+level: "400"
+title: "The Search API"
+theme: "Programmatic retrieval with a typed client"
+duration_min: 30
+objectives:
+  - "Issue a Search API query with filters and paging from a typed client"
+  - "Read titles, URLs, and snippets from the typed response"
+references:
+  - source_id: "api_clients"
+    minutes: 7
+  - source_id: "developer_platform"
+    minutes: 5
+lab:
+  minutes: 8
+  steps_ref: true
+working_example:
+  language: "python"
+  verified_against: "api_clients"
+nist_rmf: ["MAP"]
+check_for_understanding: "Which response field tells you WHY a result matched, and where do you set a datasource filter?"
+quiz_ref: "quiz-w07"
+video_summary: "The Search API is the search box as code. Pass a query, add facet filters, page through typed results — and the per-user token means the API returns exactly what that user could find in the UI."
+status: "published"
+---
+
+# Day 3 Lab
+1. Build a Search API request: a query string plus a `page_size`.
+2. Add a facet filter to scope by datasource (e.g. only Drive).
+3. Run it and read each result's title, URL, and snippet from the typed response.
+4. Confirm results respect the caller's permissions — same filtering as the UI.
+
+## Working Example: A Filtered Search Query
+
+The Search API takes a query plus optional facet filters and returns typed
+results with snippets that show why each matched. Verified against
+`api_clients`.
+
+```python
+import os
+from glean import Glean
+
+client = Glean(
+    instance=os.environ["GLEAN_INSTANCE"],
+    api_token=os.environ["GLEAN_API_TOKEN"],
+    actas_user=os.environ["END_USER_EMAIL"],
+)
+
+response = client.client.search.query(
+    query="incident runbook",
+    page_size=10,
+    request_options={
+        "facet_filters": [
+            {"field_name": "datasource", "values": [{"value": "gdrive"}]}
+        ]
+    },
+)
+
+for r in response.results:
+    print(r.title)
+    print("  ", r.url)
+    print("  snippet:", r.snippets[0].text if r.snippets else "(none)")
+```
+
+The `snippets` field is the "why it matched" — the same matched text the UI
+highlights. Verified against `api_clients`.

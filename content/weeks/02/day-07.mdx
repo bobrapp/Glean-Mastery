@@ -1,0 +1,48 @@
+---
+week: 2
+day: 7
+level: "200"
+title: "Combining Operators for Precision"
+theme: "Stacking filters into one sharp query"
+duration_min: 30
+objectives:
+  - "Stack type:, app:, and updated: filters in a single query"
+  - "Read a layered query left to right and predict its result set"
+references:
+  - source_id: "search_filters"
+    minutes: 10
+lab:
+  minutes: 8
+  steps_ref: true
+working_example:
+  language: "text"
+  verified_against: "search_filters"
+case_study:
+  source_id: "case_confluent_glean"
+nist_rmf: ["MAP"]
+check_for_understanding: "What does each operator in a stacked query remove from the result set?"
+quiz_ref: "quiz-w02"
+video_summary: "One filter narrows; three carve. Stack type:document app:drive updated:past_week budget and each operator strips away another slice until only the exact set remains. This is how precise search is built."
+status: "published"
+---
+
+# Day 7 Lab
+1. Start with a broad keyword that returns far too much.
+2. Add `type:` to keep one kind of document.
+3. Add `app:` to keep one connected system.
+4. Add `updated:` to keep one recency window.
+5. Read the full query back and confirm each filter earned its place.
+
+## Working Example: Stacking Filters
+
+Each operator removes a different slice of noise. Stack them and the result set
+narrows to exactly what you meant. Verified against `search_filters`.
+
+```text
+budget                                          → thousands of mixed results
+type:document budget                            → only documents
+type:document app:drive budget                  → only Drive documents
+type:document app:drive updated:past_week budget → only Drive docs changed this week
+
+Read it left to right: type cuts the kind, app cuts the source, updated cuts the age.
+```

@@ -1,0 +1,54 @@
+---
+week: 3
+day: 2
+level: "200"
+title: "Per-App Search: Google Drive & Slack"
+theme: "Facets for owner, type, channel, and time"
+duration_min: 30
+objectives:
+  - "Scope a query to Drive or Slack with the app: filter"
+  - "Stack owner, type, channel, and time facets to pin a result fast"
+references:
+  - source_id: "datasource_filters"
+    minutes: 8
+  - source_id: "search_filters"
+    minutes: 6
+lab:
+  minutes: 8
+  steps_ref: true
+working_example:
+  language: "text"
+  verified_against: "datasource_filters"
+nist_rmf: ["MAP"]
+check_for_understanding: "Which facet narrows a busy Slack channel fastest — and why?"
+quiz_ref: "quiz-w03"
+video_summary: "Scope to one app, then stack facets. app:drive owner:@maya type:spreadsheet finds her sheet; app:slack channel:#launch after:2026-06-01 cuts the channel to last month. The app sets the vocabulary."
+status: "published"
+---
+
+# Day 2 Lab
+1. Run `app:drive` plus one keyword. Note the result count.
+2. Add `owner:` to scope to one person, then `type:` to one file kind.
+3. Switch to `app:slack` and scope with `channel:` and an `after:` date.
+4. Compare how many facets each app exposes and which cut the most.
+
+## Working Example: Drive and Slack Facets
+
+Each connected app exposes its own facets; `app:` selects the app, and the
+facets that follow speak that app's vocabulary. Verified against
+`datasource_filters`.
+
+```text
+app:drive owner:@maya type:spreadsheet budget
+  → only Maya's spreadsheets that mention budget — not her docs or slides
+
+app:slack channel:#launch after:2026-06-01 rollback
+  → only #launch messages about rollback since June 1 — not the whole channel
+
+Drive thinks in owner + file type; Slack thinks in channel + time.
+Pick the facet the app indexes best, and one line pins the result.
+```
+
+In a busy Slack channel, `channel:` plus a time facet cuts fastest because Slack
+indexes messages by channel and timestamp — that is the axis with the most
+signal. Verified against `datasource_filters`.

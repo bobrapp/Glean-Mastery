@@ -6,10 +6,67 @@
     {
       "id": "w02-q1",
       "type": "mc",
-      "prompt": "Which metric best reflects ranking usefulness at top positions?",
-      "options": ["NDCG@k", "Latency", "Index size", "Token count"],
+      "prompt": "What does `roadmap updated:past_week` return?",
+      "options": [
+        "Roadmap results from any time, sorted by date",
+        "Only roadmap results changed in the last seven days",
+        "Only roadmap documents, regardless of date",
+        "Roadmap results you authored"
+      ],
+      "answer_index": 1,
+      "explanation": "updated: bounds results by recency; past_week keeps only what changed in the last seven days."
+    },
+    {
+      "id": "w02-q2",
+      "type": "mc",
+      "prompt": "How do you isolate results from Q1 2026 with a precise date window?",
+      "options": [
+        "updated:past_month",
+        "after:\"2026-01-01\" before:\"2026-04-01\"",
+        "in:\"Q1 2026\"",
+        "my:history 2026"
+      ],
+      "answer_index": 1,
+      "explanation": "after: and before: take quoted dates; stacking both bounds isolates one exact window."
+    },
+    {
+      "id": "w02-q3",
+      "type": "mc",
+      "prompt": "What is the difference between `in:` and `collection:`?",
+      "options": [
+        "in: searches a container that exists; collection: searches a saved set you built",
+        "They are identical",
+        "in: searches by date; collection: searches by type",
+        "collection: only works in Slack"
+      ],
       "answer_index": 0,
-      "explanation": "NDCG@k emphasizes ranking quality near the top results."
+      "explanation": "in: scopes to an existing container like a space or folder; collection: scopes to a set you curated."
+    },
+    {
+      "id": "w02-q4",
+      "type": "mc",
+      "prompt": "When is `my:history pricing` the right move?",
+      "options": [
+        "When you want every pricing doc in the company",
+        "When you've already seen the pricing doc and need to re-find it",
+        "When you want to filter by document type",
+        "When you want the newest pricing docs only"
+      ],
+      "answer_index": 1,
+      "explanation": "my:history restricts results to documents you've already viewed, so re-finding is faster than a cold search."
+    },
+    {
+      "id": "w02-q5",
+      "type": "mc",
+      "prompt": "After Glean Assistant gives a cited answer, what is the governed next step?",
+      "options": [
+        "Trust it because it has citations",
+        "Open each citation and confirm it supports the claim and isn't stale",
+        "Re-run the question to see if the answer changes",
+        "Copy the answer and move on"
+      ],
+      "answer_index": 1,
+      "explanation": "Citations are a starting point, not a verdict; open each source, confirm it backs the claim, and check the dates."
     }
   ]
 }

@@ -1,0 +1,64 @@
+---
+week: 3
+day: 7
+level: "200"
+title: "Foundations Capstone: A Cross-App Search Workflow"
+theme: "Chaining operators across apps end to end"
+duration_min: 30
+objectives:
+  - "Chain app: and facet operators across several systems to answer one question"
+  - "Sequence searches so each result narrows the next"
+references:
+  - source_id: "search_filters"
+    minutes: 8
+  - source_id: "datasource_filters"
+    minutes: 7
+case_study:
+  source_id: "case_confluent_glean"
+lab:
+  minutes: 8
+  steps_ref: true
+working_example:
+  language: "text"
+  verified_against: "datasource_filters"
+nist_rmf: ["MAP"]
+check_for_understanding: "In a cross-app workflow, why does the order of searches matter?"
+quiz_ref: "quiz-w03"
+video_summary: "One question, five apps, five filtered searches that hand off to each other. This is the payoff: at Confluent's scale, mastering per-app search turns a half-day hunt into a five-minute chain."
+status: "published"
+---
+
+# Day 7 Lab
+1. Pick a real question that spans apps — e.g. "why is the Acme renewal at risk?"
+2. Write one scoped search per app, in the order each result feeds the next.
+3. Run the chain; carry an account name or ticket ID from one step into the next.
+4. Capture the answer with a source link from each app you touched.
+
+## Working Example: A Cross-App Renewal Investigation
+
+Each step is a per-app search from this week; chained, they answer a question no
+single app holds. Verified against `datasource_filters`.
+
+```text
+Question: "Why is the Acme renewal at risk?"
+
+1. app:salesforce account:Acme stage:negotiation closedate:this-quarter
+     → the opportunity, owner, and amount in play
+2. app:zendesk org:Acme status:open priority:urgent
+     → 2 open urgent tickets — the friction
+3. app:jira project:ATLAS priority:high label:acme
+     → the engineering fix those tickets are waiting on
+4. app:slack channel:#acme-account after:2026-06-01
+     → the team's latest read on the relationship
+5. app:confluence space:CS label:renewal author:@maya
+     → the renewal play to run next
+
+Each result hands the next a name or ID — the order is the workflow.
+```
+
+Order matters because each search supplies the input to the next: the
+Salesforce step names the account, which scopes the Zendesk and Jira queries,
+which point at the Slack thread. This is the payoff of mastering search — at
+Confluent's scale, where the same answer is scattered across millions of
+documents and dozens of apps, a disciplined chain turns a half-day hunt into a
+five-minute workflow. Verified against `datasource_filters`.

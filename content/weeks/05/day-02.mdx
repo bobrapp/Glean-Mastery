@@ -1,0 +1,66 @@
+---
+week: 5
+day: 2
+level: "300"
+title: "Skill Anatomy"
+theme: "Instructions, templates, examples, and scripts"
+duration_min: 30
+objectives:
+  - "Identify the parts of a Skill: instructions, templates, examples, scripts"
+  - "Sketch a SKILL.md-style outline for a task you do often"
+references:
+  - source_id: "assistant_skills"
+    minutes: 10
+lab:
+  minutes: 8
+  steps_ref: true
+working_example:
+  language: "text"
+  verified_against: "assistant_skills"
+nist_rmf: ["MAP"]
+check_for_understanding: "What does an 'example' add to a Skill that instructions alone don't?"
+quiz_ref: "quiz-w05"
+video_summary: "A Skill isn't just a prompt. It has parts — instructions, templates, examples, and where supported, scripts. Knowing the anatomy lets you build ones that behave the same every time."
+status: "published"
+---
+
+# Day 2 Lab
+1. Open a Skill you authored on Day 1 (or start a fresh one).
+2. Separate your instructions from your templates: the steps vs. the fixed output shape.
+3. Add one worked example — a sample input and the output you'd want for it.
+4. Note where a script could help (where supported) for any deterministic step.
+5. Compare a run with and without the example; see if the example steadies the output.
+
+## Working Example: A SKILL.md-Style Outline
+
+A Skill is made of parts, each doing a distinct job: instructions tell Glean what
+to do, templates fix the output shape, examples show a good result, and scripts
+(where supported) handle deterministic steps. Verified against `assistant_skills`.
+
+```text
+# SKILL: Release Notes Drafter
+## Description (when to use)
+  When the user asks to draft release notes from merged PRs.
+
+## Instructions
+  1. Collect merged PRs since the last tag.
+  2. Group by label: feature, fix, chore.
+  3. Write one user-facing line per item.
+
+## Template (output shape)
+  ## <version> — <date>
+  ### Features
+  - ...
+  ### Fixes
+  - ...
+
+## Example
+  Input:  PRs #482 (feature), #485 (fix)
+  Output: "### Features\n- Atlas dashboard ... ### Fixes\n- Fixed export ..."
+
+## Scripts (where supported)
+  fetch_merged_prs.py   # deterministic: returns PRs since last tag
+```
+
+Instructions tell Glean *what* to do; the example shows it *what good looks like*.
+The two together route and behave more reliably than prose instructions alone.

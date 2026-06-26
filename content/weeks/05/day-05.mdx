@@ -1,0 +1,54 @@
+---
+week: 5
+day: 5
+level: "300"
+title: "Sharing Skills"
+theme: "Promoting a Personal Skill to a Shared team Skill"
+duration_min: 30
+objectives:
+  - "Promote a Personal Skill to a Shared Skill for your team"
+  - "Review ownership and instructions before a Skill becomes shared"
+references:
+  - source_id: "assistant_skills"
+    minutes: 10
+lab:
+  minutes: 8
+  steps_ref: true
+working_example:
+  language: "text"
+  verified_against: "assistant_skills"
+nist_rmf: ["GOVERN"]
+check_for_understanding: "Why review a Skill's instructions and ownership before sharing it with a team?"
+quiz_ref: "quiz-w05"
+video_summary: "A Personal Skill helps you. A Shared Skill helps your team — but only after a review. Check the instructions and name an owner before you promote it."
+status: "published"
+---
+
+# Day 5 Lab
+1. Choose a Personal Skill that's proven useful and stable.
+2. Review its instructions for anything personal, hard-coded, or stale.
+3. Assign an owner who will maintain it after it's shared.
+4. Promote it from Personal to Shared scope for your team.
+5. Have a teammate run it and confirm it behaves the same for them.
+
+## Working Example: Personal → Shared, With a Review Gate
+
+A Personal Skill is creator-only; a Shared Skill is available to your team.
+Promotion is a governance step, not just a toggle — review the instructions and
+name an owner before it goes wide. Verified against `assistant_skills`.
+
+```text
+Before:  Skill "Weekly status digest"   scope: Personal (only @you)
+
+Review gate (do this first):
+  □ Instructions free of personal assumptions ("my Jira" → "the requester's Jira")
+  □ No hard-coded names or one-off paths
+  □ Owner assigned: @team-lead  (who maintains it going forward)
+  □ Description still accurate for a team audience
+
+After:   Skill "Weekly status digest"   scope: Shared (team: Platform)
+```
+
+Sharing widens both the benefit and the blast radius: everyone now relies on this
+Skill, so a vague instruction or a stale assumption affects the whole team. The
+review and a named owner are how you keep a Shared Skill trustworthy over time.

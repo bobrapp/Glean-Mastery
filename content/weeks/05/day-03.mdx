@@ -1,0 +1,55 @@
+---
+week: 5
+day: 3
+level: "300"
+title: "Skill Routing"
+theme: "How Glean auto-selects a Skill from your description"
+duration_min: 30
+objectives:
+  - "Explain how Glean picks a Skill automatically from its description"
+  - "Use Thinking mode to make routing more reliable"
+references:
+  - source_id: "assistant_skills"
+    minutes: 8
+  - source_id: "fall25_launch"
+    minutes: 4
+lab:
+  minutes: 8
+  steps_ref: true
+working_example:
+  language: "text"
+  verified_against: "assistant_skills"
+nist_rmf: ["MEASURE"]
+check_for_understanding: "Why does the Skill description matter more than its instructions for routing?"
+quiz_ref: "quiz-w05"
+video_summary: "You don't always name a Skill. Glean reads your request, matches it against each Skill's description, and routes to the best fit — most reliably in Thinking mode."
+status: "published"
+---
+
+# Day 3 Lab
+1. Write a request in plain language that should trigger one of your Skills.
+2. Send it without naming the Skill; note which Skill Glean routed to.
+3. Turn on Thinking mode and send the same request; compare the routing.
+4. If it routed wrong, tighten the description's "when to use" line and retry.
+5. Record which phrasings route correctly — that is your measurement.
+
+## Working Example: Routing by Description
+
+Glean reads your request and matches it against each Skill's description to pick
+one automatically — no explicit name needed. Routing is most reliable in Thinking
+mode, where Glean reasons over the candidates. Verified against `assistant_skills`.
+
+```text
+You type:  "give me my standup for this week"
+
+Glean compares against Skill descriptions:
+  • "Weekly status digest"  → when user asks for a weekly status/standup  ✓ match
+  • "Release Notes Drafter"  → when user asks to draft release notes       ✗
+  • "Meeting recap"          → when user asks to summarize a meeting        ✗
+
+→ Routes to "Weekly status digest" (best description match)
+```
+
+Routing keys off the *description*, not the instructions — so a precise "when to
+use" line is what makes auto-selection land. Measure it: try several phrasings and
+track which ones route to the Skill you intended.

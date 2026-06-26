@@ -1,0 +1,71 @@
+---
+week: 6
+day: 7
+level: "300"
+title: "Power-User Capstone 2: Ship a Scheduled Agent"
+theme: "Assemble the week into one small, running agent"
+duration_min: 30
+objectives:
+  - "Combine builder, actions, a schedule, and versioning into one shipped agent"
+  - "Tie the agent's value to a measured business outcome"
+references:
+  - source_id: "fall25_launch"
+    minutes: 8
+lab:
+  minutes: 8
+  steps_ref: true
+working_example:
+  language: "text"
+  verified_against: "fall25_launch"
+case_study:
+  source_id: "case_supercom_glean"
+nist_rmf: ["MANAGE"]
+check_for_understanding: "Name the one metric you'd watch to decide whether your shipped agent is actually worth keeping."
+quiz_ref: "quiz-w06"
+video_summary: "Capstone: vibe-code a small agent, give it native actions, a schedule, and a saved version — then ship it. Anchor it to a real outcome the way Super.com did with Glean."
+status: "published"
+---
+
+# Day 7 Lab
+
+**Status: Beta (Glean Fall '25 launch) — confirm GA availability in your tenant before relying on this.**
+
+1. Vibe-code one small agent from a single sentence (Day 1), then tighten its steps (Day 2).
+2. Wire each step to the right native action — reads freely, writes only with a guard (Day 3).
+3. Attach a schedule with an empty-run no-op and a loud failure path (Day 4).
+4. Save it as a named v1 with a one-line changelog, so the change is reversible (Day 6).
+5. Pick the single metric you'll watch to decide if it earns its keep — then ship it.
+
+## Working Example: One Shipped Scheduled Agent
+
+This capstone assembles the week's announced building blocks — builder, actions, schedule,
+versioning — into one running agent. Verified against `fall25_launch`.
+
+```text
+Agent: "Daily unowned-ticket nudge"   (shipped, v1)
+
+  Trigger   schedule: weekdays 09:00, window = since last run
+  Loop      open Jira tickets with no owner (cap 25/run)
+    Step 1  Jira  get_issue          (read)
+    Step 2  infer likely owner from component
+    Step 3  Slack post_message       (write, guarded: suggest only, no auto-assign)
+  Guard     no unowned tickets -> send nothing
+  On error  DM #ops-alerts
+  Version   v1 saved, changelog: "initial ship"
+
+Metric watched: time-to-owner on new tickets (down = the agent is earning its keep).
+```
+
+The case study to anchor on is **Super.com**, which reported real, measured gains from
+Glean adoption — the point of a capstone is to tie a shipped agent to an outcome like
+that, not to ship for its own sake. (For scale, Glean's launch cited Zillow running on the
+order of 3,400 agents — but scale without a metric is just count.) Choosing and watching
+that one metric is the MANAGE discipline that decides whether an agent stays. Everything
+here rests on Fall '25 announcements: before you ship for real, confirm the builder,
+actions, schedule, and versioning are GA in your tenant.
+
+## Case Study: Super.com
+
+Super.com's results with Glean are the model for this capstone: adopt a capability,
+point it at a concrete workflow, and measure the outcome rather than the activity.
+Verified against `case_supercom_glean`.

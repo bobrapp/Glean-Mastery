@@ -17,6 +17,12 @@
     "url": "https://docs.glean.com/user-guide/advanced/advanced-search-filter",
     "verified_on": "2026-06-26"
   },
+  "datasource_filters": {
+    "type": "reference",
+    "title": "Datasource Filters (Developer Guide)",
+    "url": "https://developers.glean.com/guides/search/datasource-filters",
+    "verified_on": "2026-06-26"
+  },
   "enterprise_graph": {
     "type": "reference",
     "title": "Glean Enterprise Graph",
@@ -29,10 +35,76 @@
     "url": "https://www.glean.com/resources/guides/how-glean-search-works",
     "verified_on": "2026-06-26"
   },
+  "assistant_skills": {
+    "type": "reference",
+    "title": "Glean Assistant Skills (User Guide)",
+    "url": "https://docs.glean.com/user-guide/assistant/skills",
+    "verified_on": "2026-06-26"
+  },
+  "fall25_launch": {
+    "type": "reference",
+    "title": "Glean Fall '25 Launch — agentic engine & agent builder (Beta)",
+    "url": "https://www.glean.com/blog/live-fall-25-main",
+    "verified_on": "2026-06-26"
+  },
+  "developer_platform": {
+    "type": "reference",
+    "title": "Glean Developer Platform",
+    "url": "https://developers.glean.com/",
+    "verified_on": "2026-06-26"
+  },
+  "api_clients": {
+    "type": "reference",
+    "title": "Glean API Client Libraries (Python / TypeScript / Java / Go)",
+    "url": "https://developers.glean.com/libraries/api-clients",
+    "verified_on": "2026-06-26"
+  },
+  "authentication": {
+    "type": "reference",
+    "title": "Glean API Authentication (OAuth & Glean-issued tokens)",
+    "url": "https://developers.glean.com/get-started/authentication",
+    "verified_on": "2026-06-26"
+  },
+  "web_sdk": {
+    "type": "reference",
+    "title": "Glean Web SDK (Overview)",
+    "url": "https://developers.glean.com/libraries/web-sdk/overview",
+    "verified_on": "2026-06-26"
+  },
+  "mcp": {
+    "type": "reference",
+    "title": "Glean MCP — Model Context Protocol (About)",
+    "url": "https://docs.glean.com/administration/platform/mcp/about",
+    "verified_on": "2026-06-26"
+  },
+  "customer_stories": {
+    "type": "reference",
+    "title": "Glean Customer Stories",
+    "url": "https://www.glean.com/resources/customer-stories",
+    "verified_on": "2026-06-26"
+  },
   "case_confluent_glean": {
     "type": "case_study",
-    "title": "How Confluent saves 15,000+ hours a month with Glean",
+    "title": "How Confluent saves 15,000+ hours a month with Glean (70%+ adoption; 500 agents in 6 weeks)",
     "url": "https://www.glean.com/resources/customer-stories/confluent",
+    "verified_on": "2026-06-26"
+  },
+  "case_zillow_glean": {
+    "type": "case_study",
+    "title": "Zillow — 1.5+ hrs/week saved per employee, 80% adoption across 7,000, 3,400 agents with Glean",
+    "url": "https://www.glean.com/resources/customer-stories",
+    "verified_on": "2026-06-26"
+  },
+  "case_supercom_glean": {
+    "type": "case_study",
+    "title": "Super.com — 17x ROI, ~20 min/day faster, 1,500+ hours/month saved with Glean",
+    "url": "https://www.glean.com/resources/customer-stories",
+    "verified_on": "2026-06-26"
+  },
+  "case_dbs_glean": {
+    "type": "case_study",
+    "title": "DBS — ~10% of work hours freed across 40,000+ employees with Glean",
+    "url": "https://www.glean.com/resources/customer-stories",
     "verified_on": "2026-06-26"
   }
 }

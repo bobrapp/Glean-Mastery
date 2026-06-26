@@ -1,0 +1,60 @@
+---
+week: 8
+day: 1
+level: "500"
+title: "Agent Run-Modes: On Glean, via API, or as MCP"
+theme: "Three places an agent can live, one set of controls"
+duration_min: 30
+objectives:
+  - "Distinguish the three run-modes Glean describes for agents: run on Glean, call via API, expose as MCP"
+  - "Pick a run-mode for a given use case and name its trust boundary"
+references:
+  - source_id: "developer_platform"
+    minutes: 8
+  - source_id: "fall25_launch"
+    minutes: 5
+lab:
+  minutes: 8
+  steps_ref: true
+working_example:
+  language: "text"
+  verified_against: "developer_platform"
+nist_rmf: ["MAP"]
+check_for_understanding: "For each run-mode, name where the agent executes and where the trust boundary sits."
+quiz_ref: "quiz-w08"
+video_summary: "An agent can run inside Glean, be called from your code via API, or be exposed to other hosts over MCP. Same graph, same permissions — three different trust boundaries you must map before you build."
+status: "published"
+---
+
+# Day 1 Lab
+1. List one agent task you want — e.g., "summarize this week's tickets for my team."
+2. Place it in each run-mode in turn: built and run on Glean; called from your own service via the API; exposed to a third-party host over MCP.
+3. For each, name where execution happens and where the trust boundary sits (who holds the token, who sees the data).
+4. Pick the run-mode whose boundary you can actually govern, and write one sentence saying why.
+
+## Working Example: The Three Run-Modes Side by Side
+
+Glean describes agents that can be built and run on its platform, invoked from
+your own code through the API, or surfaced to external hosts over MCP. The
+graph and the permission model are the same in all three; what changes is where
+the agent executes and who holds the trust boundary. Verified against
+`developer_platform`.
+
+```text
+RUN-MODE            EXECUTES            TRUST BOUNDARY              GOVERN WHAT
+─────────────────────────────────────────────────────────────────────────────
+Run on Glean        Glean platform      inside Glean's tenancy      agent config,
+  (agent builder)                       (your instance)             permissions
+
+Call via API        your service        your code <-> Glean API     the token, your
+  (typed clients)                       (you hold the token)        service's logs
+
+Expose as MCP       external host        host <-> Glean MCP server   which host, which
+  (MCP server)      (Claude, Cursor…)   (host acts as the user)     tools, audit
+─────────────────────────────────────────────────────────────────────────────
+Same enterprise graph. Same permissions-aware retrieval. Different blast radius.
+```
+
+Choosing a run-mode is a MAP exercise: before any code, make explicit where the
+agent runs, what token it carries, and who can see results. The mode you can
+audit is the mode you should pick. Verified against `developer_platform`.

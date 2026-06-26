@@ -1,0 +1,72 @@
+{
+  "id": "quiz-w07",
+  "week": 7,
+  "pass_threshold": 0.8,
+  "questions": [
+    {
+      "id": "w07-q1",
+      "type": "mc",
+      "prompt": "Which set of languages does Glean ship typed Developer Platform clients for?",
+      "options": [
+        "Python, TypeScript, Java, Go",
+        "Python and JavaScript only",
+        "Ruby, PHP, C#, Rust",
+        "There is no SDK; you must use raw HTTP"
+      ],
+      "answer_index": 0,
+      "explanation": "Glean provides typed clients for Python, TypeScript, Java, and Go over the same platform APIs."
+    },
+    {
+      "id": "w07-q2",
+      "type": "mc",
+      "prompt": "Why does a user-scoped token return different results for two different users running the same query?",
+      "options": [
+        "It caches per user at random",
+        "It carries the caller's identity, so Glean filters by that user's permissions",
+        "It only searches the user's own documents",
+        "It sorts results differently per user"
+      ],
+      "answer_index": 1,
+      "explanation": "A user-scoped token impersonates one user, so Glean enforces that user's permissions and returns only what they may see."
+    },
+    {
+      "id": "w07-q3",
+      "type": "mc",
+      "prompt": "In a Chat API response, what do the citations tell you?",
+      "options": [
+        "How fast the answer was generated",
+        "The documents the answer is grounded in — your basis for trusting it",
+        "The user's recent searches",
+        "Which model produced the answer"
+      ],
+      "answer_index": 1,
+      "explanation": "Citations are the grounding sources. No citations means the answer is ungrounded and should not be trusted as fact."
+    },
+    {
+      "id": "w07-q4",
+      "type": "mc",
+      "prompt": "You need to make 10,000 support tickets searchable in Glean. Which API do you use?",
+      "options": [
+        "The Client API",
+        "The Indexing API",
+        "The Web SDK",
+        "The Search API"
+      ],
+      "answer_index": 1,
+      "explanation": "Writing content into the graph is the Indexing API's job; the Client API only reads what is already indexed."
+    },
+    {
+      "id": "w07-q5",
+      "type": "mc",
+      "prompt": "When pushing documents through the Indexing API, why must you include permission metadata?",
+      "options": [
+        "It speeds up indexing",
+        "It is optional styling for the results page",
+        "Glean enforces only the permissions you push, so without ACLs the content is not access-controlled",
+        "It sets the document's display title"
+      ],
+      "answer_index": 2,
+      "explanation": "Permissions ship with the document; Glean can only filter by ACLs you actually push, so omitting them leaves the content ungoverned."
+    }
+  ]
+}

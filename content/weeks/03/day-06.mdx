@@ -1,0 +1,51 @@
+---
+week: 3
+day: 6
+level: "200"
+title: "Per-App Round-up: GitHub/GitLab, Teams, Gong, Zendesk"
+theme: "One app: pattern, four more vocabularies"
+duration_min: 30
+objectives:
+  - "Recognize the per-app facets for code, chat, calls, and support"
+  - "Map a question to the right app and its strongest facet"
+references:
+  - source_id: "datasource_filters"
+    minutes: 10
+lab:
+  minutes: 8
+  steps_ref: true
+working_example:
+  language: "text"
+  verified_against: "datasource_filters"
+nist_rmf: ["MAP"]
+check_for_understanding: "Given a question, how do you pick which app: to scope to first?"
+quiz_ref: "quiz-w03"
+video_summary: "Same app: pattern, four more vocabularies. GitHub repo+state, Teams channel+time, Gong account+date, Zendesk status+priority. Learn each app's strongest facet and the same one line works everywhere."
+status: "published"
+---
+
+# Day 6 Lab
+1. Pick a question you actually have about each of: code, a chat thread, a sales call, a support issue.
+2. For each, choose the `app:` to scope to.
+3. Add the one facet that app indexes best.
+4. Note the pattern: same syntax, the app decides the vocabulary.
+
+## Working Example: Four More Apps, One Pattern
+
+The `app:` filter scopes to a source; the facets after it are whatever that
+source indexes. Verified against `datasource_filters`.
+
+```text
+app:github repo:atlas-api state:open is:pr        → open PRs in one repo
+app:teams channel:"Release" after:2026-06-15      → recent Release-channel chat
+app:gong account:Acme after:2026-06-01            → Acme call recordings, last month
+app:zendesk status:open priority:urgent           → the live urgent ticket queue
+
+Code → repo + state. Chat → channel + time.
+Calls → account + date. Support → status + priority.
+```
+
+To pick the first `app:`, match the question to the system of record: a PR
+question lives in GitHub, a "what did the customer say on the call" question
+lives in Gong. Scope to where the answer is stored, then reach for that app's
+strongest facet. Verified against `datasource_filters`.

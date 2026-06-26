@@ -1,0 +1,58 @@
+---
+week: 5
+day: 6
+level: "300"
+title: "Skill Quality and Iteration"
+theme: "Writing descriptions that route reliably"
+duration_min: 30
+objectives:
+  - "Diagnose a misroute and trace it to the Skill description"
+  - "Iterate a description so the right requests trigger the right Skill"
+references:
+  - source_id: "assistant_skills"
+    minutes: 10
+lab:
+  minutes: 8
+  steps_ref: true
+working_example:
+  language: "text"
+  verified_against: "assistant_skills"
+nist_rmf: ["MANAGE"]
+check_for_understanding: "You have two Skills that keep stealing each other's requests. What do you fix?"
+quiz_ref: "quiz-w05"
+video_summary: "Skills aren't write-once. When one fires on the wrong prompt, the fix is almost always the description. Iterate it, retest, and watch the misroutes drop."
+status: "published"
+---
+
+# Day 6 Lab
+1. Collect a few requests where a Skill fired on the wrong prompt (a misroute).
+2. For each, read the two descriptions that competed for it.
+3. Tighten the "when to use" lines so their boundaries don't overlap.
+4. Re-run the same requests and confirm they now route correctly.
+5. Keep a short log of phrasing → routed Skill; that log is how you manage quality over time.
+
+## Working Example: Fixing a Misroute
+
+A Skill that fires on the wrong request is almost always a description problem, not
+an instruction problem. Iterate the "when to use" lines until each Skill owns a
+clear band of requests. Verified against `assistant_skills`.
+
+```text
+Misroute:
+  "recap the launch sync"  → routed to "Release Notes Drafter"  (wrong)
+                             wanted "Meeting recap"
+
+Cause — overlapping descriptions:
+  Release Notes Drafter: "when the user asks to summarize work"   ← too broad
+  Meeting recap:         "when the user asks for a recap"
+
+Fix — sharpen the boundary:
+  Release Notes Drafter: "when the user asks to draft RELEASE NOTES from PRs"
+  Meeting recap:         "when the user asks to recap a MEETING or sync"
+
+Retest → "recap the launch sync" now routes to Meeting recap. ✓
+```
+
+Glean's framing is that Skills work "without prompt engineering"; in practice you
+still manage routing quality by iterating descriptions until the misroutes stop.
+Treat it as an ongoing loop: observe, sharpen the boundary, retest.

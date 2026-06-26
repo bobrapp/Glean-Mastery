@@ -1,0 +1,56 @@
+---
+week: 4
+day: 6
+level: "300"
+title: "Assistant Thinking Mode"
+theme: "When to invoke multi-step reasoning"
+duration_min: 30
+objectives:
+  - "Recognize the questions that warrant multi-step reasoning over a quick answer"
+  - "Decide when the added latency of a deeper pass is worth it"
+references:
+  - source_id: "fall25_launch"
+    minutes: 8
+  - source_id: "assistant_skills"
+    minutes: 6
+lab:
+  minutes: 8
+  steps_ref: true
+working_example:
+  language: "text"
+  verified_against: "fall25_launch"
+case_study:
+  source_id: "case_confluent_glean"
+nist_rmf: ["MAP"]
+check_for_understanding: "Give one question where a deeper multi-step pass is worth the wait, and one where a quick answer is better."
+quiz_ref: "quiz-w04"
+video_summary: "Not every question needs deep reasoning. Glean's Fall '25 launch describes a thinking mode for multi-step work — use it for synthesis and comparison, skip it for a single lookup."
+status: "published"
+---
+
+# Day 6 Lab
+1. Write three questions: one lookup, one synthesis, one comparison across sources.
+2. Predict which would benefit from a multi-step reasoning pass and which would not.
+3. Run each and observe answer depth versus the time it took to return.
+4. Note where the deeper pass changed the answer, not just its length.
+5. Draft a personal rule for when to reach for thinking mode.
+
+## Working Example: Matching the Question to the Mode
+
+A multi-step "thinking" mode is among the capabilities Glean described at its
+Fall '25 launch; attribute the capability to Glean rather than asserting it from
+first principles. The skill is matching the question to the mode. Verified against `fall25_launch`.
+
+```text
+Question shape                          Better mode (per Glean's Fall '25 framing)
+-------------------------------------   -----------------------------------------
+"What's our PTO accrual rate?"          quick answer (single fact lookup)
+"Compare our three vendor SLAs and      multi-step reasoning (synthesis across
+ flag the weakest term"                  several docs, then a judgment)
+"Summarize this one doc"                quick answer (one source, no cross-ref)
+
+Worth-the-wait test:
+  Does answering require pulling from SEVERAL sources and reasoning over them?
+    yes → thinking mode earns its latency
+    no  → a quick answer is faster and just as correct
+```

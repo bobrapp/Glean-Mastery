@@ -1,0 +1,53 @@
+---
+week: 4
+day: 4
+level: "300"
+title: "Repeatable Search Recipes"
+theme: "Turning a good query into a reusable saved view"
+duration_min: 30
+objectives:
+  - "Capture a refined query as a named, reusable recipe"
+  - "Document a recipe so a teammate can run it and get the same result set"
+references:
+  - source_id: "search_filters"
+    minutes: 9
+lab:
+  minutes: 8
+  steps_ref: true
+working_example:
+  language: "text"
+  verified_against: "search_filters"
+case_study:
+  source_id: "case_confluent_glean"
+nist_rmf: ["MANAGE"]
+check_for_understanding: "What three things must a written recipe include so a colleague reproduces your exact result set?"
+quiz_ref: "quiz-w04"
+video_summary: "A search you nailed once is worth saving. Capture the operator string, name it for the job it does, and a recipe you tuned for ten minutes pays back every week."
+status: "published"
+---
+
+# Day 4 Lab
+1. Take a refined, operator-stacked query you trust from earlier this week.
+2. Write it down exactly — every operator, in order — as a single reusable string.
+3. Give it a name that describes the *job*, not the keywords (e.g. "open Sev-1 postmortems").
+4. Note what it's for and when to re-run it, so future-you doesn't re-derive it.
+5. Hand it to a teammate; confirm they get the same result set from the recipe alone.
+
+## Working Example: A Named, Reusable Recipe
+
+A recipe is the operator string plus the context to run it correctly. Capture all
+of it and the search becomes a team asset, not a one-off. Verified against `search_filters`.
+
+```text
+Recipe: "Open Sev-1 postmortems — last 90 days"
+  Query:   postmortem type:document app:gdrive owner:sre-team after:2026-03-28
+  Purpose: weekly reliability review — surfaces docs that still need follow-up
+  Re-run:  every Monday; bump the after: date to keep the 90-day window
+
+Why each part is load-bearing:
+  postmortem ............. the topic
+  type:document .......... excludes Slack chatter and tickets
+  app:gdrive ............. the canonical source of truth
+  owner:sre-team ......... the team that authors them
+  after:2026-03-28 ....... the 90-day window (this is what you update)
+```

@@ -1,0 +1,58 @@
+---
+week: 8
+day: 2
+level: "500"
+title: "The MCP Endpoint: Connect Glean as an MCP Server"
+theme: "Exposing the graph to agent hosts over Model Context Protocol"
+duration_min: 30
+objectives:
+  - "Describe what Glean's MCP server exposes and how a host connects to it"
+  - "Write a host MCP config that points at the Glean endpoint with a scoped token"
+references:
+  - source_id: "mcp"
+    minutes: 10
+lab:
+  minutes: 8
+  steps_ref: true
+working_example:
+  language: "json"
+  verified_against: "mcp"
+nist_rmf: ["GOVERN"]
+check_for_understanding: "What does the MCP server expose to a host, and what does it deliberately NOT change about access?"
+quiz_ref: "quiz-w08"
+video_summary: "Glean ships an MCP server so agent hosts can reach the enterprise graph through one declared endpoint. The host adds it as a server, authenticates with a scoped token, and retrieval stays permissions-aware."
+status: "published"
+---
+
+# Day 2 Lab
+1. Open Glean's MCP documentation and note what the server exposes (search and the tools the host can call).
+2. Decide which host you'll connect (an IDE, a desktop agent) and where it reads server configs.
+3. Write the host's MCP server entry pointing at the Glean endpoint, with the token supplied from the environment — never inline.
+4. Confirm the connection lists Glean's tools, then run one read to verify results respect your permissions.
+
+## Working Example: A Host MCP Server Config
+
+Glean provides an MCP server so a host can connect to the enterprise graph over
+Model Context Protocol. The host registers the server by URL and authenticates
+with a Glean-issued, scoped token; the token still resolves to a user, so
+retrieval remains permissions-aware. The token is read from the environment,
+never hard-coded. Verified against `mcp`.
+
+```json
+{
+  "mcpServers": {
+    "glean": {
+      "type": "http",
+      "url": "https://<your-instance>-be.glean.com/mcp/default",
+      "headers": {
+        "Authorization": "Bearer ${GLEAN_MCP_TOKEN}"
+      }
+    }
+  }
+}
+```
+
+Adding the server is a GOVERN decision, not just a wiring step: you are
+declaring which host may reach the graph and under whose identity. The token is
+scoped and acts as a user, so the MCP endpoint does not widen access — it only
+relays it. Verified against `mcp`.

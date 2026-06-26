@@ -1,0 +1,60 @@
+---
+week: 5
+day: 7
+level: "300"
+title: "Power-User Capstone: Automate a Recurring Task"
+theme: "Build a Skill that earns back your time"
+duration_min: 30
+objectives:
+  - "Build a Skill that automates a recurring task end to end"
+  - "Connect the week's pieces: author, route, invoke, share, iterate"
+references:
+  - source_id: "assistant_skills"
+    minutes: 10
+lab:
+  minutes: 8
+  steps_ref: true
+working_example:
+  language: "text"
+  verified_against: "assistant_skills"
+case_study:
+  source_id: "case_zillow_glean"
+nist_rmf: ["MANAGE"]
+check_for_understanding: "Name one recurring task in your own week that a Skill could take off your plate."
+quiz_ref: "quiz-w05"
+video_summary: "The payoff: a Skill that runs a recurring task for you. Author it, make it route, share it, iterate. This is how teams like Zillow turn Glean Assistant into everyday leverage."
+status: "published"
+---
+
+# Day 7 Lab
+1. Pick a real recurring task you own — a weekly report, a triage pass, a digest.
+2. Author the Skill: instructions, a template, one worked example (Week 5 anatomy).
+3. Make it route: write a tight description, test it in Thinking mode.
+4. Share it with your team and assign an owner (the Day 5 review gate).
+5. Run it for a week, log misroutes, and iterate the description until it's reliable.
+
+## Working Example: A Recurring-Task Skill, End to End
+
+This capstone Skill stitches the week together — authored, routed, invocable,
+shared, and iterated. It runs a task you'd otherwise do by hand every week.
+Verified against `assistant_skills`.
+
+```text
+Skill: "Monday triage digest"        scope: Shared (team: Support)  owner: @lead
+  Description (routes on):
+    "When the user asks for the Monday triage or weekly ticket digest."
+  Instructions:
+    1. Pull open tickets older than 7 days.
+    2. Group by severity, then by owner.
+    3. Flag the top 3 at-risk items with a one-line reason.
+  Example: input = 42 open tickets → output = severity table + 3 flagged risks
+  Invoke:  /monday-triage   (explicit)  — or just "give me the Monday triage"
+```
+
+## Case Study: Zillow
+
+Zillow adopted Glean Assistant and Skills broadly, letting employees package
+recurring work — and increasingly delegate it to agents — instead of redoing it by
+hand each cycle. The capstone above is that pattern in miniature: one well-described,
+well-owned Skill that automates a task and returns hours to the team that built it.
+That adoption-into-agents arc is the payoff of everything this week covered.

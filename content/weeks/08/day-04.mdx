@@ -1,0 +1,73 @@
+---
+week: 8
+day: 4
+level: "500"
+title: "The Agent Toolkit: CrewAI, ADK, LangGraph, OpenAI on Glean"
+theme: "Wiring Glean retrieval into your framework of choice"
+duration_min: 30
+objectives:
+  - "Identify the agent frameworks Glean's platform supports as a retrieval backend"
+  - "Wire Glean search into a framework agent as a callable tool"
+references:
+  - source_id: "developer_platform"
+    minutes: 7
+  - source_id: "api_clients"
+    minutes: 6
+lab:
+  minutes: 8
+  steps_ref: true
+working_example:
+  language: "python"
+  verified_against: "developer_platform"
+nist_rmf: ["MAP"]
+check_for_understanding: "What is the one thing every framework's Glean tool has in common, regardless of framework?"
+quiz_ref: "quiz-w08"
+video_summary: "CrewAI, Google ADK, LangGraph, OpenAI — Glean describes building with each against its platform. The pattern is identical: wrap a typed-client search call as a tool, and let the framework orchestrate."
+status: "published"
+---
+
+# Day 4 Lab
+1. Pick one framework your team uses: CrewAI, Google ADK, LangGraph, or the OpenAI Agents SDK.
+2. Install Glean's typed client and confirm a bare search call works (you did this in Week 7).
+3. Wrap that search call as a tool the framework can call, with a clear name and docstring.
+4. Register the tool with one agent and have it answer a question that requires company context.
+
+## Working Example: A Glean Search Tool for a Framework Agent
+
+Glean describes building against its platform with frameworks such as CrewAI,
+Google ADK, LangGraph, and the OpenAI Agents SDK. The common core is small: wrap
+a typed-client search call as a tool, then let the framework orchestrate. Here
+the tool is framework-neutral — the same function plugs into any of them.
+Verified against `developer_platform`.
+
+```python
+import os
+from glean import Glean
+
+# One client, authenticated once from the environment — never hard-code tokens.
+_client = Glean(
+    instance=os.environ["GLEAN_INSTANCE"],
+    api_token=os.environ["GLEAN_API_TOKEN"],
+)
+
+
+def glean_search(query: str, top_k: int = 5) -> list[dict]:
+    """Search the enterprise graph and return titles + URLs.
+
+    Wrap this as a tool in CrewAI / Google ADK / LangGraph / OpenAI Agents SDK.
+    Retrieval runs as the token's user, so results stay permissions-aware.
+    """
+    resp = _client.client.search.query(query=query, page_size=top_k)
+    return [{"title": r.title, "url": r.url} for r in resp.results]
+
+
+# CrewAI:    Tool(name="glean_search", func=glean_search, description=...)
+# OpenAI:    @function_tool def glean_search(...) -> ...
+# LangGraph: bind glean_search into a ToolNode
+# Google ADK: register glean_search as a FunctionTool
+```
+
+The MAP lesson: whatever the framework, the trust boundary is the same — the
+tool carries a token that resolves to a user, so the agent can only ever
+retrieve what that user is allowed to see. Map that once and it holds across
+every framework. Verified against `developer_platform`.

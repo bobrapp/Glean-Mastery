@@ -1,0 +1,53 @@
+---
+week: 3
+day: 4
+level: "200"
+title: "Per-App Search: Confluence"
+theme: "Facets for space, author, and label"
+duration_min: 30
+objectives:
+  - "Scope a query to Confluence and filter by space"
+  - "Use author and label facets to find the canonical page, not a copy"
+references:
+  - source_id: "datasource_filters"
+    minutes: 9
+lab:
+  minutes: 8
+  steps_ref: true
+working_example:
+  language: "text"
+  verified_against: "datasource_filters"
+nist_rmf: ["MAP"]
+check_for_understanding: "How does a label: facet help you find the official page over a draft?"
+quiz_ref: "quiz-w03"
+video_summary: "Confluence organizes by space, author, label. app:confluence space:ENG label:runbook finds the official runbook in Engineering, not someone's stale draft. Labels carry the team's intent — lean on them."
+status: "published"
+---
+
+# Day 4 Lab
+1. Run `app:confluence space:` plus a space key. Note the result count.
+2. Add `author:` to scope to the page's likely owner.
+3. Add `label:` to keep only pages the team tagged for a purpose.
+4. Compare the labeled result against the unfiltered one — which is canonical?
+
+## Working Example: Confluence Facets
+
+Confluence groups pages into spaces and lets teams tag them with labels;
+`app:confluence` selects the source and each facet matches that structure.
+Verified against `datasource_filters`.
+
+```text
+app:confluence space:ENG onboarding
+  → every onboarding-ish page in Engineering, drafts and all
+
+app:confluence space:ENG label:onboarding author:@lin
+  → Lin's onboarding pages tagged for that purpose — the maintained set
+
+app:confluence space:OPS label:runbook incident
+  → only pages the Ops team labeled "runbook" about incidents
+```
+
+A `label:` facet finds the official page because labels are deliberate: a team
+tags the canonical runbook so it stands apart from the dozen drafts that mention
+the same words. The label is intent the author put there for exactly this lookup.
+Verified against `datasource_filters`.

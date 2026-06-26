@@ -1,59 +1,46 @@
 ---
 week: 2
 day: 1
-level: "300"
-title: "Ranking Signals and Trade-offs"
-theme: "Signal quality and evaluation"
+level: "200"
+title: "The updated: Time Filter"
+theme: "Bounding results by recency"
 duration_min: 30
 objectives:
-  - "Identify common ranking signals"
-  - "Assess relevance trade-offs"
+  - "Use updated: to keep only results changed within a recent window"
+  - "Choose between today, past_week, and past_month for the right freshness"
 references:
-  - source_id: "retrieval_basics"
-    minutes: 12
+  - source_id: "search_filters"
+    minutes: 10
 lab:
-  minutes: 10
+  minutes: 8
   steps_ref: true
 working_example:
-  language: "typescript"
-  verified_against: "retrieval_basics"
-case_study:
-  source_id: "case_confluent_glean"
-nist_rmf: ["MEASURE", "MANAGE"]
-check_for_understanding: "Which signal change would you test first and why?"
+  language: "text"
+  verified_against: "search_filters"
+nist_rmf: ["MAP"]
+check_for_understanding: "When does updated:past_week serve you better than adding another keyword?"
 quiz_ref: "quiz-w02"
-video_summary: "Search ranking blends signals — text match, recency, affinity, popularity. Tuning one weight quietly demotes the others. Change one at a time and let the A/B test show what moved."
+video_summary: "Old results burying the fresh ones? Add updated:past_week to keep only what changed recently. today, past_week, and past_month bound your search by time so the stale stuff drops away."
 status: "published"
 ---
 
 # Day 1 Lab
+1. Run a query for an active topic — something people edit often.
+2. Add `updated:past_week` and note how the result count shrinks.
+3. Swap in `updated:today`, then `updated:past_month`, and watch the window widen.
+4. Pick the smallest window that still returns what you need.
+5. Note when recency mattered more than another keyword would have.
 
-1. List candidate ranking signals.
-2. Predict possible failure modes for each.
-3. Propose one A/B test.
+## Working Example: updated: in Action
 
-## Working Example: Blending Ranking Signals
+The `updated:` filter keeps only results changed inside a recency window. Verified
+against `search_filters`.
 
-A few signals combine into one score; the *weights* are the trade-off. Raise one
-and you relatively demote the others — which is why "what would you test first?"
-has a real answer. Illustrative, verified against `retrieval_basics`.
+```text
+roadmap                       → everything ever indexed, oldest drafts included
+roadmap updated:today         → only versions touched today
+roadmap updated:past_week     → changes from the last seven days
+roadmap updated:past_month    → a wider net for slower-moving work
 
-```typescript
-type Signals = { textMatch: number; recency: number; affinity: number; popularity: number };
-
-const WEIGHTS = { textMatch: 0.5, recency: 0.2, affinity: 0.2, popularity: 0.1 };
-
-const score = (s: Signals): number =>
-  s.textMatch * WEIGHTS.textMatch +
-  s.recency * WEIGHTS.recency +
-  s.affinity * WEIGHTS.affinity +
-  s.popularity * WEIGHTS.popularity;
-
-// Equal text match; the tie is broken by the other signals.
-score({ textMatch: 0.9, recency: 0.2, affinity: 0.9, popularity: 0.2 }); // 0.69  (affinity-led)
-score({ textMatch: 0.9, recency: 0.9, affinity: 0.1, popularity: 0.9 }); // 0.74  (recency-led)
+Reach for updated: when the wrong results are stale, not off-topic.
 ```
-
-The second doc wins here purely on recency. If your users complain that *stale*
-docs rank too high, the first signal to test is the `recency` weight — change one
-weight at a time so the A/B test attributes the effect cleanly.

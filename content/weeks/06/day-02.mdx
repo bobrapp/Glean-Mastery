@@ -1,89 +1,61 @@
 ---
 week: 6
 day: 2
-level: "500"
-title: "Pro Track: Orchestrating Multi-Step Agents"
-theme: "Agent orchestration, tool use, and layered guardrails"
+level: "300"
+title: "Agent Steps and Instructions"
+theme: "Iterate the plan conversationally"
 duration_min: 30
 objectives:
-  - "Decompose a task into an orchestrated multi-agent plan"
-  - "Apply layered policy-as-code checks across the plan"
+  - "Refine an agent's steps by talking to the builder, not editing a form"
+  - "Write a clear per-step instruction that constrains what the step does"
 references:
-  - source_id: "retrieval_basics"
-    minutes: 5
-  - source_id: "glean_search_docs"
-    minutes: 4
+  - source_id: "fall25_launch"
+    minutes: 9
 lab:
-  minutes: 12
+  minutes: 8
   steps_ref: true
 working_example:
-  language: "rego"
-  verified_against: "retrieval_basics"
-case_study:
-  source_id: "case_confluent_glean"
-nist_rmf: ["GOVERN", "MAP", "MEASURE", "MANAGE"]
-check_for_understanding: "Where in an orchestration plan should a guardrail run, and why more than once?"
+  language: "text"
+  verified_against: "fall25_launch"
+nist_rmf: ["MANAGE"]
+check_for_understanding: "What makes a step instruction tight enough to be safe to run — give one property."
 quiz_ref: "quiz-w06"
-video_summary: "One checkpoint is not enough for multi-step agents. Gate the retrieve step against unsafe context and the act step against unsafe actions — proceed only when both are clear."
+video_summary: "An agent's plan is a list of steps you can talk into shape. Add a step, reorder, or tighten an instruction by chatting — then read the revised plan back before you let it run."
 status: "published"
 ---
 
 # Day 2 Lab
-1. Decompose a goal into a plan: plan -> retrieve -> reason -> act -> verify.
-2. Identify the highest-risk step in the plan and justify the ranking.
-3. Place a policy-as-code check at both the retrieve and act steps.
-4. Map each guardrail to the NIST AI RMF function it supports.
 
-## Working Example: Layered Guardrails (Rego)
+**Status: Beta (Glean Fall '25 launch) — confirm GA availability in your tenant before relying on this.**
 
-Day 1 gated a single act. Orchestration needs checks at more than one step:
-reject unsafe *context* at the retrieve stage, and still reject an unsafe *act*
-later. This policy exposes two decisions over one plan, and only proceeds when
-both are clear. Verified against `retrieval_basics`.
+1. Open yesterday's draft agent and look at its ordered steps.
+2. In chat, tighten one step's instruction — name the exact channel, time window, or output format.
+3. Ask the builder to add a guard step: "only continue if there are new posts."
+4. Reorder the steps if the plan reads out of sequence.
+5. Read the revised plan back end to end before you let it run.
 
-```rego
-package glean.agent.orchestration
+## Working Example: Tightening a Step by Chatting
 
-# Stage 1 — retrieve: refuse to admit context the plan shouldn't see.
-deny_retrieve contains msg if {
-	some src in input.plan.retrieved
-	src.classification == "restricted"
-	not src.cleared
-	msg := sprintf("retrieve: restricted source %q not cleared", [src.id])
-}
+Per the Fall '25 launch announcement, you iterate the plan in conversation: each step
+carries an instruction you can sharpen in plain language. Verified against
+`fall25_launch`.
 
-# Stage 2 — act: refuse to act on anything still unverified at execution time.
-deny_act contains msg if {
-	some src in input.plan.acted_on
-	not src.verified
-	msg := sprintf("act: acting on unverified source %q", [src.id])
-}
+```text
+Loose step:   "Summarize the posts."
 
-# The orchestrator may proceed only if BOTH gates are clear.
-default allow_plan := false
+You:    "Summarize only posts since the last run, max 5 bullets, link each source."
 
-allow_plan if {
-	count(deny_retrieve) == 0
-	count(deny_act) == 0
-}
+Revised step instruction:
+  - Scope:   posts in #incidents newer than last_run_at
+  - Limit:   at most 5 bullets
+  - Format:  one bullet per incident, each with a source link
+  - Guard:   if zero new posts, stop and send nothing
+
+You:    "If there are no new posts, don't DM me at all."   -> adds the guard above
 ```
 
-### Sample input
-
-```json
-{
-  "plan": {
-    "retrieved": [
-      { "id": "doc-1", "classification": "public" },
-      { "id": "doc-2", "classification": "restricted", "cleared": true }
-    ],
-    "acted_on": [{ "id": "doc-1", "verified": true }]
-  }
-}
-```
-
-With this input both gates are clear and `allow_plan` is `true`. Flip
-`doc-2.cleared` to `false` and `deny_retrieve` fires; mark `doc-1.verified`
-`false` and `deny_act` fires instead. A single chokepoint would catch only one
-of these — which is why the guardrail runs at both steps (today's
-check-for-understanding).
+A vague instruction ("summarize the posts") leaves the agent to improvise; a tight one
+fixes scope, limit, format, and a stop condition. That precision is a MANAGE control —
+it's how you keep a running agent inside the lines you meant. Remember this builder is
+announced, not confirmed-GA: verify the step-editing behavior in your tenant before you
+depend on it.

@@ -1,0 +1,59 @@
+---
+week: 6
+day: 5
+level: "300"
+title: "Looping Over Data"
+theme: "Process a dataset step by step"
+duration_min: 30
+objectives:
+  - "Drive an agent to iterate over a list, applying the same steps to each item"
+  - "Bound a loop so a large or surprising dataset can't run away"
+references:
+  - source_id: "fall25_launch"
+    minutes: 8
+lab:
+  minutes: 8
+  steps_ref: true
+working_example:
+  language: "text"
+  verified_against: "fall25_launch"
+nist_rmf: ["MAP"]
+check_for_understanding: "Why should you cap the number of items a loop will process on a single run?"
+quiz_ref: "quiz-w06"
+video_summary: "Glean's Fall '25 launch announced looping: hand an agent a list and it runs your steps over each row. The skill is shaping the input and bounding the loop so it can't run away."
+status: "published"
+---
+
+# Day 5 Lab
+
+**Status: Beta (Glean Fall '25 launch) — confirm GA availability in your tenant before relying on this.**
+
+1. Pick a dataset your chore repeats over — open Jira tickets, new leads, stale docs.
+2. Have the agent fetch that list as the loop's input, and look at what one row contains.
+3. Define the per-item steps once: the agent applies them to every row.
+4. Add a cap — process at most N items per run — so a huge list can't run away.
+5. Decide what a per-item failure does: skip and log, or stop the whole loop.
+
+## Working Example: Iterating Over a List
+
+Per Glean's Fall '25 launch announcement, an agent can loop over a dataset, applying the
+same steps to each item. Verified against `fall25_launch`.
+
+```text
+Input list:  open Jira tickets with no owner   -> [PROJ-12, PROJ-19, PROJ-23, ...]
+
+For each ticket in the list (cap: 25 per run):
+  Step 1  read the ticket
+  Step 2  find a likely owner from the related component
+  Step 3  post a suggestion in #triage (read-style, no auto-assign)
+  On item error: log it, skip to the next ticket
+
+Same steps, every row. The cap and skip-on-error keep one bad row from
+breaking — or runaway-looping — the whole job.
+```
+
+Looping is leverage: one reviewed step list, applied across a whole dataset. That makes
+*shaping the input* the critical move — what's in the list, how big it is, what one row
+looks like — which is MAP work. The cap and the per-item error rule keep an unexpected
+dataset from turning leverage into damage. Looping is announced capability, not confirmed
+GA: verify it behaves this way in your tenant before you point it at real data.

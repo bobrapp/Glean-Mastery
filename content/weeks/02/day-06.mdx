@@ -1,0 +1,51 @@
+---
+week: 2
+day: 6
+level: "200"
+title: "Verifying Answers and Citations"
+theme: "Checking the sources before you trust the answer"
+duration_min: 30
+objectives:
+  - "Open each citation behind an Assistant answer and confirm it supports the claim"
+  - "Spot when an answer is stale, partial, or unsupported by its sources"
+references:
+  - source_id: "assistant_skills"
+    minutes: 8
+  - source_id: "retrieval_basics"
+    minutes: 6
+lab:
+  minutes: 8
+  steps_ref: true
+working_example:
+  language: "text"
+  verified_against: "assistant_skills"
+nist_rmf: ["MEASURE"]
+check_for_understanding: "Name one sign that an answer's citation does not actually support it."
+quiz_ref: "quiz-w02"
+video_summary: "An answer with citations still has to be checked. Open each source, confirm it says what the answer claims, and watch the dates. Trust the sources, not the confident tone — that's the governed habit."
+status: "published"
+---
+
+# Day 6 Lab
+1. Ask the Assistant a question that matters and read its answer.
+2. Open every citation it offers, one at a time.
+3. For each, confirm the source actually states what the answer claims.
+4. Check the dates — a citation can be real but out of date.
+5. If a claim has no citation, or the source doesn't match, treat the answer as unverified.
+
+## Working Example: Verifying a Citation
+
+A cited answer is a starting point, not a verdict. Open each source and confirm it
+supports the specific claim before you act on it. Verified against
+`assistant_skills`.
+
+```text
+Answer claim:  "Travel must be booked 14 days in advance." [1]
+[1] Travel Policy (Confluence)
+
+Check 1 — Open [1]. Does it say 14 days, or a different number?
+Check 2 — Read the date. Is this the current policy or a 2024 draft?
+Check 3 — No citation on a claim? Treat that line as unsupported.
+
+The answer is only as good as the sources you can confirm behind it.
+```

@@ -1,0 +1,67 @@
+---
+week: 8
+day: 5
+level: "500"
+title: "Tool Use & Orchestration: Multi-Step Agents with Guardrails"
+theme: "Layered checks around a multi-tool agent loop"
+duration_min: 30
+objectives:
+  - "Sequence a multi-step, multi-tool agent run that uses Glean retrieval plus an action"
+  - "Add layered guardrails — input, mid-loop, and pre-action — to the run"
+references:
+  - source_id: "developer_platform"
+    minutes: 7
+  - source_id: "api_clients"
+    minutes: 6
+lab:
+  minutes: 8
+  steps_ref: true
+working_example:
+  language: "python"
+  verified_against: "developer_platform"
+nist_rmf: ["MANAGE"]
+check_for_understanding: "Name the three guardrail layers in the loop and what each one stops."
+quiz_ref: "quiz-w08"
+video_summary: "Real agents chain tools: retrieve, then reason, then act. Wrap that loop in three guardrails — vet the input, check sources mid-loop, and gate the action — so a bad step never reaches the world."
+status: "published"
+---
+
+# Day 5 Lab
+1. Define a two-tool task: search Glean, then take one action (post a summary, file a ticket).
+2. Add an input guardrail that rejects out-of-scope or unsafe requests before any tool runs.
+3. Add a mid-loop check that refuses to proceed if retrieved sources are unverified.
+4. Add a pre-action gate that blocks the final action unless the user's role permits it. Run it; watch each layer fire.
+
+## Working Example: A Guarded Multi-Tool Loop
+
+A multi-step agent chains tools — retrieve with Glean, reason, then act. Layered
+guardrails wrap that loop so an unsafe step is caught before it propagates: one
+check on the way in, one in the middle on the evidence, and one before the act.
+Verified against `developer_platform`.
+
+```python
+def run_agent(request, user):
+    # Layer 1 — input guardrail: stop unsafe/out-of-scope requests up front.
+    if not input_allowed(request, user):
+        return deny("input rejected by policy")
+
+    # Tool 1 — retrieve (permissions-aware: runs as `user`'s token).
+    sources = glean_search(request.query)
+
+    # Layer 2 — mid-loop guardrail: refuse to reason on unverified evidence.
+    if any(not s.get("verified") for s in sources):
+        return deny("unverified source(s) in retrieval")
+
+    draft = reason(request, sources)  # Tool 2 — synthesize a proposed action.
+
+    # Layer 3 — pre-action gate: the irreversible step needs explicit allow.
+    if not action_permitted(request.action, user.role):
+        return deny(f"action {request.action!r} not permitted for {user.role!r}")
+
+    return act(draft)  # only now does the agent touch the world
+```
+
+This is a MANAGE control: each layer narrows the blast radius, and the
+pre-action gate is the last line before anything irreversible. Glean's
+retrieval stays scoped to the user, but orchestration risk is yours to manage —
+the guardrails are how you do it. Verified against `developer_platform`.

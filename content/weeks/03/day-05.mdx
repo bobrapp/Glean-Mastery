@@ -1,0 +1,53 @@
+---
+week: 3
+day: 5
+level: "200"
+title: "Per-App Search: Salesforce"
+theme: "Facets for stage, amount, and close date"
+duration_min: 30
+objectives:
+  - "Scope a query to Salesforce and filter opportunities by stage"
+  - "Use amount and close-date facets to surface deals that matter now"
+references:
+  - source_id: "datasource_filters"
+    minutes: 9
+lab:
+  minutes: 8
+  steps_ref: true
+working_example:
+  language: "text"
+  verified_against: "datasource_filters"
+nist_rmf: ["MAP"]
+check_for_understanding: "Which two facets together build a 'closing this quarter' shortlist?"
+quiz_ref: "quiz-w03"
+video_summary: "Salesforce speaks in stage, amount, close date. app:salesforce stage:negotiation amount:>50000 closedate:this-quarter pulls the big deals closing now — a pipeline review from one search line."
+status: "published"
+---
+
+# Day 5 Lab
+1. Run `app:salesforce stage:` plus a deal stage. Note how many opportunities show.
+2. Add an `amount:>` threshold to keep only the larger deals.
+3. Add `closedate:` to scope to the period you care about.
+4. Read the shortlist — is it the list you would bring to a pipeline review?
+
+## Working Example: Salesforce Facets
+
+Salesforce indexes opportunities by structured fields; `app:salesforce` selects
+the source and each facet matches an opportunity field. Verified against
+`datasource_filters`.
+
+```text
+app:salesforce stage:negotiation
+  → every deal in negotiation — the whole stage, big and small
+
+app:salesforce stage:negotiation amount:>50000 closedate:this-quarter
+  → large deals in negotiation closing this quarter — the focus list
+
+app:salesforce account:Acme stage:closed-won closedate:2026
+  → Acme's wins this year, for the renewal narrative
+```
+
+`closedate:` and `amount:` together build the "closing this quarter" shortlist:
+the date facet bounds the time window and the amount threshold drops the small
+deals, leaving exactly the opportunities a pipeline review should cover. Verified
+against `datasource_filters`.

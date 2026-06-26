@@ -1,0 +1,45 @@
+---
+week: 2
+day: 3
+level: "200"
+title: "in: and collection: Containers"
+theme: "Searching inside a place"
+duration_min: 30
+objectives:
+  - "Use in: to search within a single container like a space or folder"
+  - "Use collection: to search inside a saved collection of documents"
+references:
+  - source_id: "search_filters"
+    minutes: 10
+lab:
+  minutes: 8
+  steps_ref: true
+working_example:
+  language: "text"
+  verified_against: "search_filters"
+nist_rmf: ["MAP"]
+check_for_understanding: "What is the difference between in: a container and collection: a saved set?"
+quiz_ref: "quiz-w02"
+video_summary: "Know where it lives? Use in: to search one container — a space or folder — and collection: to search a saved set you built. Both scope by place instead of by topic, so the rest of the index falls away."
+status: "published"
+---
+
+# Day 3 Lab
+1. Find a container you use often — a Confluence space, a Drive folder, a channel.
+2. Run a query with `in:` and that container's name to scope the search to it.
+3. Save a few documents into a collection if you have not already.
+4. Run the same query with `collection:` and your collection's name.
+5. Note when scoping by place is faster than scoping by `type:` or `app:`.
+
+## Working Example: in: and collection: in Action
+
+The `in:` filter scopes a search to one container; `collection:` scopes it to a
+saved set you curated. Verified against `search_filters`.
+
+```text
+onboarding in:"People Ops"          → only inside the People Ops space
+specs in:"Project Atlas"            → only inside the Atlas folder/space
+pricing collection:"Q2 Planning"    → only inside your saved Q2 Planning set
+
+Use in: for a place that already exists; collection: for a set you built by hand.
+```
