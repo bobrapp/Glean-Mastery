@@ -1,0 +1,40 @@
+{
+  "id": "quiz-w05",
+  "week": 5,
+  "pass_threshold": 0.8,
+  "questions": [
+    {
+      "id": "w05-q1",
+      "type": "mc",
+      "prompt": "How should a search request authenticate to the Glean API?",
+      "options": [
+        "A public anonymous key in the URL",
+        "A bearer token in the Authorization header",
+        "The user's password in the request body",
+        "No auth; the search API is open"
+      ],
+      "answer_index": 1,
+      "explanation": "Authenticated APIs expect a bearer token in the Authorization header, sourced from a secret store rather than hard-coded."
+    },
+    {
+      "id": "w05-q2",
+      "type": "mc",
+      "prompt": "Why wrap the raw search endpoint in a small typed client?",
+      "options": [
+        "To make each call slower",
+        "To centralize query options, types, and error handling",
+        "To avoid using HTTPS",
+        "To bypass rate limits"
+      ],
+      "answer_index": 1,
+      "explanation": "A typed client keeps query options, response shapes, and error handling consistent everywhere instead of scattering fetch calls."
+    },
+    {
+      "id": "w05-q3",
+      "type": "short",
+      "prompt": "Name one query option, besides the query string, a typed client should expose.",
+      "answer_key": "A page size or result limit (a source filter or page cursor is also acceptable).",
+      "explanation": "Limit, cursor, and source filters are common options worth typing once and reusing."
+    }
+  ]
+}

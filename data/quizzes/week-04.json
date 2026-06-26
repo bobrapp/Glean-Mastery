@@ -1,0 +1,30 @@
+{
+  "id": "quiz-w04",
+  "week": 4,
+  "pass_threshold": 0.8,
+  "questions": [
+    {
+      "id": "w04-q1",
+      "type": "mc",
+      "prompt": "Which operator most directly scopes a query to documents from one connected system?",
+      "options": ["owner:", "source:", "after:", "title:"],
+      "answer_index": 1,
+      "explanation": "source: restricts results to a specific datasource (e.g., source:drive)."
+    },
+    {
+      "id": "w04-q2",
+      "type": "mc",
+      "prompt": "You only want documents updated this quarter. Which kind of operator helps most?",
+      "options": ["An owner filter", "A type filter", "A date filter", "A title filter"],
+      "answer_index": 2,
+      "explanation": "Date operators (e.g., after:) bound results to a time window."
+    },
+    {
+      "id": "w04-q3",
+      "type": "short",
+      "prompt": "In one sentence, say when a filter beats a longer natural-language query.",
+      "answer_key": "When you already know a precise attribute — source, owner, or date — that deterministically narrows the result set.",
+      "explanation": "Filters express known constraints exactly; natural language is better for fuzzy or exploratory intent."
+    }
+  ]
+}

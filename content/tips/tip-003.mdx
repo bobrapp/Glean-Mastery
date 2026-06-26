@@ -1,0 +1,38 @@
+---
+id: "tip-003"
+title: "Call the search API with a typed client"
+level: "400"
+category: "api"
+audience: "builder"
+status: "draft"
+code_ref: "examples/tip-003/search-client.ts"
+verified_against: "retrieval_basics"
+---
+
+## Why this helps
+
+Scattering raw `fetch` calls across an app means every caller re-invents auth,
+query options, and error handling — and they drift. A small typed client makes
+the request shape a single, reviewable contract.
+
+## Steps
+
+1. Define request and response **types** for the search call (see
+   [`examples/tip-003/search-client.ts`](../../examples/tip-003/search-client.ts)).
+2. Read the API token from a secret store or environment variable — never
+   hard-code it.
+3. Wrap the endpoint in one method that sets the `Authorization` header,
+   applies sensible defaults (page size, sources), and throws on non-2xx.
+4. Map the raw response into your typed result shape at the boundary, so callers
+   never touch untyped JSON.
+5. Reuse the client everywhere; change query behavior in exactly one place.
+
+## Working example
+
+See `examples/tip-003/search-client.ts` — a dependency-free typed client,
+verified against `retrieval_basics`.
+
+## Check
+
+If the search response shape changed tomorrow, how many files would you edit?
+With a typed client, the answer is one.
