@@ -1,6 +1,6 @@
 {
-  "schema_version": "1.0.0",
-  "generated_at": "2026-06-26T15:23:03.982Z",
+  "schema_version": "1.1.0",
+  "generated_at": "2026-06-26T15:55:24.488Z",
   "totals": {
     "days": 7,
     "published_days": 0,
@@ -165,5 +165,29 @@
       "case_study_type": "case_study",
       "has_verify_marker": true
     }
-  ]
+  ],
+  "registries": {
+    "leaders": [],
+    "projects": [],
+    "tips": [
+      {
+        "id": "tip-001",
+        "status": "draft",
+        "has_code_ref": false,
+        "verified_against": null
+      },
+      {
+        "id": "tip-002",
+        "status": "draft",
+        "has_code_ref": false,
+        "verified_against": null
+      },
+      {
+        "id": "tip-003",
+        "status": "draft",
+        "has_code_ref": true,
+        "verified_against": "retrieval_basics"
+      }
+    ]
+  }
 }

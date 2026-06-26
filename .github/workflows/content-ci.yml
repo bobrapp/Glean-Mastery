@@ -17,8 +17,11 @@ jobs:
         uses: actions/setup-node@v5
         with:
           node-version: "24"
+          cache: "npm"
       - name: Install dependencies
-        run: npm install
+        run: npm ci
+      - name: Typecheck
+        run: npm run typecheck
       - name: Build content manifest
         run: npm run build:manifest
       - name: Validate data against schemas

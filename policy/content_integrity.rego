@@ -1,24 +1,58 @@
 package content.integrity
 
-# Deny published content that still contains verification markers
-# or lacks a real case study mapping in the manifest.
+# Content integrity gate. Evaluated by CI against data/content-manifest.json.
+# Any member of `deny` blocks the build (opa eval --fail-defined).
+
+# --- Curriculum days ---------------------------------------------------------
+
+# Deny published days that still contain a [verify] marker.
 deny contains msg if {
-some i
-day := input.days[i]
-day.status == "published"
-day.has_verify_marker == true
-msg := sprintf("%s is published but still contains [verify]", [day.file])
+	some i
+	day := input.days[i]
+	day.status == "published"
+	day.has_verify_marker == true
+	msg := sprintf("%s is published but still contains [verify]", [day.file])
 }
 
+# Deny published days whose case study source is not a real case study.
 deny contains msg if {
-some i
-day := input.days[i]
-day.status == "published"
-day.case_study_type != "case_study"
-msg := sprintf("%s is published but case study source is not type=case_study", [day.file])
+	some i
+	day := input.days[i]
+	day.status == "published"
+	day.case_study_type != "case_study"
+	msg := sprintf("%s is published but case study source is not type=case_study", [day.file])
 }
 
-default allow = false
+# --- Community registries: consent is mandatory before publishing ------------
+
+# Deny any published leader who has not consented to being listed.
+deny contains msg if {
+	some leader in input.registries.leaders
+	leader.status == "published"
+	leader.consent_to_list != true
+	msg := sprintf("leader %s is published without consent_to_list=true", [leader.id])
+}
+
+# Deny any published project that has not consented to being listed.
+deny contains msg if {
+	some project in input.registries.projects
+	project.status == "published"
+	project.consent_to_list != true
+	msg := sprintf("project %s is published without consent_to_list=true", [project.id])
+}
+
+# --- Tips: a published code example must cite what it was verified against ----
+
+deny contains msg if {
+	some tip in input.registries.tips
+	tip.status == "published"
+	tip.has_code_ref == true
+	not tip.verified_against
+	msg := sprintf("tip %s is published with code but no verified_against source", [tip.id])
+}
+
+default allow := false
+
 allow if {
-count(deny) == 0
+	count(deny) == 0
 }
