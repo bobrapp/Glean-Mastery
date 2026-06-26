@@ -1,0 +1,15 @@
+{
+  "id": "quiz-w02",
+  "week": 2,
+  "pass_threshold": 0.8,
+  "questions": [
+    {
+      "id": "w02-q1",
+      "type": "mc",
+      "prompt": "Which metric best reflects ranking usefulness at top positions?",
+      "options": ["NDCG@k", "Latency", "Index size", "Token count"],
+      "answer_index": 0,
+      "explanation": "NDCG@k emphasizes ranking quality near the top results."
+    }
+  ]
+}
