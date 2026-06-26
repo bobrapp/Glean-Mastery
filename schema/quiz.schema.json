@@ -1,0 +1,49 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://glean-mastery/schema/quiz.schema.json",
+  "title": "Weekly Quiz",
+  "description": "Schema for data/quizzes/week-NN.json. Multiple-choice and short-answer questions.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["id", "week", "pass_threshold", "questions"],
+  "properties": {
+    "id": { "type": "string", "pattern": "^quiz-w[0-9]{2}$" },
+    "week": { "type": "integer", "minimum": 1 },
+    "pass_threshold": { "type": "number", "minimum": 0, "maximum": 1 },
+    "questions": {
+      "type": "array",
+      "minItems": 1,
+      "items": { "$ref": "#/definitions/question" }
+    }
+  },
+  "definitions": {
+    "question": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["id", "type", "prompt", "explanation"],
+      "properties": {
+        "id": { "type": "string", "minLength": 2 },
+        "type": { "type": "string", "enum": ["mc", "short"] },
+        "prompt": { "type": "string", "minLength": 4 },
+        "options": {
+          "type": "array",
+          "minItems": 2,
+          "items": { "type": "string", "minLength": 1 }
+        },
+        "answer_index": { "type": "integer", "minimum": 0 },
+        "answer_key": { "type": "string", "minLength": 1 },
+        "explanation": { "type": "string", "minLength": 4 }
+      },
+      "allOf": [
+        {
+          "if": { "properties": { "type": { "const": "mc" } } },
+          "then": { "required": ["options", "answer_index"] }
+        },
+        {
+          "if": { "properties": { "type": { "const": "short" } } },
+          "then": { "required": ["answer_key"] }
+        }
+      ]
+    }
+  }
+}

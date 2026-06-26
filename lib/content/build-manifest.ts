@@ -18,6 +18,10 @@ if (!fs.existsSync(WEEKS_DIR)) {
 
 const sources = JSON.parse(fs.readFileSync(SOURCES_PATH, "utf8"));
 
+function readJsonOr(file: string, fallback: any): any {
+  return fs.existsSync(file) ? JSON.parse(fs.readFileSync(file, "utf8")) : fallback;
+}
+
 function walk(dir: string): string[] {
   return fs.readdirSync(dir, { withFileTypes: true }).flatMap((e) => {
     const p = path.join(dir, e.name);
@@ -57,8 +61,31 @@ const days = walk(WEEKS_DIR)
   })
   .sort((a, b) => (a.week - b.week) || (a.day - b.day));
 
+// Registry summaries — minimal projections the OPA gate needs to enforce
+// consent and verification on anything marked published.
+const tipsData = readJsonOr("data/tips.json", { tips: [] });
+const leadersData = readJsonOr("data/leaders.json", { leaders: [] });
+const projectsData = readJsonOr("data/projects.json", { projects: [] });
+
+const leaders = (leadersData.leaders ?? []).map((l: any) => ({
+  id: l.id,
+  status: l.status,
+  consent_to_list: l.consent_to_list ?? false,
+}));
+const projects = (projectsData.projects ?? []).map((p: any) => ({
+  id: p.id,
+  status: p.status,
+  consent_to_list: p.consent_to_list ?? false,
+}));
+const tips = (tipsData.tips ?? []).map((t: any) => ({
+  id: t.id,
+  status: t.status,
+  has_code_ref: Boolean(t.code_ref),
+  verified_against: t.verified_against ?? null,
+}));
+
 const manifest = {
-  schema_version: "1.0.0",
+  schema_version: "1.1.0",
   generated_at,
   totals: {
     days: days.length,
@@ -67,6 +94,7 @@ const manifest = {
     draft_days: days.filter((d) => d.status === "draft").length,
   },
   days,
+  registries: { leaders, projects, tips },
 };
 
 fs.mkdirSync(path.dirname(OUT_PATH), { recursive: true });
