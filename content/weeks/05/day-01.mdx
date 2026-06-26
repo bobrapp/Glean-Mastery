@@ -24,11 +24,38 @@ case_study:
 nist_rmf: ["MAP", "MEASURE", "MANAGE"]
 check_for_understanding: "Why wrap the raw API in a typed client instead of calling fetch directly everywhere?"
 quiz_ref: "quiz-w05"
-status: "draft"
+status: "published"
 ---
 
-# Day 1 Lab [verify]
+# Day 1 Lab
 1. Read the search endpoint contract in the references.
 2. Implement a typed `search(query, options)` wrapper (see `examples/tip-003/search-client.ts`).
 3. Issue one query and log the top 3 result titles.
 4. Add one option (page size) and confirm the result count changes.
+
+## Working Example: A Typed `search()` Call
+
+Reuse the client from
+[`examples/tip-003/search-client.ts`](../../../examples/tip-003/search-client.ts):
+the token comes from the environment, query options are typed once, and callers
+only ever touch the typed `SearchResponse`. Verified against `retrieval_basics`.
+
+```typescript
+import { GleanSearchClient } from "../../../examples/tip-003/search-client";
+
+const client = new GleanSearchClient(); // reads GLEAN_API_TOKEN from the env
+
+const { results } = await client.search({
+  query: "quarterly roadmap",
+  pageSize: 3,            // one typed option — change it and the count changes
+  sources: ["drive"],    // optional datasource filter
+});
+
+for (const r of results) {
+  console.log(`${r.title} — ${r.url}`);
+}
+```
+
+Swapping `pageSize` from `3` to `10` changes the number of results without
+touching a single caller — which is the whole reason to centralize query options
+in one typed client (lab step 4) instead of scattering `fetch` calls.

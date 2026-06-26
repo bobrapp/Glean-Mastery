@@ -24,11 +24,65 @@ case_study:
 nist_rmf: ["GOVERN", "MAP", "MEASURE", "MANAGE"]
 check_for_understanding: "Where in an orchestration plan should a guardrail run, and why more than once?"
 quiz_ref: "quiz-w06"
-status: "draft"
+status: "published"
 ---
 
-# Day 2 Lab [verify]
+# Day 2 Lab
 1. Decompose a goal into a plan: plan -> retrieve -> reason -> act -> verify.
 2. Identify the highest-risk step in the plan and justify the ranking.
 3. Place a policy-as-code check at both the retrieve and act steps.
 4. Map each guardrail to the NIST AI RMF function it supports.
+
+## Working Example: Layered Guardrails (Rego)
+
+Day 1 gated a single act. Orchestration needs checks at more than one step:
+reject unsafe *context* at the retrieve stage, and still reject an unsafe *act*
+later. This policy exposes two decisions over one plan, and only proceeds when
+both are clear. Verified against `retrieval_basics`.
+
+```rego
+package glean.agent.orchestration
+
+# Stage 1 — retrieve: refuse to admit context the plan shouldn't see.
+deny_retrieve contains msg if {
+	some src in input.plan.retrieved
+	src.classification == "restricted"
+	not src.cleared
+	msg := sprintf("retrieve: restricted source %q not cleared", [src.id])
+}
+
+# Stage 2 — act: refuse to act on anything still unverified at execution time.
+deny_act contains msg if {
+	some src in input.plan.acted_on
+	not src.verified
+	msg := sprintf("act: acting on unverified source %q", [src.id])
+}
+
+# The orchestrator may proceed only if BOTH gates are clear.
+default allow_plan := false
+
+allow_plan if {
+	count(deny_retrieve) == 0
+	count(deny_act) == 0
+}
+```
+
+### Sample input
+
+```json
+{
+  "plan": {
+    "retrieved": [
+      { "id": "doc-1", "classification": "public" },
+      { "id": "doc-2", "classification": "restricted", "cleared": true }
+    ],
+    "acted_on": [{ "id": "doc-1", "verified": true }]
+  }
+}
+```
+
+With this input both gates are clear and `allow_plan` is `true`. Flip
+`doc-2.cleared` to `false` and `deny_retrieve` fires; mark `doc-1.verified`
+`false` and `deny_act` fires instead. A single chokepoint would catch only one
+of these — which is why the guardrail runs at both steps (today's
+check-for-understanding).
