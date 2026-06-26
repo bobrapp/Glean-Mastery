@@ -6,6 +6,8 @@ growing library of 100 tips & tricks. Content is treated as data and gated by
 policy-as-code, so "looks governed" and "is governed" stay the same thing.
 
 → Full program design: [`docs/PROGRAM-OVERVIEW.md`](docs/PROGRAM-OVERVIEW.md)
+→ Master helper agent (the front door for all interactions): [`AGENTS.md`](AGENTS.md) — Jeeves
+→ House rules for editing the repo: [`CLAUDE.md`](CLAUDE.md)
 
 ## Layout
 
