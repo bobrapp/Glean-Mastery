@@ -44,6 +44,9 @@ const days = walk(WEEKS_DIR)
 
     const caseSrc = sources[data.case_study?.source_id] ?? null;
 
+    // Strip the frontmatter block, then look for a fenced code block in the body.
+    const body = raw.replace(/^---\n[\s\S]*?\n---\n/, "");
+
     return {
       file,
       week: data.week,
@@ -57,6 +60,8 @@ const days = walk(WEEKS_DIR)
       source_ids,
       case_study_type: caseSrc?.type ?? null,
       has_verify_marker: /\[verify\]/.test(raw),
+      declares_working_example: Boolean(data.working_example),
+      has_example_code: body.includes("```"),
     };
   })
   .sort((a, b) => (a.week - b.week) || (a.day - b.day));

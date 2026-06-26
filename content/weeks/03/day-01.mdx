@@ -30,3 +30,32 @@ status: "published"
 1. Draft a go/no-go checklist.
 2. Add two measurable acceptance criteria.
 3. Identify one post-launch monitor.
+
+## Working Example: A Go/No-Go Readiness Gate
+
+The readiness criteria from the rollout case study, encoded as one gate: broad
+rollout is a go only when *every* criterion holds. This answers the
+check-for-understanding directly. Verified against `retrieval_basics`.
+
+```typescript
+type Readiness = {
+  permissionsVerified: boolean; // results respect every source's ACLs
+  relevanceMeasured: boolean;   // a baseline quality metric is captured
+  feedbackLoop: boolean;        // users can flag bad results
+  ownerAssigned: boolean;       // someone owns tuning after launch
+};
+
+const readyForBroadRollout = (r: Readiness): boolean =>
+  Object.values(r).every(Boolean); // all-or-nothing: any false blocks the go
+
+readyForBroadRollout({
+  permissionsVerified: true,
+  relevanceMeasured: true,
+  feedbackLoop: true,
+  ownerAssigned: false, // <- not ready: no owner for post-launch tuning
+}); // false
+```
+
+The gate is deliberately all-or-nothing: a missing owner or an unmeasured
+baseline is enough to hold the rollout, because each criterion maps to a failure
+the case study actually saw in production.
