@@ -1,0 +1,20 @@
+{
+  "official_glossary": {
+    "type": "reference",
+    "title": "Glean Official Glossary",
+    "url": "https://example.com/glean/glossary",
+    "verified_on": "2026-06-26"
+  },
+  "retrieval_basics": {
+    "type": "reference",
+    "title": "Retrieval and Ranking Basics",
+    "url": "https://example.com/glean/retrieval-basics",
+    "verified_on": "2026-06-26"
+  },
+  "case_acme_rollout": {
+    "type": "case_study",
+    "title": "Acme Search Rollout Case Study",
+    "url": "https://example.com/case-studies/acme-rollout",
+    "verified_on": "2026-06-26"
+  }
+}
