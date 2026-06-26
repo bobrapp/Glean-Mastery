@@ -1,0 +1,50 @@
+---
+week: 1
+day: 4
+level: "200"
+title: "Reading Results and Relevance"
+theme: "Interpreting what Glean returns"
+duration_min: 30
+objectives:
+  - "Interpret a result's title, snippet, and ranking position"
+  - "Tell an intent mismatch apart from a ranking mismatch"
+references:
+  - source_id: "retrieval_basics"
+    minutes: 8
+  - source_id: "search_basics"
+    minutes: 4
+lab:
+  minutes: 8
+  steps_ref: true
+working_example:
+  language: "text"
+  verified_against: "retrieval_basics"
+case_study:
+  source_id: "case_confluent_glean"
+nist_rmf: ["MEASURE"]
+check_for_understanding: "Your top result is the right type but the wrong document. Intent or ranking problem?"
+quiz_ref: "quiz-w01"
+video_summary: "Read a Glean result like a label: the title says what it is, the snippet says why it matched, the position says how confident the rank is. Wrong type, fix intent; wrong order, fix signals."
+status: "published"
+---
+
+# Day 4 Lab
+1. Run a query you care about.
+2. For the top result, name what the title, the snippet, and the position each tell you.
+3. Decide: is the best answer missing (intent) or just ranked low (ranking)?
+4. Adjust the query for intent, or add a filter for ranking — then re-run.
+
+## Working Example: Anatomy of a Result
+
+Every result carries three readable signals. Verified against `retrieval_basics`.
+
+```text
+[Benefits 2026 — Parental Leave]   ← TITLE: what this is
+drive · updated 3 days ago · @hr   ← METADATA: source, recency, owner
+"...eligible employees accrue..."  ← SNIPPET: why it matched your query
+position #1 of 240                 ← RANK: how confident Glean is
+
+Diagnose a miss:
+  right type, wrong doc at #1   → RANKING (add a filter, e.g. updated:)
+  wrong type entirely           → INTENT (reframe the query)
+```

@@ -1,0 +1,47 @@
+---
+week: 1
+day: 6
+level: "200"
+title: "The app: Filter"
+theme: "Scoping to one connected system"
+duration_min: 30
+objectives:
+  - "Use the app: filter to scope a query to one connected system"
+  - "Recognize common app: values (app:gdrive, app:slack, app:jira)"
+references:
+  - source_id: "search_filters"
+    minutes: 8
+lab:
+  minutes: 8
+  steps_ref: true
+working_example:
+  language: "text"
+  verified_against: "search_filters"
+case_study:
+  source_id: "case_confluent_glean"
+nist_rmf: ["MAP"]
+check_for_understanding: "You know the doc lives in Slack, not Drive. Which filter saves the most time?"
+quiz_ref: "quiz-w01"
+video_summary: "Know which system holds the answer? Scope to it. app:slack finds the thread, app:gdrive the doc, app:jira the ticket. One filter beats scrolling past every other tool's results."
+status: "published"
+---
+
+# Day 6 Lab
+1. Pick a query where you know which app holds the answer.
+2. Add `app:` for that system (e.g. `app:slack`).
+3. Compare results with and without the filter.
+4. Try two apps to feel how it scopes.
+
+## Working Example: app: in Action
+
+The `app:` filter scopes a query to a single connected system. Verified against
+`search_filters`.
+
+```text
+quarterly roadmap              → results from every connected app
+app:gdrive quarterly roadmap   → only Google Drive
+app:slack  quarterly roadmap   → only Slack messages
+app:jira   quarterly roadmap   → only Jira issues
+
+When you already know WHERE it lives, app: is the fastest cut you can make.
+```
