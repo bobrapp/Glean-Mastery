@@ -6,7 +6,7 @@ on:
     branches: [main]
   workflow_dispatch:
 permissions:
-  contents: write
+  contents: read
 jobs:
   build-and-validate:
     runs-on: ubuntu-latest
@@ -34,11 +34,3 @@ jobs:
           opa version
       - name: Run content integrity policy gate
         run: opa eval --format pretty --fail-defined --data policy/content_integrity.rego --input data/content-manifest.json "data.content.integrity.deny[x]"
-      - name: Commit regenerated manifest
-        if: github.event_name == 'push'
-        run: |
-          git config user.name "github-actions[bot]"
-          git config user.email "github-actions[bot]@users.noreply.github.com"
-          git add data/content-manifest.json
-          git diff --staged --quiet || git commit -m "chore: regenerate content manifest [skip ci]"
-          git push
