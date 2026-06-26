@@ -1,0 +1,40 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://glean-mastery/schema/projects.schema.json",
+  "title": "Top 100 Glean Projects Registry",
+  "type": "object",
+  "required": ["schema_version", "max_entries", "projects"],
+  "properties": {
+    "schema_version": { "type": "string" },
+    "max_entries": { "type": "integer", "const": 100 },
+    "projects": {
+      "type": "array",
+      "maxItems": 100,
+      "items": { "$ref": "#/definitions/project" }
+    }
+  },
+  "definitions": {
+    "project": {
+      "type": "object",
+      "required": ["id", "name", "category", "stack", "status"],
+      "additionalProperties": false,
+      "properties": {
+        "id": { "type": "string", "pattern": "^project-[0-9]{3}$" },
+        "name": { "type": "string", "minLength": 2 },
+        "organization": { "type": "string" },
+        "summary": { "type": "string" },
+        "category": { "type": "string", "enum": ["enterprise-search", "agent", "workflow", "analytics", "support", "engineering", "governance", "other"] },
+        "stack": {
+          "type": "array",
+          "items": { "type": "string" },
+          "minItems": 1
+        },
+        "glean_plus": { "type": "array", "items": { "type": "string" } },
+        "impact_metric": { "type": "string" },
+        "reference_url": { "type": "string", "format": "uri" },
+        "consent_to_list": { "type": "boolean" },
+        "status": { "type": "string", "enum": ["nominated", "verified", "published"] }
+      }
+    }
+  }
+}
