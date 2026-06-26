@@ -24,11 +24,39 @@ case_study:
 nist_rmf: ["MAP", "MEASURE"]
 check_for_understanding: "When does a filter beat a longer natural-language query?"
 quiz_ref: "quiz-w04"
-status: "draft"
+status: "published"
 ---
 
-# Day 1 Lab [verify]
+# Day 1 Lab
 1. Pick one broad query that returns too many results.
 2. Add a source filter, then an owner filter, then a date range.
 3. Record how many results remain after each filter.
 4. Write one sentence on which filter gave the biggest precision gain.
+
+## Working Example: Stacking Operators to Narrow a Query
+
+The same information need, refined one constraint at a time. Each line adds a
+filter that removes a class of noise, so the result set shrinks while precision
+rises. Exact operator tokens vary by deployment — see the references for the
+operators your instance supports; the *pattern* is what matters.
+
+```text
+# 1. Broad and noisy — hundreds of hits across every connected app
+quarterly roadmap
+
+# 2. Scope to one system
+quarterly roadmap app:drive
+
+# 3. Narrow to the likely author
+quarterly roadmap app:drive owner:alex
+
+# 4. Bound to the quarter you care about
+quarterly roadmap app:drive owner:alex after:2026-04-01
+```
+
+By the last line the result set is typically a handful of documents instead of
+hundreds. The biggest single precision gain usually comes from the first
+constraint that matches the *kind* of answer you want — often `app:` (which
+system) or a date bound. That is exactly what step 4 of the lab asks you to
+notice: a filter beats a longer natural-language query whenever you already know
+a precise, structured constraint the query text can only hint at.
