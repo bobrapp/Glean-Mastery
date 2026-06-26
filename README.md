@@ -16,7 +16,7 @@ policy-as-code, so "looks governed" and "is governed" stay the same thing.
 | `data/tips.json` | Tips & tricks registry (target: 100) |
 | `data/leaders.json` · `data/projects.json` | Consent-gated community registries |
 | `data/sources.json` | Sources of truth that content verifies against |
-| `data/content-manifest.json` | **Generated** — do not edit by hand |
+| `data/content-manifest.json` | **Generated & gitignored** — built by `npm run build:manifest` (and in CI) |
 | `schema/` | JSON Schemas: day frontmatter, quizzes, and each registry |
 | `policy/content_integrity.rego` | OPA gate enforced in CI |
 | `lib/content/` | Manifest builder + validator |
@@ -44,8 +44,9 @@ npm run validate         # build:manifest + validate:data
    without `consent_to_list: true`, and any published tip that ships code without citing
    what it was `verified_against`.
 
-CI (`.github/workflows/content-ci.yml`) runs all three on every push and PR, and commits
-the regenerated manifest on push to `main`.
+CI (`.github/workflows/content-ci.yml`) runs all three on every push and PR. The manifest
+is generated fresh in CI before the gate and is **not** committed to the repo (it's
+gitignored), so branches never conflict on it.
 
 ## Status lifecycle
 

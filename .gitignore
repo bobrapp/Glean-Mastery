@@ -5,6 +5,9 @@ node_modules/
 *.tsbuildinfo
 .DS_Store
 
+# Generated — built fresh by `npm run build:manifest` (and in CI before the gate)
+data/content-manifest.json
+
 # Local env
 .env
 .env.*
