@@ -1,0 +1,15 @@
+{
+  "id": "quiz-w03",
+  "week": 3,
+  "pass_threshold": 0.8,
+  "questions": [
+    {
+      "id": "w03-q1",
+      "type": "mc",
+      "prompt": "What should happen before marking a day as published?",
+      "options": ["Leave [verify] tags", "Skip case study checks", "Complete source verification", "Disable CI"],
+      "answer_index": 2,
+      "explanation": "Published content must have verified sources and no [verify] markers."
+    }
+  ]
+}
