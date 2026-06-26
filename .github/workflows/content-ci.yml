@@ -27,6 +27,9 @@ jobs:
       - name: Build content manifest
         run: npm run build:manifest
 
+      - name: Validate data against schemas
+        run: npm run validate:data
+
       - name: Setup OPA
         uses: open-policy-agent/setup-opa@v2
         with:
