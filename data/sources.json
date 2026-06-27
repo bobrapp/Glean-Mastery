@@ -43,8 +43,14 @@
   },
   "fall25_launch": {
     "type": "reference",
-    "title": "Glean Fall '25 Launch — agentic engine & agent builder (Beta)",
+    "title": "Glean Fall '25 Launch — agentic engine & agent builder",
     "url": "https://www.glean.com/blog/live-fall-25-main",
+    "verified_on": "2026-06-26"
+  },
+  "agent_builder": {
+    "type": "reference",
+    "title": "Glean Agent Builder (docs — GA)",
+    "url": "https://docs.glean.com/agents/concepts/agent-builder",
     "verified_on": "2026-06-26"
   },
   "developer_platform": {

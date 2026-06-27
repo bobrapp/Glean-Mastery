@@ -67,10 +67,10 @@ map and are marked *(exists)*.
 6. Skill quality & iteration — descriptions that route reliably.
 7. Power-user capstone — a Skill that automates a recurring task.
 
-**Week 6 — the conversational agent builder (Beta)**
-1. Intro to the vibe-code agent builder — build by chatting. **(Beta — flag status)**
+**Week 6 — the conversational agent builder**
+1. Intro to the vibe-code agent builder — build by chatting.
 2. Agent steps & instructions — iterate the plan conversationally.
-3. The 100+ native actions (Slack/Microsoft/Salesforce/Jira/GitHub/Google). **(Beta)**
+3. The 100+ native actions (Slack/Microsoft/Salesforce/Jira/GitHub/Google).
 4. Scheduled triggers — run an agent on a schedule.
 5. Looping over data — process a dataset step by step.
 6. Versioning & lifecycle — version control for agents.
@@ -98,9 +98,10 @@ map and are marked *(exists)*.
 
 - **The 200→500 ladder is our instructional framing, not an official Glean certification.**
   No Glean Academy/cert path survived verification (one academy tutorial claim was refuted).
-- **Week 6 features are Beta / Fall-'25-announcement-sourced** (vibe-code builder, 100+
-  actions, triggers/looping/versioning). Each lesson must flag GA-vs-Beta and re-verify
-  before a cohort ships.
+- **Week 6 Agent Builder is now GA** (re-verified 2026-06-26 against the Agent Builder
+  product page + docs — no Beta label; scheduled triggers, versioning, native actions are
+  current features). The **one** remaining Beta is the *content triggers* trigger type.
+  Lessons cite the GA docs (`agent_builder`); the Fall-'25 launch is kept as historical context.
 - **NIST AI RMF mapping is instructional synthesis**, not a documented Glean crosswalk.
 - **Do not reuse** the refuted Enterprise Graph "powers permissions-enforced search across
   100+ connectors" framing (killed in verification).
