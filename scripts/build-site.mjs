@@ -244,6 +244,7 @@ function page(title, desc, bodyHtml, jsonld, url = SITE_URL) {
 ${FONTS}<style>${CSS}</style>${ld}</head>
 <body><a class="skip" href="#main">Skip to content</a><main class="wrap" id="main">${bodyHtml}
 <footer><div class="creed" style="border:none;padding:0;display:inline-block">"Agents do the bureaucracy; humans hold the meaning."</div>
+<nav class="estate" aria-label="The AiGovOps family" style="margin:16px 0 4px;font-size:13px"><a href="https://www.aigovops-foundation.com">Foundation</a> · <a href="https://community.aigovops-foundation.com">Community</a> · <a href="https://community.aigovops-foundation.com/library/">Library</a> · <a href="https://github.com/bobrapp/Glean-Mastery">Source</a></nav>
 <div class="fcreed">PART OF THE AIGOVOPS FAMILY · 30 MINUTES A DAY</div></footer></main>${SITEJS}</body></html>`;
 }
 
@@ -264,7 +265,7 @@ const courseLd = {
   numberOfCredits: published, educationalLevel: "Beginner to Advanced (200–500)",
 };
 const indexBody = `
-  <div class="eyebrow"><a href="https://aigovops-foundation.github.io/aigovops-library-june-ken-bob/">← AiGovOps Library</a> · Glean-ia-acs</div>
+  <div class="eyebrow"><a href="https://community.aigovops-foundation.com/library/">← AiGovOps Library</a> · Glean-ia-acs</div>
   <h1>30 minutes a day to <span class="y">Glean</span> mastery.</h1>
   <p class="lede">A governed, source-cited curriculum — from foundations to building agents — in daily 30-minute lessons. Every lesson carries a real working example, resolving sources, and a quiz before it's allowed to publish.</p>
   <div class="creed">"Agents do the bureaucracy; humans hold the meaning."</div>
