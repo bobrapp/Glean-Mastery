@@ -231,11 +231,16 @@ const SITEJS = `<script>
 })();
 </script>`;
 
-function page(title, desc, bodyHtml, jsonld) {
+const OG_IMAGE = "https://www.aigovops-foundation.com/images/founders.jpg";
+const FAVICON = "data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'><text x='0' y='14' font-size='15'>📘</text></svg>";
+
+function page(title, desc, bodyHtml, jsonld, url = SITE_URL) {
   const ld = jsonld ? `<script type="application/ld+json">${JSON.stringify(jsonld)}</script>` : "";
   return `<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
 <title>${esc(title)}</title><meta name="description" content="${esc(desc)}">
-<meta property="og:type" content="website"><meta property="og:title" content="${esc(title)}"><meta property="og:description" content="${esc(desc)}"><meta property="og:url" content="${SITE_URL}">
+<link rel="canonical" href="${url}"><link rel="icon" href="${FAVICON}">
+<meta property="og:type" content="website"><meta property="og:title" content="${esc(title)}"><meta property="og:description" content="${esc(desc)}"><meta property="og:url" content="${url}"><meta property="og:image" content="${OG_IMAGE}">
+<meta name="twitter:card" content="summary_large_image"><meta name="twitter:title" content="${esc(title)}"><meta name="twitter:description" content="${esc(desc)}"><meta name="twitter:image" content="${OG_IMAGE}">
 ${FONTS}<style>${CSS}</style>${ld}</head>
 <body><a class="skip" href="#main">Skip to content</a><main class="wrap" id="main">${bodyHtml}
 <footer><div class="creed" style="border:none;padding:0;display:inline-block">"Agents do the bureaucracy; humans hold the meaning."</div>
@@ -316,7 +321,7 @@ days.forEach((d, idx) => {
     <div><button type="button" class="mark" id="markdone" data-slug="${slugOf(d)}">Mark this day complete</button></div>
     ${nextCta}
     <div class="nav"><span>${prev ? `<a href="${dayHref(prev)}">← W${pad2(prev.week)}D${pad2(prev.day)}</a>` : ""}</span><span><a href="index.html">all lessons</a></span><span>${next ? `<a href="${dayHref(next)}">W${pad2(next.week)}D${pad2(next.day)} →</a>` : ""}</span></div>`;
-  fs.writeFileSync(path.join(OUT, dayHref(d)), page(`${d.title} · Glean Mastery`, d.theme || d.title, body, lessonLd));
+  fs.writeFileSync(path.join(OUT, dayHref(d)), page(`${d.title} · Glean Mastery`, d.theme || d.title, body, lessonLd, SITE_URL + dayHref(d)));
 });
 
 // ---------- sitemap ----------
