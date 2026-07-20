@@ -261,7 +261,7 @@ function page(title, desc, bodyHtml, jsonld, url = SITE_URL) {
 ${FONTS}<style>${CSS}</style>${ld}</head>
 <body><a class="skip" href="#main">Skip to content</a><main class="wrap" id="main">${bodyHtml}</main>
 <footer><div class="fwrap"><p class="creed-estate">Ship safe AI — never unsafe AI: get to yes, stay at yes, recover to yes, and keep the garden of humanity growing.</p>
-<div class="creed" style="border:none;padding:0;display:inline-block">"Agents do the bureaucracy; humans hold the meaning."</div>
+<div class="creed" style="border:none;padding:0;display:inline-block">"Agents do the bureaucracy; humans hold the meaning — and humans hold the keys."</div>
 <nav class="estate" aria-label="The AiGovOps family" style="margin:16px 0 4px;font-size:13px"><a href="https://www.aigovops-foundation.com">Foundation</a> · <a href="https://community.aigovops-foundation.com">Community</a> · <a href="https://community.aigovops-foundation.com/library/">Library</a> · <a href="https://github.com/bobrapp/Glean-Mastery">Source</a></nav>
 <div class="fcreed">PART OF THE AIGOVOPS FAMILY · 30 MINUTES A DAY</div></div></footer>${SITEJS}</body></html>`;
 }
@@ -286,7 +286,7 @@ const indexBody = `
   <div class="eyebrow"><a href="https://community.aigovops-foundation.com/library/">← AiGovOps Library</a> · Glean-ia-acs</div>
   <h1>30 minutes a day to <span class="y">Glean</span> mastery.</h1>
   <p class="lede">A governed, source-cited curriculum — from foundations to building agents — in daily 30-minute lessons. Every lesson carries a real working example, resolving sources, and a quiz before it's allowed to publish.</p>
-  <div class="creed">"Agents do the bureaucracy; humans hold the meaning."</div>
+  <div class="creed">"Agents do the bureaucracy; humans hold the meaning — and humans hold the keys."</div>
   <div class="howto">
     <h2>How it works</h2>
     <p>One focused lesson a day, about 30 minutes each. Every lesson follows the same shape, and your progress is saved on this device — pick up where you left off.</p>
